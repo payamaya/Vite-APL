@@ -1,0 +1,42 @@
+name: "✨ Feature Request"
+description: "Suggest a new feature or improvement"
+title: "[Feature] <title>"
+labels: [Feature, Needs Triage]
+body:
+- type: checkboxes
+  attributes:
+    label: "Is there an existing feature request for this?"
+    description: "Please search to see if a similar feature request already exists."
+    options:
+      - label: "I have searched the existing issues"
+        required: true
+- type: textarea
+  attributes:
+    label: "Feature Description"
+    description: "A clear and concise description of the feature you want to request."
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: "Use Case / Motivation"
+    description: "Explain why this feature would be useful and how it improves the project."
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: "Proposed Solution"
+    description: "If you have any ideas on how to implement this, please share them here."
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: "Alternatives Considered"
+    description: "Have you considered any alternatives? If so, please describe them."
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: "Additional Context"
+    description: "Add any other relevant context or screenshots about the feature request here."
+  validations:
+    required: false
