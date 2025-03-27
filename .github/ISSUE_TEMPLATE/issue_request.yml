@@ -1,0 +1,11 @@
+name: '⏺️ Issue Request'
+description: 'Suggest a new Issue or improvement'
+title: '[Issue] <title>'
+labels: [Issue, Needs Triage]
+body:
+  - type: textarea
+    attributes:
+      label: 'Issue Description'
+      description: 'A clear and concise description of the issue you want to request.'
+    validations:
+      required: true
