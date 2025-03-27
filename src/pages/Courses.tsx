@@ -23,7 +23,7 @@ const Courses = () => {
   // GET ALL Course from backend => database fetch
   return (
     <section className='card'>
-      <h1>Courses</h1>
+      <h1>Mohamed</h1>
       <ul>
         {courses.map((course) => (
           <li key={course.courseID}>
