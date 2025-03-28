@@ -1,4 +1,4 @@
-name: '⏺️ Parent Task Request'
+name: 'Parent Task Request'
 description: 'Suggest a new Issue or improvement'
 title: '[Parent Task] <title>'
 labels: [Parent Task, Needs Triage]
