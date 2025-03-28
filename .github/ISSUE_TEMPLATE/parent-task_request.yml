@@ -1,11 +1,11 @@
-name: '⏺️ Issue Request'
+name: '⏺️ Parent Task Request'
 description: 'Suggest a new Issue or improvement'
-title: '[Issue] <title>'
-labels: [Issue, Needs Triage]
+title: '[Parent Task] <title>'
+labels: [Parent Task, Needs Triage]
 body:
   - type: textarea
     attributes:
-      label: 'Issue Description'
+      label: 'Parent Task Description'
       description: 'A clear and concise description of the issue you want to request.'
     validations:
       required: true
