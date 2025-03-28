@@ -27,7 +27,7 @@ jobs:
                   await github.rest.projects.createCard({
                     project_id: context.payload.project_card.project_id,
                     content_id: subIssueNumber,
-                    content_type: "SubTask"
+                    content_type: "SubTask Request"
                   });
                 }
               }
