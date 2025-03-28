@@ -1,15 +1,11 @@
 name: '🎭 SubTask Request'
-description: 'Suggest a new subtask or improvement'
+description: 'Suggest a new Issue or improvement'
 title: '[SubTask] <title>'
 labels: [SubTask, Needs Triage]
 body:
   - type: textarea
     attributes:
       label: 'SubTask Description'
-      description: 'A clear and concise description of the subtask.'
+      description: 'A clear and concise description of the issue you want to request.'
     validations:
       required: true
-  - type: input
-    attributes:
-      label: 'Parent Issue'
-      description: 'Provide the parent issue number in the format: `#1234`'
