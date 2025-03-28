@@ -1,5 +1,5 @@
-name: 'Parent Task Request'
-description: 'Suggest a new issue or improvement'
+name: '⏺️Parent Task Request'
+description: 'Suggest a new Issue or improvement'
 title: '[Parent Task] <title>'
 labels: [Parent Task, Needs Triage]
 body:
@@ -8,15 +8,14 @@ body:
       label: 'Parent Task Description'
       description: 'A clear and concise description of the issue you want to request.'
     validations:
-      required: true
-  - type: markdown
-    attributes:
-      value: |
-        **Sub-issues:**  
-        To link sub-issues, add them below in the format:  
-        - [ ] #1234 (Example sub-issue)  
-        - [ ] #5678 (Another sub-issue)
+      required: true and here si the subTask subissue: name: '🎭 SubTask Request'
+description: 'Suggest a new Issue or improvement' please fix 
+title: '[SubTask] <title>'
+labels: [SubTask, Needs Triage]
+body:
   - type: textarea
     attributes:
-      label: 'Linked Sub-issues'
-      description: 'List sub-issues using the format: `- [ ] #<issue-number>`'
+      label: 'SubTask Description'
+      description: 'A clear and concise description of the issue you want to request.'
+    validations:
+      required: true
