@@ -1,0 +1,34 @@
+name: Move Parent and Sub-Issues
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  move-sub-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Linked Issues
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.payload.project_card.content_url.split('/').pop();
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber
+            });
+
+            if (issue.body.includes("### Sub-issues")) {
+              const matches = issue.body.match(/#(\d+)/g);
+              if (matches) {
+                for (const match of matches) {
+                  const subIssueNumber = match.replace("#", "");
+                  await github.rest.projects.createCard({
+                    project_id: context.payload.project_card.project_id,
+                    content_id: subIssueNumber,
+                    content_type: "Issue"
+                  });
+                }
+              }
+            }
