@@ -1,54 +1,89 @@
-# React + TypeScript + Vite
+# E-Learning Platform Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of the **E-Learning Platform**, built using **React Vite with TypeScript**. The platform facilitates online learning by allowing **admins, teachers, and students** to interact within a structured system.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Authentication & Authorization
+- User authentication with login functionality.
+- Role-based access control (Admin, Teacher, Student).
 
-## Expanding the ESLint configuration
+### Admin Features
+- Create and manage **teachers, students, and courses**.
+- Assign teachers to courses.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Teacher Features
+- Add and manage **courses**.
+- Create **modules, activities, and activity details** within courses.
+- View and grade **student-submitted activities** (quizzes, assignments, etc.).
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Student Features
+- Access only the courses assigned by **teachers or admins**.
+- View course content and submit **quizzes and assignments**.
+
+## Technology Stack
+- **Frontend:** React Vite (TypeScript)
+- **Styling:** Bootstrap
+- **Navigation:** React Router
+
+## Installation & Setup
+
+### Prerequisites
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Steps to Run the Application
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/payamaya/Vite-APL.git
+   cd e-learning-frontend
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start the development server:**
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+   The application should now be running at `http://localhost:5173/` (default Vite port).
+
+## Deployment
+
+### Build for Production
+To create an optimized production build, run:
+```sh
+npm run build
+# or
+yarn build
 ```
+This will generate a `dist/` folder with the optimized static assets.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Deploying to a Hosting Service
+You can deploy the built files to any static hosting provider (e.g., Vercel, Netlify, Firebase Hosting, GitHub Pages, etc.).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Example deployment with **Vercel**:
+1. Install Vercel CLI:
+   ```sh
+   npm install -g vercel
+   ```
+2. Deploy the project:
+   ```sh
+   vercel
+   ```
+Follow the CLI instructions to complete the deployment.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Contribution
+If you would like to contribute to this project, feel free to fork the repository and submit a pull request.
+
+## License
+This project is licensed under the MIT License.
+
