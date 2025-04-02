@@ -4,6 +4,7 @@ const Home = () => {
   return (
     <section className='container'>
       <h1>Home</h1>
+      {/* <div>{import.meta.env.VITE_API_URL}</div> */}
       <Cards
         imgSrc={'/public/read.png'}
         title={'Home Title'}

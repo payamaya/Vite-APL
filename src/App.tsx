@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Navbar from './Components/Navbar'
 import Courses from './pages/Courses'
 import CourseDetails from './pages/CourseDetails'
+import './styles/App.css'
 
 // import Courses from './pages/Courses'
 // import Dashboard from './pages/Dashboard'
