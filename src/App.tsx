@@ -6,7 +6,6 @@ import Courses from './pages/Courses'
 import CourseDetails from './pages/CourseDetails'
 import './styles/App.css'
 
-// import Courses from './pages/Courses'
 // import Dashboard from './pages/Dashboard'
 // import NotFound from './pages/NotFound'
 // import Navbar from './components/Navbar'
@@ -20,7 +19,7 @@ function App() {
           { label: 'Home', link: '/' },
           { label: 'About', link: '/about' },
           { label: 'Courses', link: '/courses' },
-          // { label: 'CourseDetails', link: '/course-details' },
+          ///  label: 'CourseDetails', link: '/course--dtails' },
         ]}
         fixed={'top'}
       />
