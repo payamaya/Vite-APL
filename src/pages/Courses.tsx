@@ -1,50 +1,54 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-// import Cards from '../Components/Cards'
-
+import { getAllCourses } from '../api/coursesApi' // Import API call function
+import { ICourse } from '../interfaces/ICourse'
 const Courses = () => {
-  const courses = [
-    {
-      courseID: '101',
-      name: 'React Basics',
-      img: '/public/LTU-tenta.png',
-      des: 'This is the first item accordion body.</strong> It is  shown by default, until the collapse plugin adds the appropriate  classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables',
-    },
-    {
-      courseID: '102',
-      name: 'React Advanced',
-      des: 'This is the first item accordion body.</strong> It is  shown by default, until the collapse plugin adds the appropriate  classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables',
-    },
-    {
-      courseID: '103',
-      name: 'Fullstack',
-      des: 'This is the first item accordion body.</strong> It is  shown by default, until the collapse plugin adds the appropriate  classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables',
-    },
-  ]
-  // GET ALL Course from backend => database fetch
+  const [courses, setCourses] = useState<ICourse[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Fetch courses from backend when component mounts
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await getAllCourses()
+        console.log('API response:', data) // Call API function
+        setCourses(Array.isArray(data) ? data : []) // Update state with API response
+      } catch (err) {
+        setError('Failed to load courses')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCourses()
+  }, [])
+
   return (
     <section className='card'>
-      <h1>The Course</h1>
-      <ul>
-        {courses.map((course) => (
-          <li key={course.courseID}>
-            <Link to={`/courses/${course.courseID}`}>
-              {/* <Cards
-                imgSrc={'/public/LTU-tenta.png'}
-                title={'About Title'}
-                text={'About'}
-                buttonLink={
-                  'https://getbootstrap.com/docs/5.3/components/card/'
-                }
-              /> */}
+      <h1>The Courses</h1>
 
-              <section key={course.courseID}>
+      {/* Show loading state */}
+      {loading && <p>Loading courses...</p>}
+
+      {/* Show error if API request fails */}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <ul>
+        {courses.map((course: ICourse) => (
+          <li key={course.id}>
+            <Link to={`/courses/${course.id}`}>
+              <section>
                 <h3>{course.name}</h3>
                 <p>{course.des}</p>
-                <img
-                  src={course.img}
-                  alt=''
-                  className='figure-img img-fluid rounded '
-                />
+                {course.img && (
+                  <img
+                    src={course.img}
+                    alt={course.name}
+                    className='figure-img img-fluid rounded'
+                  />
+                )}
               </section>
             </Link>
           </li>
