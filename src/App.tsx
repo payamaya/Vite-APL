@@ -10,6 +10,7 @@ function App() {
           { label: 'Home', link: '/' },
           { label: 'About', link: '/about' },
           { label: 'Courses', link: '/courses' },
+          { label: 'Admin', link: '/admin/dashboard' },
           ///  label: 'CourseDetails', link: '/course--dtails' },
         ]}
         fixed={'top'}

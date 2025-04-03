@@ -1,4 +1,4 @@
-import Cards from '../Components/Cards'
+import Cards from '../../Components/Cards'
 
 const About = () => {
   return (
