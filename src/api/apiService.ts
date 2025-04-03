@@ -1,0 +1,51 @@
+import axios from 'axios'
+import API_BASE_URL from './apiConfig'
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+})
+
+const apiService = {
+  getAll: async (endpoint: string) => {
+    try {
+      const response = await api.get(`/${endpoint}`)
+      return response.data
+    } catch (error) {
+      throw new Error(`Error fetching ${endpoint}: ${error}`)
+    }
+  },
+  getById: async (endpoint: string, id: string) => {
+    try {
+      const response = await api.get(`/${endpoint}/${id}`)
+      return response.data
+    } catch (error) {
+      throw new Error(`Error fetching ${endpoint} by ID: ${error}`)
+    }
+  },
+  create: async (endpoint: string, data: object) => {
+    try {
+      const response = await api.post(`/${endpoint}`, data)
+      return response.data
+    } catch (error) {
+      throw new Error(`Error creating ${endpoint}: ${error}`)
+    }
+  },
+  update: async (endpoint: string, id: string, data: object) => {
+    try {
+      const response = await api.put(`/${endpoint}/${id}`, data)
+      return response.data
+    } catch (error) {
+      throw new Error(`Error updating ${endpoint}: ${error}`)
+    }
+  },
+  delete: async (endpoint: string, id: string) => {
+    try {
+      const response = await api.delete(`${endpoint}/${id}`)
+      return response.data
+    } catch (error) {
+      throw new Error(`Error deleteing ${endpoint}: ${error}`)
+    }
+  },
+}
+export default apiService
