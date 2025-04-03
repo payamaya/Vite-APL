@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllCourses } from '../api/coursesApi' // Import API call function
+import courseService from '../api/coursesApi' // Import API call function
 import { ICourse } from '../interfaces/ICourse'
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
@@ -11,7 +11,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const data = await getAllCourses()
+        const data = await courseService.getAllCourses()
         console.log('API response:', data) // Call API function
         setCourses(Array.isArray(data) ? data : []) // Update state with API response
       } catch (err) {
