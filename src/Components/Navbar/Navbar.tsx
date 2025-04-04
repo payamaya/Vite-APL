@@ -1,31 +1,16 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
-interface NavItem {
-  label: string
-  link: string
-  disabled?: boolean
-}
-
-interface DropdownItem {
-  label: string
-  link: string
-}
-
-interface NavbarProps {
-  brand: string
-  navItems: NavItem[]
-  dropdownLabel?: string
-  dropdownItems?: DropdownItem[]
-  showSearch?: boolean
-  fixed: 'top' | 'bottom'
-}
+import { NavbarProps } from '../../interfaces/NavbarInterfaces'
+import { handleMenuClose, toggleMenu } from './navbarUtils'
+import ReusableButton from '../common/Button/ReusableButton'
 
 const Navbar: React.FC<NavbarProps> = ({
   brand,
   navItems,
   dropdownLabel,
   dropdownItems,
-  // showSearch = true,
+  // showSearch = false,
   fixed = 'top',
 }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,20 +20,19 @@ const Navbar: React.FC<NavbarProps> = ({
       className={`navbar navbar-expand-lg bg-body-tertiary ${fixed === 'top' ? 'fixed-top' : 'fixed-bottom'}`}
     >
       <div className='container-fluid'>
-        <a className='navbar-brand' href='#'>
+        <NavLink className='navbar-brand' to='/'>
           {brand}
-        </a>
-        {/* Hamburger button */}
-        <button
+        </NavLink>
+        <ReusableButton
+          as='button'
           className='navbar-toggler'
-          type='button'
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleMenu(isOpen, setIsOpen)}
           aria-controls='navbarSupportedContent'
           aria-expanded={isOpen}
           aria-label='Toggle navigation'
         >
           <span className='navbar-toggler-icon'></span>
-        </button>
+        </ReusableButton>
 
         {/* Menu Items */}
         <div
@@ -58,33 +42,38 @@ const Navbar: React.FC<NavbarProps> = ({
           <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
             {navItems.map((item, index) => (
               <li className='nav-item' key={index}>
-                <a
+                <NavLink
                   className={`nav-link ${item.disabled ? 'disabled' : ''}`}
-                  href={item.link}
+                  to={item.link}
                   aria-disabled={item.disabled}
+                  onClick={handleMenuClose(setIsOpen)}
                 >
                   {item.label}
-                </a>
+                </NavLink>
               </li>
             ))}
 
             {dropdownLabel && dropdownItems && (
               <li className='nav-item dropdown'>
-                <a
+                <NavLink
                   className='nav-link dropdown-toggle'
-                  href='#'
+                  to='/'
                   role='button'
                   data-bs-toggle='dropdown'
                   aria-expanded='false'
                 >
                   {dropdownLabel}
-                </a>
+                </NavLink>
                 <ul className='dropdown-menu'>
                   {dropdownItems.map((item, index) => (
                     <li key={index}>
-                      <a className='dropdown-item' href={item.link}>
+                      <NavLink
+                        className='dropdown-item'
+                        to={item.link}
+                        onClick={handleMenuClose(setIsOpen)}
+                      >
                         {item.label}
-                      </a>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
