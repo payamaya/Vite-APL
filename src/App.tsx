@@ -1,19 +1,14 @@
-import Navbar from './Components/Navbar'
+import Navbar from './Components/Navbar/Navbar'
 import AppRoutes from './routes/AppRoutes'
-
+import { NAV_ITEMS, NAV_BRAND } from './config/navItems'
 function App() {
   return (
     <>
       <Navbar
-        brand='My E-Learning Platform'
-        navItems={[
-          { label: 'Home', link: '/' },
-          { label: 'About', link: '/about' },
-          { label: 'Courses', link: '/courses' },
-          { label: 'Admin', link: '/admin/dashboard' },
-          ///  label: 'CourseDetails', link: '/course--dtails' },
-        ]}
+        brand={NAV_BRAND}
+        navItems={NAV_ITEMS}
         fixed={'top'}
+        showSearch={true}
       />
       <AppRoutes />
     </>
