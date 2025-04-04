@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { NavbarProps } from '../../interfaces/NavbarInterfaces'
 import { handleMenuClose, toggleMenu } from './navbarUtils'
+import ReusableButton from '../common/Button/ReusableButton'
 
 const Navbar: React.FC<NavbarProps> = ({
   brand,
@@ -22,17 +23,16 @@ const Navbar: React.FC<NavbarProps> = ({
         <NavLink className='navbar-brand' to='/'>
           {brand}
         </NavLink>
-        {/* Hamburger button */}
-        <button
+        <ReusableButton
+          as='button'
           className='navbar-toggler'
-          type='button'
           onClick={toggleMenu(isOpen, setIsOpen)}
           aria-controls='navbarSupportedContent'
           aria-expanded={isOpen}
           aria-label='Toggle navigation'
         >
           <span className='navbar-toggler-icon'></span>
-        </button>
+        </ReusableButton>
 
         {/* Menu Items */}
         <div
