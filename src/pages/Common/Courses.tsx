@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import courseService from '../../api/coursesApi' // Import API call function
 import { ICourse } from '../../interfaces/ICourse'
-import GoBackButton from '../../Components/common/Button/GoBackButton'
+import GoBackButton from '../../Components/common/buttons/GoBackButton'
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)

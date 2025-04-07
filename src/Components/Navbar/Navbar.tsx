@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { NavbarProps } from '../../interfaces/NavbarInterfaces'
+import { NavbarProps } from '../../interfaces/components/NavbarInterfaces'
 import { handleMenuClose, toggleMenu } from './navbarUtils'
-import ReusableButton from '../common/Button/ReusableButton'
+import ReusableButton from '../common/buttons/ReusableButton'
 
 const Navbar: React.FC<NavbarProps> = ({
   brand,

@@ -1,4 +1,4 @@
-import { BasNavItem } from './base/BaseNavItem'
+import { BasNavItem } from '../base/BaseNavItem'
 
 export interface NavItem extends BasNavItem {
   disabled?: boolean
