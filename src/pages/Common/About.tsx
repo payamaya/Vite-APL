@@ -7,7 +7,7 @@ const About = () => {
         <h1>Om Vår E-Learning Plattform</h1>
         <p className="lead">Från nybörjare till expert – vi erbjuder teknikutbildning för alla, med kvalitet och kompetens i fokus.</p>
     </div>
-    <img style={{backgroundImage:`url("https://www.teknikakademin.se/wp-content/uploads/2025/01/1200x675_vrblognew_email-marketing-tips-for-educational-institutions.jpg.webp")`,
+    <div style={{backgroundImage:`url("https://www.teknikakademin.se/wp-content/uploads/2025/01/1200x675_vrblognew_email-marketing-tips-for-educational-institutions.jpg.webp")`,
                 backgroundSize: 'cover',
                 backgroundAttachment: 'fixed', 
                 backgroundPosition: 'center center', 
@@ -15,7 +15,7 @@ const About = () => {
                 backgroundRepeat: 'no-repeat',
                 display: 'flex',
                 alignItems: 'flex-start',
-      }}/>
+      }}></div>
 </header>
 <section className="py-5">
     <h2 className="text-center mb-3">Vår Mission</h2>
