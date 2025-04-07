@@ -1,20 +1,13 @@
-
+// About function that returns a JSX element representing the About page of the application. It includes sections about the platform, its mission, services, team members, and user testimonials.
 const About = () => {
   return (
     <div className=" mt-5 d-flex flex-column">
-<header style={{backgroundImage:`url("https://www.teknikakademin.se/wp-content/uploads/2025/01/1200x675_vrblognew_email-marketing-tips-for-educational-institutions.jpg.webp")`,
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed', 
-                backgroundPosition: 'center center', 
-                height: '100vh', 
-                backgroundRepeat: 'no-repeat',
-                display: 'flex',
-                alignItems: 'flex-start',
-      }} className="bg-primary text-white text-center">
+<header className="bg-primary text-white text-center">
     <div className="container-fluid bg-primary opacity-75 py-5 ">
         <h1>Om Vår E-Learning Plattform</h1>
         <p className="lead">Från nybörjare till expert – vi erbjuder teknikutbildning för alla, med kvalitet och kompetens i fokus.</p>
     </div>
+    <img src="https://www.teknikakademin.se/wp-content/uploads/2025/01/1200x675_vrblognew_email-marketing-tips-for-educational-institutions.jpg.webp" className="image-fluid w-100" alt="About Us" style={{height: '100vh', objectFit: 'cover'}} />
 </header>
 <section className="py-5">
     <h2 className="text-center mb-3">Vår Mission</h2>
@@ -26,7 +19,7 @@ const About = () => {
                       backgroundRepeat: 'no-repeat',
                       margin: '0',
       }} className="container-fluid py-5">
-      <h2 className="text-center mb-5">Vad Vi Gör</h2>
+        <h2 className="text-center mb-5">Vad Vi Gör</h2>
       <div className="row justify-content-center text-left">
           <div className="col-md-4">
               <h4>Bemanning och rekrytering</h4>
@@ -87,9 +80,6 @@ const About = () => {
         <p>Oavsett om du är företag som söker rätt kompetens eller en tekniker som vill ta nästa steg i karriären, finns vi här för att hjälpa dig. Kontakta oss idag för att ta reda på hur vi kan stötta dig på resan mot framgång!</p>
     </div>
 </section>
-<footer className="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 E-Learning Platform. All rights reserved.</p>
-</footer>
 </div>
   )
 }
