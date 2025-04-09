@@ -42,7 +42,8 @@ const Courses = () => {
             <Link to={`/courses/${course.id}`}>
               <section>
                 <h3>{course.name}</h3>
-                <p>{course.des}</p>
+                <h4 className='br-primary'>{course.title}</h4>
+                <p>{course.description}</p>
                 {course.img && (
                   <img
                     src={course.img}
