@@ -54,3 +54,35 @@ const authService = {
 }
 
 export default authService
+
+// src/api/authService.ts
+// import axios from 'axios'
+
+// const API_URL = 'https://reqres.in/api' // Reqres base URL
+
+// const authService = {
+//   login: async (credentials: { email: string; password: string }): Promise<string> => {
+//     try {
+//       console.log('Posting to:', `${API_URL}/login`, credentials)
+
+//       const response = await axios.post(`${API_URL}/login`, credentials)
+//       const token = response.data.token
+//       localStorage.setItem('token', token)
+//       return token
+//     } catch (error: any) {
+//       console.error('Login failed', error)
+//       // Instead of calling setError here, throw the error to be handled in the component
+//       throw new Error(error.response?.data?.error || 'Login failed')
+//     }
+//   },
+
+//   logout: (): void => {
+//     localStorage.removeItem('token')
+//   },
+
+//   getToken: (): string | null => localStorage.getItem('token'),
+
+//   isAuthenticated: (): boolean => !!localStorage.getItem('token'),
+// }
+
+// export default authService

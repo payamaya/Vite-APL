@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import courseService from '../../api/coursesApi' // Import API call function
-import { ICourse } from '../../interfaces/ICourse'
-import GoBackButton from '../../Components/common/Button/GoBackButton'
+import { ICourse } from '../../interfaces/components/ICourse'
+import GoBackButton from '../../Components/common/buttons/GoBackButton'
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)
@@ -42,7 +42,8 @@ const Courses = () => {
             <Link to={`/courses/${course.id}`}>
               <section>
                 <h3>{course.name}</h3>
-                <p>{course.des}</p>
+                <h4 className='br-primary'>{course.title}</h4>
+                <p>{course.description}</p>
                 {course.img && (
                   <img
                     src={course.img}

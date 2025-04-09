@@ -29,7 +29,7 @@ const AppRoutes = () => {
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
       <Route path='/courses' element={<Courses />} />
-      <Route path='/courses/:courseID' element={<CourseDetails />} />
+      <Route path='/courses/:courseId' element={<CourseDetails />} />
       {/* 404 Not Found - should be last */}
       <Route path='*' element={<Navigate to='/' replace />} />
 

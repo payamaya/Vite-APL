@@ -1,4 +1,4 @@
-import { BaseButtonProps } from '../base/BaseButtonProps'
+import { BaseButtonProps } from '../../base/BaseButtonProps'
 
 export interface LinkButtonProps extends BaseButtonProps {
   as: 'link' | 'navlink'
