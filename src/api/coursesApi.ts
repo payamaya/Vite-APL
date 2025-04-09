@@ -1,7 +1,7 @@
 import apiService from './apiService'
 
 const courseService = {
-  getAllCourses: () => apiService.getAll('courses'),
+  getAllCourses: () => apiService.getAll('course'),
   getCourseById: (courseId: string) => apiService.getById('courses', courseId),
   createCourse: (courseData: object) =>
     apiService.create('courses', courseData),

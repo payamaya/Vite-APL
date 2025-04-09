@@ -19,7 +19,7 @@ api.interceptors.request.use((config) => {
 const apiService = {
   getAll: async (endpoint: string) => {
     try {
-      const response = await api.get(`/${endpoint}`)
+      const response = await api.get(`${API_BASE_URL}/${endpoint}`)
       return response.data
     } catch (error) {
       throw new Error(`Error fetching ${endpoint}: ${error}`)
@@ -27,7 +27,7 @@ const apiService = {
   },
   getById: async (endpoint: string, id: string) => {
     try {
-      const response = await api.get(`/${endpoint}/${id}`)
+      const response = await api.get(`${API_BASE_URL}/${endpoint}/${id}`)
       return response.data
     } catch (error) {
       throw new Error(`Error fetching ${endpoint} by ID: ${error}`)
@@ -35,7 +35,7 @@ const apiService = {
   },
   create: async (endpoint: string, data: object) => {
     try {
-      const response = await api.post(`/${endpoint}`, data)
+      const response = await api.post(`${API_BASE_URL}/${endpoint}`, data)
       return response.data
     } catch (error) {
       throw new Error(`Error creating ${endpoint}: ${error}`)
@@ -43,7 +43,7 @@ const apiService = {
   },
   update: async (endpoint: string, id: string, data: object) => {
     try {
-      const response = await api.put(`/${endpoint}/${id}`, data)
+      const response = await api.put(`${API_BASE_URL}/${endpoint}/${id}`, data)
       return response.data
     } catch (error) {
       throw new Error(`Error updating ${endpoint}: ${error}`)
@@ -51,7 +51,7 @@ const apiService = {
   },
   delete: async (endpoint: string, id: string) => {
     try {
-      const response = await api.delete(`${endpoint}/${id}`)
+      const response = await api.delete(`${API_BASE_URL}/${endpoint}/${id}`)
       return response.data
     } catch (error) {
       throw new Error(`Error deleteing ${endpoint}: ${error}`)
