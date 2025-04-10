@@ -5,12 +5,19 @@ import { ICourse } from '../../interfaces/components/ICourse'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableForm from '../../Components/common/forms/ReusableForm'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
+import { useDeleteHandler } from '../../hooks/useDeleteHandler' // <-- Updated import
 
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  // ✅ Use custom delete hook
+  const {
+    deletingId,
+    error: deleteError,
+    deleteItem,
+  } = useDeleteHandler<ICourse>(courseService.deleteCourse, setCourses, courses)
 
   // Fetch courses from backend when component mounts
   useEffect(() => {
@@ -30,25 +37,6 @@ const Courses = () => {
     }
   }
 
-  const handleDelete = async (courseId: string) => {
-    if (!window.confirm('Are you sure you want to delete this course?')) {
-      return
-    }
-
-    try {
-      setDeletingId(courseId)
-      await courseService.deleteCourse(courseId)
-      // Remove the deleted course from state
-      setCourses(courses.filter((course) => course.id !== courseId))
-    } catch (error) {
-      setError(
-        error instanceof Error ? error.message : 'Failed to delete course'
-      )
-    } finally {
-      setDeletingId(null)
-    }
-  }
-
   return (
     <div className='container'>
       <section className='card'>
@@ -57,8 +45,11 @@ const Courses = () => {
         {/* Show loading state */}
         {loading && <p>Loading courses...</p>}
 
-        {/* Show error if API request fails */}
+        {/* Show general fetch error */}
         {error && <div className='alert alert-danger'>{error}</div>}
+
+        {/* Show delete error */}
+        {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
 
         <ul className='list-group'>
           {courses.map((course: ICourse) => (
@@ -83,7 +74,12 @@ const Courses = () => {
                 </Link>
                 <div className='d-flex gap-2'>
                   <ReusableButton
-                    onClick={() => handleDelete(course.id)}
+                    onClick={() =>
+                      deleteItem(
+                        course.id,
+                        'Are you sure you want to delete this course?'
+                      )
+                    }
                     theme='light'
                     className='bg-danger'
                     disabled={deletingId === course.id}
@@ -98,6 +94,7 @@ const Courses = () => {
         </ul>
         <GoBackButton />
       </section>
+
       <ReusableForm endpoint={'/course'} onSuccess={fetchCourses} />
     </div>
   )
