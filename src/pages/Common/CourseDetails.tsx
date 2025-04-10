@@ -42,9 +42,9 @@ const CourseDetails = () => {
           return
         }
 
-        const data = await courseService.getCourseById(courseId)
-        console.log('API response:', data)
-        setCourse(data)
+        const response = await courseService.getCourseById<ICourse>(courseId)
+        console.log('API response:', response.data)
+        setCourse(response.data)
       } catch (err) {
         setError('Failed to load course')
         console.error(err)

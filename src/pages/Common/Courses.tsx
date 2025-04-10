@@ -1,63 +1,105 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import courseService from '../../api/coursesApi' // Import API call function
+import courseService from '../../api/coursesApi'
 import { ICourse } from '../../interfaces/components/ICourse'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
+import ReusableForm from '../../Components/common/forms/ReusableForm'
+import ReusableButton from '../../Components/common/buttons/ReusableButton'
+
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   // Fetch courses from backend when component mounts
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const data = await courseService.getAllCourses()
-        console.log('API response:', data) // Call API function
-        setCourses(Array.isArray(data) ? data : []) // Update state with API response
-      } catch (err) {
-        setError('Failed to load courses')
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchCourses()
   }, [])
 
+  const fetchCourses = async () => {
+    try {
+      setLoading(true)
+      const response = await courseService.getAllCourses()
+      setCourses(Array.isArray(response.data) ? response.data : [])
+    } catch (err) {
+      setError('Failed to load courses')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDelete = async (courseId: string) => {
+    if (!window.confirm('Are you sure you want to delete this course?')) {
+      return
+    }
+
+    try {
+      setDeletingId(courseId)
+      await courseService.deleteCourse(courseId)
+      // Remove the deleted course from state
+      setCourses(courses.filter((course) => course.id !== courseId))
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : 'Failed to delete course'
+      )
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
   return (
-    <section className='card'>
-      <h1>The Courses</h1>
+    <div className='container'>
+      <section className='card'>
+        <h1>The Courses</h1>
 
-      {/* Show loading state */}
-      {loading && <p>Loading courses...</p>}
+        {/* Show loading state */}
+        {loading && <p>Loading courses...</p>}
 
-      {/* Show error if API request fails */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        {/* Show error if API request fails */}
+        {error && <div className='alert alert-danger'>{error}</div>}
 
-      <ul>
-        {courses.map((course: ICourse) => (
-          <li key={course.id}>
-            <Link to={`/courses/${course.id}`}>
-              <section>
-                <h3>{course.name}</h3>
-                <h4 className='br-primary'>{course.title}</h4>
-                <p>{course.description}</p>
-                {course.img && (
-                  <img
-                    src={course.img}
-                    alt={course.name}
-                    className='figure-img img-fluid rounded'
-                  />
-                )}
-              </section>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <GoBackButton />
-    </section>
+        <ul className='list-group'>
+          {courses.map((course: ICourse) => (
+            <li key={course.id} className='list-group-item border rounded m-2'>
+              <div className='d-flex justify-content-between align-items-start'>
+                <Link
+                  to={`/courses/${course.id}`}
+                  className='flex-grow-1 text-decoration-none'
+                >
+                  <section>
+                    <h3>{course.name}</h3>
+                    <h4 className='br-primary'>{course.title}</h4>
+                    <p>{course.description}</p>
+                    {course.img && (
+                      <img
+                        src={course.img}
+                        alt={course.name}
+                        className='figure-img img-fluid rounded'
+                      />
+                    )}
+                  </section>
+                </Link>
+                <div className='d-flex gap-2'>
+                  <ReusableButton
+                    onClick={() => handleDelete(course.id)}
+                    theme='light'
+                    className='bg-danger'
+                    disabled={deletingId === course.id}
+                    loading={deletingId === course.id}
+                  >
+                    Delete
+                  </ReusableButton>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <GoBackButton />
+      </section>
+      <ReusableForm endpoint={'/course'} onSuccess={fetchCourses} />
+    </div>
   )
 }
 
