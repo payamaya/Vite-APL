@@ -1,11 +1,25 @@
 import apiService from './apiService'
 
 const courseService = {
-  getAllCourses: () => apiService.getAll('course'),
-  getCourseById: (courseId: string) => apiService.getById('course', courseId),
-  createCourse: (courseData: object) => apiService.create('course', courseData),
-  updateCourse: (courseId: string, courseData: object) =>
-    apiService.update('courses', courseId, courseData),
-  deleteCourse: (courseId: string) => apiService.delete('course', courseId),
+  getAllCourses<T>() {
+    return apiService.getAll<T>('course')
+  },
+
+  getCourseById<T>(courseId: string) {
+    return apiService.getById<T>('course', courseId)
+  },
+
+  createCourse<T>(courseData: T) {
+    return apiService.create<T>('course', courseData)
+  },
+
+  updateCourse<T>(courseId: string, courseData: T) {
+    return apiService.update<T>('course', courseId, courseData)
+  },
+
+  deleteCourse<T>(courseId: string) {
+    return apiService.delete<T>('course', courseId)
+  },
 }
+
 export default courseService
