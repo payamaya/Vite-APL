@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useFormHandler } from '../../../hooks/useFormHandler'
 import ReusableInput from '../inputs/ReusableInput'
 import ReusableButton from '../buttons/ReusableButton'
 import apiService from '../../../api/apiService'
 import { ReusableFormProps } from '../../../interfaces/components/common/ReusableFormProps'
 import { IFormData } from '../../../interfaces/components/IFormData'
-import { ApiResponse } from '../../../interfaces/components/ApiResponse'
 
 const ReusableForm = ({
   endpoint,
@@ -12,50 +11,19 @@ const ReusableForm = ({
   onSuccess,
   onCancel,
 }: ReusableFormProps) => {
-  const [formData, setFormData] = useState<IFormData>(
-    initialData || { name: '', title: '', description: '' }
-  )
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const { formData, setFormData, error, success, isLoading, handleSubmit } =
+    // ✅ Use custom useFormHandler hook
+    useFormHandler<IFormData>(
+      endpoint,
+      initialData || { name: '', title: '', description: '' },
+      apiService.create,
+      apiService.update,
+      onSuccess
+    )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    setError(null)
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
-    setSuccess(false)
-
-    try {
-      let response: ApiResponse<IFormData>
-
-      if (formData.id) {
-        response = await apiService.update<IFormData>(
-          endpoint,
-          formData.id,
-          formData
-        )
-      } else {
-        response = await apiService.create<IFormData>(endpoint, formData)
-      }
-
-      setSuccess(true)
-      setFormData({ name: '', title: '', description: '' })
-      setTimeout(() => setSuccess(false), 2000)
-      if (onSuccess) {
-        onSuccess(response) // Use only the relevant `data`
-      }
-    } catch (error) {
-      console.error('Failed to send data:', error)
-      setError(error instanceof Error ? error.message : 'An error occurred')
-    } finally {
-      setIsLoading(false)
-    }
   }
 
   return (
