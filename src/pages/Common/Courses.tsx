@@ -50,8 +50,9 @@ const Courses = () => {
 
         {/* Show delete error */}
         {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
-
-        <ul className='list-group'>
+  
+          {/* Show courses or a message if there are none */}
+     {courses.length === 0 ? <p className='text-danger fs-5 p-2'>There is no course available!</p> : <ul className='list-group'>
           {courses.map((course: ICourse) => (
             <li key={course.id} className='list-group-item border rounded m-2'>
               <div className='d-flex justify-content-between align-items-start'>
@@ -91,7 +92,7 @@ const Courses = () => {
               </div>
             </li>
           ))}
-        </ul>
+        </ul>}
         <GoBackButton />
       </section>
 
