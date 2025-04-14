@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { Home, About, Courses, CourseDetails } from '../pages/Common'
 import * as Admin from '../pages/Admin'
 import ProtectedRoute from '../Components/ProtectedRoute'
+import ModuleDetails from '../pages/Common/ModuleDetails'
 
 const AppRoutes = () => {
   const adminRoutes = [
@@ -30,6 +31,10 @@ const AppRoutes = () => {
       <Route path='/about' element={<About />} />
       <Route path='/courses' element={<Courses />} />
       <Route path='/courses/:courseId' element={<CourseDetails />} />
+      <Route
+        path='/courses/:courseId/module/:moduleId'
+        element={<ModuleDetails />}
+      />
       {/* 404 Not Found - should be last */}
       <Route path='*' element={<Navigate to='/' replace />} />
 

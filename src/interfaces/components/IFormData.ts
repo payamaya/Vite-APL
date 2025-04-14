@@ -3,5 +3,6 @@ export interface IFormData {
   name: string
   title: string
   description: string
+  courseId?: string // Add this
   img?: string // Optional if you want to handle images
 }
