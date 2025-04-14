@@ -11,4 +11,6 @@ export interface ReusableInputProps {
   error?: string;
   required?: boolean;
   autoFocus?: boolean;
+  rows?: number;
+  [key:string]:any; //For additional props
 }
