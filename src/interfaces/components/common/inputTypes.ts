@@ -1,16 +1,25 @@
+// interfaces/components/common/inputTypes.ts
 import React from "react";
 
-export interface ReusableInputProps {
+export interface BaseFieldProps {
   label?: string;
   name: string;
-  type?: React.HTMLInputTypeAttribute;
   value: string;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
   required?: boolean;
   autoFocus?: boolean;
+  [key: string]: any;
+}
+
+export interface InputFieldProps extends BaseFieldProps {
+  type?: React.HTMLInputTypeAttribute;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+}
+
+export interface TextareaFieldProps extends BaseFieldProps {
   rows?: number;
-  [key:string]:any; //For additional props
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
