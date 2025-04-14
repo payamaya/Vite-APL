@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import courseService from '../../api/coursesApi'
 import { ICourse } from '../../interfaces/components/ICourse'
+import ReusableForm from '../../Components/common/forms/ReusableForm'
+import { ApiResponse } from '../../interfaces/components/ApiResponse'
+import { IFormData } from '../../interfaces/components/IFormData'
 
 const CourseDetails = () => {
   const { courseId } = useParams() // ✅ make sure this matches your route
@@ -60,6 +63,10 @@ const CourseDetails = () => {
   if (error) return <p>{error}</p>
   if (!course) return <p>No course found.</p>
 
+  function fetchCourses(responseData: ApiResponse<IFormData>): void {
+    throw new Error('Function not implemented.')
+  }
+
   return (
     <section className='container border rounded p-2 mt-5'>
       <h2 className='mt-5'>Course Details</h2>
@@ -71,6 +78,8 @@ const CourseDetails = () => {
       {/* Add more fields here as needed */}
       <>
         <h2>Module </h2>
+        <ReusableForm endpoint={`/course/${courseId}/module`} onSuccess={fetchCourses} />
+
         {/* Bootstrap Accordion */}
         <div className='accordion' id='accordionExample'>
           {modules.map((module, index) => (
@@ -104,6 +113,7 @@ const CourseDetails = () => {
           ))}
         </div>
       </>
+
     </section>
   )
 }
