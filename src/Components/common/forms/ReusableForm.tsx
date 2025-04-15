@@ -4,7 +4,6 @@
 // import { ReusableFormProps } from '../../../interfaces/components/common/ReusableFormProps';
 // import { IFormData } from '../../../interfaces/components/IFormData';
 
-
 // import ReusableInput from '../inputs/ReusableInput';
 // import ReusableTextarea from '../inputs/ReusableTextarea';
 
@@ -96,14 +95,13 @@
 
 // export default ReusableForm;
 
-import { useFormHandler } from '../../../hooks/useFormHandler';
-import ReusableButton from '../buttons/ReusableButton';
-import apiService from '../../../api/apiService';
-import { ReusableFormProps } from '../../../interfaces/components/common/ReusableFormProps';
-import { IFormData } from '../../../interfaces/components/IFormData';
-import ReusableInput from '../inputs/ReusableInput';
-import ReusableTextarea from '../inputs/ReusableTextarea';
-
+import { useFormHandler } from '../../../hooks/useFormHandler'
+import ReusableButton from '../buttons/ReusableButton'
+import apiService from '../../../api/apiService'
+import { ReusableFormProps } from '../../../interfaces/components/common/ReusableFormProps'
+import { IFormData } from '../../../interfaces/components/IFormData'
+import ReusableInput from '../inputs/ReusableInput'
+import ReusableTextarea from '../inputs/ReusableTextarea'
 
 const ReusableForm = ({
   endpoint,
@@ -118,16 +116,18 @@ const ReusableForm = ({
       apiService.create,
       apiService.update,
       onSuccess
-    );
+    )
 
-  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleFieldChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   return (
     <section className='container bg-primary mt-4 p-4 border rounded'>
-      <h3>Add modules</h3>
+      <h3>{formData.name}</h3>
       <form onSubmit={handleSubmit}>
         <ReusableInput
           label='Name'
@@ -184,7 +184,7 @@ const ReusableForm = ({
         </div>
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default ReusableForm;
+export default ReusableForm
