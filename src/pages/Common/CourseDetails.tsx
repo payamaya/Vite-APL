@@ -5,6 +5,8 @@ import moduleService from '../../api/moduleService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import ReusableForm from '../../Components/common/forms/ReusableForm'
 import { IModule } from '../../interfaces/components/IModule'
+import ReusableButton from '../../Components/common/buttons/ReusableButton'
+import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
@@ -12,8 +14,17 @@ const CourseDetails = () => {
   const [modules, setModules] = useState<IModule[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  
+  const {
+    deletingId,
+    error: deleteError,
+    deleteItem,
+  } = useDeleteHandler<IModule>(
+    (moduleId: string) => moduleService.deleteModule(courseId!, moduleId),
+    setModules,
+    modules
+  )
 
-  // Properly implement the fetch function
   const fetchCourseAndModules = async () => {
     try {
       if (!courseId) {
@@ -24,17 +35,10 @@ const CourseDetails = () => {
       setLoading(true)
       setError('')
 
-      // Fetch course details
-      const courseResponse =
-        await courseService.getCourseById<ICourse>(courseId)
+      const courseResponse = await courseService.getCourseById<ICourse>(courseId)
       setCourse(courseResponse.data)
 
-      // Fetch modules - adjust based on your actual API response structure
-      const modulesResponse =
-        await moduleService.getAllModules<IModule[]>(courseId)
-
-      // Handle different response structures:
-      // If response is ApiResponse<IModule[]>
+      const modulesResponse = await moduleService.getAllModules<IModule[]>(courseId)
       setModules(modulesResponse.data)
     } catch (err) {
       setError('Failed to load course or modules')
@@ -62,6 +66,8 @@ const CourseDetails = () => {
       <p>End: {course.endDate}</p>
 
       <h2>Modules</h2>
+      {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
+      
       <ReusableForm
         endpoint={`/course/${courseId}/module`}
         onSuccess={fetchCourseAndModules}
@@ -69,11 +75,10 @@ const CourseDetails = () => {
           name: '',
           title: '',
           description: '',
-          courseId: courseId, // Now matches IFormData
+          courseId: courseId,
         }}
       />
 
-      {/* Bootstrap Accordion for Modules */}
       <div className='accordion' id='accordionExample'>
         {modules.length > 0 ? (
           modules.map((module, index) => (
@@ -102,6 +107,22 @@ const CourseDetails = () => {
                   <p>{module.description}</p>
                   <div className='btn btn-info'>
                     Need to add the activity type her{module.activityType}
+                  </div>
+                  <div className='d-flex gap-2'>
+                    <ReusableButton
+                      onClick={() =>
+                        deleteItem(
+                          module.id,
+                          'Are you sure you want to delete this module?'
+                        )
+                      }
+                      theme='light'
+                      className='bg-danger'
+                      disabled={deletingId === module.id}
+                      loading={deletingId === module.id}
+                    >
+                      Delete Module
+                    </ReusableButton>
                   </div>
                 </div>
               </div>
