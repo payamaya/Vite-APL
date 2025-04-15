@@ -1,9 +1,10 @@
+// Updated useDeleteHandler hook
 import { useState } from 'react'
 
 type UseDeleteHandlerReturn = {
   deletingId: string | null
   error: string | null
-  deleteItem: (id: string, confirmMessage?: string) => Promise<void>
+  deleteItem: (id: string, confirmMessage?: string) => Promise<boolean>
 }
 
 export function useDeleteHandler<T extends { id: string }>(
@@ -17,15 +18,17 @@ export function useDeleteHandler<T extends { id: string }>(
   const deleteItem = async (
     id: string,
     confirmMessage = 'Are you sure you want to delete this item?'
-  ) => {
-    if (!window.confirm(confirmMessage)) return
+  ): Promise<boolean> => {
+    if (!window.confirm(confirmMessage)) return false
 
     try {
       setDeletingId(id)
       await deleteFn(id)
       setList(list.filter((item) => item.id !== id))
+      return true
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete item')
+      return false
     } finally {
       setDeletingId(null)
     }

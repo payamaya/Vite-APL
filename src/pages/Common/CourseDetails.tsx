@@ -10,6 +10,7 @@ import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 import ReusableModal from '../../Components/common/modals/ReusableModal'
 
 import { ModalField } from '../../interfaces/components/common/ModalField'
+import { useNotification } from '../../context/NotificationContext'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
@@ -19,7 +20,7 @@ const CourseDetails = () => {
   const [error, setError] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentModule, setCurrentModule] = useState<IModule | null>(null)
-
+  const { showNotification } = useNotification()
   const {
     deletingId,
     error: deleteError,
@@ -98,6 +99,10 @@ const CourseDetails = () => {
               module.id === currentModule.id ? response.data : module
             )
           )
+          showNotification({
+            message: 'Module updated successfully!',
+            variant: 'info',
+          })
           setIsModalOpen(false)
           setCurrentModule(null)
         } else {
@@ -110,6 +115,10 @@ const CourseDetails = () => {
         if (response.status >= 200 && response.status < 300) {
           // Add new module to the list
           setModules((prevModules) => [response.data, ...prevModules])
+          showNotification({
+            message: 'Module created successfully!',
+            variant: 'success',
+          })
           setIsModalOpen(false)
         } else {
           throw new Error(`${response.data || 'Creation failed'} `)
@@ -119,6 +128,10 @@ const CourseDetails = () => {
       let errorMessage = 'Unknown error'
       if (err instanceof Error) {
         errorMessage = err.message
+        showNotification({
+          message: `Failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          variant: 'danger',
+        })
       }
       console.error('Error details:', errorMessage)
       setError(`Failed to save module: ${errorMessage}`)
@@ -143,17 +156,6 @@ const CourseDetails = () => {
 
       <h2>Modules</h2>
       {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
-
-      {/* <ReusableForm
-        endpoint={`/course/${courseId}/module`}
-        onSuccess={fetchCourseAndModules}
-        initialData={{
-          name: 'Add Module',
-          title: '',
-          description: '',
-          courseId: courseId,
-        }}
-      /> */}
       <div className='mb-3'>
         <ReusableButton
           onClick={handleCreateModule}
@@ -194,12 +196,16 @@ const CourseDetails = () => {
                   </div>
                   <div className='d-flex gap-2'>
                     <ReusableButton
-                      onClick={() =>
-                        deleteItem(
+                      onClick={async () => {
+                        await deleteItem(
                           module.id,
                           'Are you sure you want to delete this module?'
                         )
-                      }
+                        showNotification({
+                          message: 'Module deleted successfully!',
+                          variant: 'danger',
+                        })
+                      }}
                       theme='light'
                       className='bg-danger'
                       disabled={deletingId === module.id}
