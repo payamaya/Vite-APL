@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom'
 import courseService from '../../api/coursesService'
 import moduleService from '../../api/moduleService'
 import { ICourse } from '../../interfaces/components/ICourse'
-import ReusableForm from '../../Components/common/forms/ReusableForm'
+// import ReusableForm from '../../Components/common/forms/ReusableForm'
 import { IModule } from '../../interfaces/components/IModule'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import { useDeleteHandler } from '../../hooks/useDeleteHandler'
+import ReusableModal from '../../Components/common/modals/ReusableModal'
+
+import { ModalField } from '../../interfaces/components/common/ModalField'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
@@ -14,7 +17,9 @@ const CourseDetails = () => {
   const [modules, setModules] = useState<IModule[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentModule, setCurrentModule] = useState<IModule | null>(null)
+
   const {
     deletingId,
     error: deleteError,
@@ -35,10 +40,12 @@ const CourseDetails = () => {
       setLoading(true)
       setError('')
 
-      const courseResponse = await courseService.getCourseById<ICourse>(courseId)
+      const courseResponse =
+        await courseService.getCourseById<ICourse>(courseId)
       setCourse(courseResponse.data)
 
-      const modulesResponse = await moduleService.getAllModules<IModule[]>(courseId)
+      const modulesResponse =
+        await moduleService.getAllModules<IModule[]>(courseId)
       setModules(modulesResponse.data)
     } catch (err) {
       setError('Failed to load course or modules')
@@ -47,11 +54,80 @@ const CourseDetails = () => {
       setLoading(false)
     }
   }
-
+  const handleEdit = (module: IModule) => {
+    setCurrentModule(module)
+    setIsModalOpen(true)
+  }
   useEffect(() => {
     fetchCourseAndModules()
   }, [courseId])
 
+  const moduleFields: ModalField<IModule>[] = [
+    { name: 'name', label: 'Name', type: 'text', required: true },
+    { name: 'title', label: 'Title', type: 'text', required: true },
+    { name: 'description', label: 'Description', type: 'textarea' },
+    // { name: 'img', label: 'Image URL', type: 'url' },
+    // { name: 'startDate', label: 'Start Date', type: 'date' },
+    // { name: 'endDate', label: 'End Date', type: 'date' },
+  ]
+
+  const handleSubmitModule = async (formData: IModule) => {
+    try {
+      if (!courseId) {
+        throw new Error('Course ID is missing')
+      }
+
+      if (currentModule) {
+        // Update existing module
+        const updateData = {
+          ...currentModule,
+          ...formData,
+          id: currentModule.id,
+        }
+
+        const response = await moduleService.updateModule(
+          courseId,
+          currentModule.id,
+          updateData
+        )
+
+        if (response.status >= 200 && response.status < 300) {
+          // Update the module in local state
+          setModules((prevModules) =>
+            prevModules.map((module) =>
+              module.id === currentModule.id ? response.data : module
+            )
+          )
+          setIsModalOpen(false)
+          setCurrentModule(null)
+        } else {
+          throw new Error(`${response.data || ':Update failed'} `)
+        }
+      } else {
+        // Create new module
+        const response = await moduleService.createModule(courseId, formData)
+
+        if (response.status >= 200 && response.status < 300) {
+          // Add new module to the list
+          setModules((prevModules) => [response.data, ...prevModules])
+          setIsModalOpen(false)
+        } else {
+          throw new Error(`${response.data || 'Creation failed'} `)
+        }
+      }
+    } catch (err: unknown) {
+      let errorMessage = 'Unknown error'
+      if (err instanceof Error) {
+        errorMessage = err.message
+      }
+      console.error('Error details:', errorMessage)
+      setError(`Failed to save module: ${errorMessage}`)
+    }
+  }
+  const handleCreateModule = () => {
+    setCurrentModule(null) // Set to null for creation
+    setIsModalOpen(true)
+  }
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>
   if (!course) return <p>No course found.</p>
@@ -67,17 +143,25 @@ const CourseDetails = () => {
 
       <h2>Modules</h2>
       {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
-      
-      <ReusableForm
+
+      {/* <ReusableForm
         endpoint={`/course/${courseId}/module`}
         onSuccess={fetchCourseAndModules}
         initialData={{
-          name: '',
+          name: 'Add Module',
           title: '',
           description: '',
           courseId: courseId,
         }}
-      />
+      /> */}
+      <div className='mb-3'>
+        <ReusableButton
+          onClick={handleCreateModule}
+          theme='dark'
+          className='bg-success'
+          label='Add Module'
+        />
+      </div>
 
       <div className='accordion' id='accordionExample'>
         {modules.length > 0 ? (
@@ -123,6 +207,13 @@ const CourseDetails = () => {
                     >
                       Delete Module
                     </ReusableButton>
+
+                    <ReusableButton
+                      onClick={() => handleEdit(module)}
+                      theme='light'
+                      className='bg-primary'
+                      label='Edit'
+                    />
                   </div>
                 </div>
               </div>
@@ -132,6 +223,17 @@ const CourseDetails = () => {
           <p>No modules found for this course.</p>
         )}
       </div>
+      <ReusableModal<IModule>
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false)
+          setCurrentModule(null)
+        }}
+        onSubmit={handleSubmitModule}
+        initialData={currentModule || undefined}
+        title={currentModule ? 'Edit Module' : 'Create New Module'}
+        fields={moduleFields}
+      />
     </section>
   )
 }
