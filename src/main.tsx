@@ -6,13 +6,16 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './styles/index.css'
 
 import App from './App.tsx'
+import { NotificationProvider } from './context/NotificationContext.tsx'
 
 const root = document.getElementById('root') as HTMLElement
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <NotificationProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </NotificationProvider>
   </React.StrictMode>
 )
