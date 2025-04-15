@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import courseService from '../../api/coursesApi'
+import courseService from '../../api/coursesService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableForm from '../../Components/common/forms/ReusableForm'
@@ -50,6 +50,22 @@ const Courses = () => {
 
         {/* Show delete error */}
         {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
+
+
+        {/* Show courses or a message if there are none */}
+        {courses.length === 0 ? (
+          <p className='text-danger fs-5 p-2'>There is no course available!</p>
+        ) : (
+          <ul className='list-group'>
+            {courses.map((course: ICourse) => (
+              <li
+                key={course.id}
+                className='list-group-item border rounded m-2'
+              >
+                <div className='d-flex justify-content-between align-items-start'>
+                  <Link
+                    to={`/courses/${course.id}`}
+                    className='flex-grow-1 text-decoration-none'
   
           {/* Show courses or a message if there are none */}
      {courses.length === 0 ? <p className='text-danger fs-5 p-2'>There are no courses available!</p> : <ul className='list-group'>
@@ -86,13 +102,40 @@ const Courses = () => {
                     disabled={deletingId === course.id}
                     loading={deletingId === course.id}
                   >
-                    Delete
-                  </ReusableButton>
+                    <section>
+                      <h3>{course.name}</h3>
+                      <h4 className='br-primary'>{course.title}</h4>
+                      <p>{course.description}</p>
+                      {course.img && (
+                        <img
+                          src={course.img}
+                          alt={course.name}
+                          className='figure-img img-fluid rounded'
+                        />
+                      )}
+                    </section>
+                  </Link>
+                  <div className='d-flex gap-2'>
+                    <ReusableButton
+                      onClick={() =>
+                        deleteItem(
+                          course.id,
+                          'Are you sure you want to delete this course?'
+                        )
+                      }
+                      theme='light'
+                      className='bg-danger'
+                      disabled={deletingId === course.id}
+                      loading={deletingId === course.id}
+                    >
+                      Delete
+                    </ReusableButton>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>}
+              </li>
+            ))}
+          </ul>
+        )}
         <GoBackButton />
       </section>
 

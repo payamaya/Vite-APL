@@ -127,6 +127,7 @@ const ReusableForm = ({
 
   return (
     <section className='container bg-primary mt-4 p-4 border rounded'>
+      <h3>Add modules</h3>
       <form onSubmit={handleSubmit}>
         <ReusableInput
           label='Name'
