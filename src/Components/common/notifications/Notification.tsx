@@ -1,13 +1,6 @@
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import Alert from 'react-bootstrap/Alert'
-
-interface NotificationProps {
-  message?: ReactNode // Changed to ReactNode and made optional
-  variant: 'success' | 'danger' | 'warning' | 'info'
-  onClose?: () => void
-  duration?: number
-  children?: ReactNode
-}
+import { NotificationProps } from './NotificationProps'
 
 export const Notification = ({
   message,

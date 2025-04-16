@@ -1,6 +1,7 @@
 // src/api/authService.ts
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
+import { AuthResponse } from '../interfaces/components/AuthResponse'
 
 const authService = {
   login: async (credentials: {
@@ -8,8 +9,12 @@ const authService = {
     password: string
   }): Promise<string> => {
     try {
-      const response = await apiService.create('auth/login', credentials)
-      const token = response.token
+      const response = await apiService.create<
+        { email: string; password: string }, // request type
+        AuthResponse // response type
+      >('auth/login', credentials)
+
+      const token = response.data.token
       localStorage.setItem('token', token)
       return token
     } catch (error) {

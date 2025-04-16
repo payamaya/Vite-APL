@@ -1,5 +1,5 @@
 import { ApiResponse } from '../interfaces/components/ApiResponse'
-import apiService from './apiService'
+import apiService from '../api/apiService'
 
 const courseService = {
   getAllCourses<T>(): Promise<ApiResponse<T>> {
@@ -18,7 +18,7 @@ const courseService = {
   createCourse: async <T>(data: T): Promise<ApiResponse<T>> => {
     try {
       console.log('Creating course with data:', data)
-      const response = await apiService.create<T>('course', data)
+      const response = await apiService.create<T, T>('course', data)
       console.log('Course created successfully:', response)
       return response
     } catch (error) {
@@ -36,7 +36,7 @@ const courseService = {
         throw new Error('Course ID is required for update')
       }
       console.log(`Updating course ${courseId} with:`, courseData)
-      const response = await apiService.update<T>(
+      const response = await apiService.update<T, T>(
         'course',
         courseId,
         courseData
