@@ -2,20 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReusableTextarea from '../inputs/ReusableTextarea'
 import ReusableInput from '../inputs/ReusableInput'
 import ReusableButton from '../buttons/ReusableButton'
-
-interface ReusableModalProps<T> {
-  isOpen: boolean
-  onClose: () => void
-  onSubmit: (data: T) => void
-  initialData?: T
-  title: string
-  fields: Array<{
-    name: keyof T
-    label: string
-    type: 'text' | 'number' | 'textarea' | 'date' | 'url'
-    required?: boolean
-  }>
-}
+import { ReusableModalProps } from './ReusableModalProps'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ReusableModal = <T extends Record<string, any>>({

@@ -12,7 +12,10 @@ export interface BaseFieldProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
-
+export interface FieldConfig {
+  componentType: 'input' | 'textarea'
+  defaultRows?: number
+}
 export interface InputFieldProps extends BaseFieldProps {
   type?: React.HTMLInputTypeAttribute
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

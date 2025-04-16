@@ -1,6 +1,6 @@
-// src/api/authService.ts
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
+import { AuthResponse } from '../interfaces/components/AuthResponse'
 
 const authService = {
   login: async (credentials: {
@@ -8,8 +8,12 @@ const authService = {
     password: string
   }): Promise<string> => {
     try {
-      const response = await apiService.create('auth/login', credentials)
-      const token = response.token
+      const response = await apiService.create<
+        { email: string; password: string },
+        AuthResponse
+      >('auth/login', credentials)
+
+      const token = response.data.token
       localStorage.setItem('token', token)
       return token
     } catch (error) {
@@ -38,7 +42,6 @@ const authService = {
     }
   },
 
-  // Add token validation method
   isValidToken: (): boolean => {
     const token = localStorage.getItem('token')
     if (!token) return false
@@ -52,37 +55,4 @@ const authService = {
     }
   },
 }
-
 export default authService
-
-// src/api/authService.ts
-// import axios from 'axios'
-
-// const API_URL = 'https://reqres.in/api' // Reqres base URL
-
-// const authService = {
-//   login: async (credentials: { email: string; password: string }): Promise<string> => {
-//     try {
-//       console.log('Posting to:', `${API_URL}/login`, credentials)
-
-//       const response = await axios.post(`${API_URL}/login`, credentials)
-//       const token = response.data.token
-//       localStorage.setItem('token', token)
-//       return token
-//     } catch (error: any) {
-//       console.error('Login failed', error)
-//       // Instead of calling setError here, throw the error to be handled in the component
-//       throw new Error(error.response?.data?.error || 'Login failed')
-//     }
-//   },
-
-//   logout: (): void => {
-//     localStorage.removeItem('token')
-//   },
-
-//   getToken: (): string | null => localStorage.getItem('token'),
-
-//   isAuthenticated: (): boolean => !!localStorage.getItem('token'),
-// }
-
-// export default authService
