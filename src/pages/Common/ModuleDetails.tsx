@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import courseService from '../../api/coursesService'
-import moduleService from '../../api/moduleService'
+import courseService from '../../services/coursesService'
+import moduleService from '../../services/moduleService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import { IModule } from '../../interfaces/components/IModule'
+import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 const ModuleDetails = () => {
   const { courseId, moduleId } = useParams<{
@@ -101,9 +102,9 @@ const ModuleDetails = () => {
           )}
 
           <div className='mt-3'>
-            <button className='btn btn-primary'>
+            <ReusableButton className='btn btn-primary ' theme='light'>
               Edit Module {/* Add edit functionality if needed */}
-            </button>
+            </ReusableButton>
           </div>
         </div>
       </div>

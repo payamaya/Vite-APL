@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export interface ICourse {
-  message: any
+  message: string
   startDate: ReactNode
   endDate: ReactNode
   id: string

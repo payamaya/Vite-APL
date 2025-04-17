@@ -1,9 +1,8 @@
-import { InputFieldProps, TextareaFieldProps } from "../interfaces/components/common/inputTypes";
-
-interface FieldConfig {
-  componentType: 'input' | 'textarea';
-  defaultRows?: number;
-}
+import {
+  FieldConfig,
+  InputFieldProps,
+  TextareaFieldProps,
+} from '../../../interfaces/components/common/inputTypes'
 
 const FieldFactory = ({ componentType, defaultRows = 3 }: FieldConfig) => {
   if (componentType === 'input') {
@@ -21,10 +20,14 @@ const FieldFactory = ({ componentType, defaultRows = 3 }: FieldConfig) => {
       ...restProps
     }: InputFieldProps) {
       return (
-        <div className="mb-3">
-          {label && <label htmlFor={name} className="form-label">{label}</label>}
+        <div className='mb-3'>
+          {label && (
+            <label htmlFor={name} className='form-label'>
+              {label}
+            </label>
+          )}
           <input
-            className={`form-control ${error ? "is-invalid" : ""}`}
+            className={`form-control ${error ? 'is-invalid' : ''}`}
             id={name}
             name={name}
             type={type}
@@ -36,10 +39,10 @@ const FieldFactory = ({ componentType, defaultRows = 3 }: FieldConfig) => {
             autoFocus={autoFocus}
             {...restProps}
           />
-          {error && <div className="invalid-feedback">{error}</div>}
+          {error && <div className='invalid-feedback'>{error}</div>}
         </div>
-      );
-    };
+      )
+    }
   }
 
   return function TextareaField({
@@ -56,10 +59,14 @@ const FieldFactory = ({ componentType, defaultRows = 3 }: FieldConfig) => {
     ...restProps
   }: TextareaFieldProps) {
     return (
-      <div className="mb-3">
-        {label && <label htmlFor={name} className="form-label">{label}</label>}
+      <div className='mb-3'>
+        {label && (
+          <label htmlFor={name} className='form-label'>
+            {label}
+          </label>
+        )}
         <textarea
-          className={`form-control ${error ? "is-invalid" : ""}`}
+          className={`form-control ${error ? 'is-invalid' : ''}`}
           id={name}
           name={name}
           value={value}
@@ -71,10 +78,10 @@ const FieldFactory = ({ componentType, defaultRows = 3 }: FieldConfig) => {
           rows={rows}
           {...restProps}
         />
-        {error && <div className="invalid-feedback">{error}</div>}
+        {error && <div className='invalid-feedback'>{error}</div>}
       </div>
-    );
-  };
-};
+    )
+  }
+}
 
-export default FieldFactory;
+export default FieldFactory

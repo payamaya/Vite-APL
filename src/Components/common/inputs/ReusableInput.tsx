@@ -1,4 +1,9 @@
-import FieldFactory from '../../FieldFactory'
-const ReusableInput = FieldFactory({ componentType: 'input' })
+import { FieldConfig } from '../../../interfaces/components/common/inputTypes'
+import FieldFactory from './FieldFactory'
 
-export default ReusableInput
+const config: FieldConfig = {
+  componentType: 'input',
+}
+
+const ReusableTextarea = FieldFactory(config)
+export default ReusableTextarea

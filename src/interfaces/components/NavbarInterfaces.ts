@@ -7,7 +7,7 @@ export interface DropdownItem extends BasNavItem {
   items: BasNavItem[]
 }
 
-export type FixedPosition = 'top' | 'bottom'
+export type FixedPosition = 'top' | 'bottom' | ' left' | 'right'
 export interface NavbarProps {
   brand: string
   navItems: NavItem[]
