@@ -9,8 +9,8 @@ const authService = {
   }): Promise<string> => {
     try {
       const response = await apiService.create<
-        { email: string; password: string },
-        AuthResponse
+        { email: string; password: string }, // request type
+        AuthResponse // response type
       >('auth/login', credentials)
 
       const token = response.data.token

@@ -43,7 +43,9 @@ const AppRoutes = () => {
         <Route index element={<Navigate to='dashboard' replace />} />
         <Route path='dashboard' element={<Teacher.TeacherHome />} />
         <Route path='courses' element={<Teacher.TeacherCourses />} />
+
         <Route path='notice' element={<Teacher.TeacherNotice />} />
+
         <Route path='courses/:courseId' element={<CourseDetails />} />
         <Route
           path='courses/:courseId/module/:moduleId'
