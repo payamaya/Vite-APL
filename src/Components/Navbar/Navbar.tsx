@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-
-import { NavbarProps } from '../../interfaces/components/NavbarInterfaces'
+import { NavbarProps } from './navbarInterfaces'
 import { handleMenuClose, toggleMenu } from './navbarUtils'
 import ReusableButton from '../common/buttons/ReusableButton'
 
@@ -10,14 +9,30 @@ const Navbar: React.FC<NavbarProps> = ({
   navItems,
   dropdownLabel,
   dropdownItems,
-  // showSearch = false,
   fixed = 'top',
-}) => {
+  currentRole,
+}: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  // Filter nav items based on role
+  const filteredNavItems = navItems.filter((item) => {
+    if (!item.role) return true
+    if (item.role === 'all') return true
+    return item.role === currentRole
+  })
+
+  // Filter dropdown items based on role
+  const filteredDropdownItems = dropdownItems?.filter((item) => {
+    if (!item.role) return true
+    if (item.role === 'all') return true
+    return item.role === currentRole
+  })
 
   return (
     <nav
-      className={`navbar navbar-expand-lg bg-body-tertiary ${fixed === 'top' ? 'fixed-top' : 'fixed-bottom'}`}
+      className={`navbar navbar-expand-lg bg-body-tertiary ${
+        fixed === 'top' ? 'fixed-top' : 'fixed-bottom'
+      }`}
     >
       <div className='container-fluid'>
         <NavLink className='navbar-brand' to='/'>
@@ -40,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({
           id='navbarSupportedContent'
         >
           <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-            {navItems.map((item, index) => (
+            {filteredNavItems.map((item, index) => (
               <li className='nav-item' key={index}>
                 <NavLink
                   className={`nav-link ${item.disabled ? 'disabled' : ''}`}
@@ -53,47 +68,35 @@ const Navbar: React.FC<NavbarProps> = ({
               </li>
             ))}
 
-            {dropdownLabel && dropdownItems && (
-              <li className='nav-item dropdown'>
-                <NavLink
-                  className='nav-link dropdown-toggle'
-                  to='/'
-                  role='button'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                >
-                  {dropdownLabel}
-                </NavLink>
-                <ul className='dropdown-menu'>
-                  {dropdownItems.map((item, index) => (
-                    <li key={index}>
-                      <NavLink
-                        className='dropdown-item'
-                        to={item.link}
-                        onClick={handleMenuClose(setIsOpen)}
-                      >
-                        {item.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            )}
+            {dropdownLabel &&
+              filteredDropdownItems &&
+              filteredDropdownItems.length > 0 && (
+                <li className='nav-item dropdown'>
+                  <NavLink
+                    className='nav-link dropdown-toggle'
+                    to='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >
+                    {dropdownLabel}
+                  </NavLink>
+                  <ul className='dropdown-menu'>
+                    {filteredDropdownItems.map((item, index) => (
+                      <li key={index}>
+                        <NavLink
+                          className='dropdown-item'
+                          to={item.link}
+                          onClick={handleMenuClose(setIsOpen)}
+                        >
+                          {item.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
           </ul>
-
-          {/* {showSearch && (
-            <form className='d-flex' role='search'>
-              <input
-                className='form-control me-2'
-                type='search'
-                placeholder='Search'
-                aria-label='Search'
-              />
-              <button className='btn btn-outline-success' type='submit'>
-                Search
-              </button>
-            </form>
-          )} */}
         </div>
       </div>
     </nav>

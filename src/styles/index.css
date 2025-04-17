@@ -36,6 +36,17 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+.course-card {
+  border-radius: 1rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+}
 
 button {
   border-radius: 8px;

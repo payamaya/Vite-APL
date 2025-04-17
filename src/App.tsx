@@ -1,14 +1,19 @@
-import Navbar from './Components/Navbar/Navbar'
+// src/App.tsx
+import Navbar from './Components/navbar/Navbar'
 import AppRoutes from './routes/AppRoutes'
-import { NAV_ITEMS, NAV_BRAND } from './config/navItems'
+import { NAV_BRAND, PUBLIC_NAV_ITEMS } from './config/navItems'
+import { RoleOrPublic } from './types'
+
 function App() {
+  const currentRole: RoleOrPublic = 'teacher' // or get from auth context
+
   return (
     <>
       <Navbar
         brand={NAV_BRAND}
-        navItems={NAV_ITEMS}
+        navItems={PUBLIC_NAV_ITEMS}
+        currentRole={currentRole}
         fixed={'top'}
-        showSearch={true}
       />
       <AppRoutes />
     </>
