@@ -1,7 +1,7 @@
 // src/pages/admin/Dashboard.tsx
-import DashboardLayout from '../../Components/common/DashboardLayout'
+import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
-import { ADMIN_NAV_ITEMS } from '../../config/navItems'
+// import { ADMIN_NAV_ITEMS } from '../../config/navItems'
 
 const AdminDashboard = () => {
   // Sample data
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
     <DashboardLayout
       role='admin'
       title='Admin Dashboard'
-      navItems={ADMIN_NAV_ITEMS}
+      // navItems={ADMIN_NAV_ITEMS}
     >
       <div className='mb-5'>
         <h4>Admin Dashboard</h4>

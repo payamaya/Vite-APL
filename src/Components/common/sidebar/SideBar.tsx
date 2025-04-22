@@ -1,13 +1,14 @@
 // src/Components/common/Sidebar.tsx
 import { useLocation, useNavigate } from 'react-router-dom'
-import ReusableButton from '../common/buttons/ReusableButton'
-import { NavItem } from '../../interfaces/components/NavbarInterfaces'
-import { RoleOrPublic } from '../../types'
+import ReusableButton from '../buttons/ReusableButton'
+// import { NavItem } from '../../../interfaces/components/NavbarInterfaces'
+// import { RoleOrPublic } from '../../../types'
+import { SidebarProps } from './SidebarProps'
 
-interface SidebarProps {
-  role: RoleOrPublic
-  navItems: NavItem[]
-}
+// interface SidebarProps {
+//   role: RoleOrPublic
+//   navItems: NavItem[]
+// }
 
 const Sidebar = ({ role, navItems }: SidebarProps) => {
   const navigate = useNavigate()

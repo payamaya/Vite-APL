@@ -1,6 +1,6 @@
 // src/pages/teacher/Dashboard.tsx
 import { Outlet } from 'react-router-dom'
-import DashboardLayout from '../../Components/common/DashboardLayout'
+import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 // import ReusableTable from '../../Components/common/tables/ReusableTable'
 
 import { useEffect, useState } from 'react'
