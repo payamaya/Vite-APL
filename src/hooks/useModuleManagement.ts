@@ -13,7 +13,7 @@ export const useModuleManagement = (
   const [currentModule, setCurrentModule] = useState<IModule | null>(null)
   const { showNotification } = useNotification()
 
-  const handleSubmit = async (formData: IModule) => {
+  const handleSubmitModule = async (formData: IModule) => {
     try {
       if (!courseId) throw new Error('Course ID is required')
 
@@ -56,6 +56,6 @@ export const useModuleManagement = (
     setModules,
     currentModule,
     setCurrentModule,
-    handleSubmit,
+    handleSubmitModule,
   }
 }

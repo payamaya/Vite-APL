@@ -97,8 +97,10 @@
 // export default TeacherCourses
 import { useEffect, useState } from 'react'
 import { ICourse } from '../../interfaces/components/ICourse'
-import CourseList from './CourseList'
+
 import courseService from '../../services/coursesService'
+import ReusableTable from '../../Components/common/tables/ReusableTable'
+import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 
 const TeacherCourses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
@@ -165,7 +167,16 @@ const TeacherCourses = () => {
                   You haven't created any courses yet.
                 </div>
               )}
-              {courses.length > 0 && <CourseList courses={courses} />}
+              {courses.length > 0 && (
+                <ReusableTable
+                  data={courses}
+                  columns={courseTableColumns}
+                  searchPlaceholder='Search Courses...'
+                  onRowClick={(course) =>
+                    console.log('Selected course:', course)
+                  }
+                />
+              )}
             </div>
           </div>
         </section>

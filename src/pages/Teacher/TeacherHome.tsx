@@ -83,26 +83,33 @@ const TeacherHome = () => {
                   You haven't created any courses yet.
                 </div>
               ) : (
-                <div className='row' role='list'>
+                <div className='row g-4' role='list'>
                   {courses.map((course) => (
                     <article
                       key={course.id}
-                      className='col-md-4 mb-4'
+                      className='col-md-6 col-lg-4'
                       role='listitem'
                       aria-labelledby={`course-${course.id}-title`}
                     >
-                      <div className='card h-100 shadow-sm'>
+                      <div className='card h-100 shadow-sm border-0 course-card'>
                         <div className='card-body d-flex flex-column'>
-                          <h3 id={`course-${course.id}-title`} className='h3'>
+                          <h3
+                            id={`course-${course.id}-title`}
+                            className='h5 fw-bold text-dark mb-2'
+                          >
                             {course.name}
                           </h3>
-                          <h4 className='text-muted mb-3 h4'>{course.title}</h4>
-                          <h5 className='flex-grow-1 h5'>
-                            {course.description}
-                          </h5>
+                          <h4 className='text-secondary mb-2 h6'>
+                            {course.title}
+                          </h4>
+                          <p className='text-muted flex-grow-1 small'>
+                            {course.description?.length > 120
+                              ? `${course.description.slice(0, 120)}...`
+                              : course.description}
+                          </p>
                           <Link
                             to={`/courses/${course.id}`}
-                            className='btn btn-primary mt-auto align-self-start'
+                            className='btn btn-sm btn-outline-primary mt-3 align-self-start'
                             aria-label={`View details for ${course.name}`}
                           >
                             View Details

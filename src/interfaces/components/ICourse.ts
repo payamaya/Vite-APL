@@ -1,9 +1,7 @@
-import { ReactNode } from 'react'
-
 export interface ICourse {
   message: string
-  startDate: ReactNode
-  endDate: ReactNode
+  startDate: string | Date
+  endDate: string | Date
   id: string
   name: string
   title: string

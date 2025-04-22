@@ -4,7 +4,7 @@ import { Home, About, Courses, CourseDetails } from '../pages/Common'
 import * as Admin from '../pages/Admin'
 import * as Teacher from '../pages/Teacher'
 import * as Student from '../pages/Student'
-import ProtectedRoute from '../Components/ProtectedRoute'
+// import ProtectedRoute from '../Components/ProtectedRoute'
 import ModuleDetails from '../pages/Common/ModuleDetails'
 
 const AppRoutes = () => {
@@ -31,7 +31,7 @@ const AppRoutes = () => {
       {/* Admin Route */}
       <Route
         path='/admin'
-        element={<ProtectedRoute allowedRoles={['admin']} />}
+        // element={<ProtectedRoute allowedRoles={['admin']} />}
       >
         {adminRoutes.map((route) => (
           <Route key={route.path || 'index'} {...route} />
@@ -44,7 +44,7 @@ const AppRoutes = () => {
         <Route path='dashboard' element={<Teacher.TeacherHome />} />
         <Route path='courses' element={<Teacher.TeacherCourses />} />
 
-        <Route path='notice' element={<Teacher.TeacherNotice />} />
+        <Route path='notices' element={<Teacher.TeacherNotice />} />
 
         <Route path='courses/:courseId' element={<CourseDetails />} />
         <Route
@@ -55,7 +55,7 @@ const AppRoutes = () => {
       {/* Student Route */}
       <Route
         path='/student'
-        element={<ProtectedRoute allowedRoles={['student']} />}
+        // element={<ProtectedRoute allowedRoles={['student']} />}
       >
         {studentRoutes.map((route) => (
           <Route key={route.path || 'index'} {...route} />

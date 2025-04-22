@@ -65,12 +65,12 @@ const ModuleDetails = () => {
           <p>{course.description}</p>
           {course.startDate && (
             <p>
-              <strong>Start:</strong> {course.startDate}
+              <strong>Start:</strong> {course.startDate.toLocaleString()}
             </p>
           )}
           {course.endDate && (
             <p>
-              <strong>End:</strong> {course.endDate}
+              <strong>End:</strong> {course.endDate.toLocaleString()}
             </p>
           )}
         </div>
