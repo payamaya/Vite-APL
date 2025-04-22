@@ -1,12 +1,5 @@
 import React from 'react'
-
-interface CardProps {
-  imgSrc: string
-  title: string
-  text: string
-  buttonLink: string
-  buttonText?: string
-}
+import { CardProps } from './CardProps'
 
 const Card: React.FC<CardProps> = ({
   imgSrc,

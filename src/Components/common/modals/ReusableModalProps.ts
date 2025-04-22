@@ -1,13 +1,11 @@
-export interface ReusableModalProps<T> {
+import { ModalField } from '../../../interfaces/components/common/ModalField'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface ReusableModalProps<T extends Record<string, any>> {
   isOpen: boolean
   onClose: () => void
   onSubmit: (data: T) => void
   initialData?: T
   title: string
-  fields: Array<{
-    name: keyof T
-    label: string
-    type: 'text' | 'number' | 'textarea' | 'date' | 'url'
-    required?: boolean
-  }>
+  fields: ModalField<T>[] // <-- This is the key fix
 }

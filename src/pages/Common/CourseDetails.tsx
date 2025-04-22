@@ -1,21 +1,345 @@
+// // src/pages/CourseDetails.tsx
+// import { useEffect, useState } from 'react'
+// import { useParams } from 'react-router-dom'
+// import courseService from '../../services/coursesService'
+// import { ICourse } from '../../interfaces/components/ICourse'
+// import { IModule } from '../../interfaces/components/IModule'
+// import ReusableButton from '../../Components/common/buttons/ReusableButton'
+// import { useDeleteHandler } from '../../hooks/useDeleteHandler'
+// import { ResourceManager } from '../../Components/ResourceManager'
+// import { useNotification } from '../../context/NotificationContext'
+// import { moduleFields } from '../../Components/common/forms/moduleFields'
+// import GoBackButton from '../../Components/common/buttons/GoBackButton'
+// import moduleService from '../../services/moduleService'
+// import { useModuleManagement } from '../../hooks/useModuleManagement'
+// import useActivityManagement from '../../hooks/useActivitymanagement'
+// import { activityFields } from '../../Components/common/forms/activityFields'
+// import { IActivity } from '../../interfaces/components/IActivity'
+// import activityService from '../../services/activityService'
+// import { formatDate } from '../../utils/dateUtils'
+// import { activityTableColumns } from '../../Components/common/tables/activityTableColumns'
+// import ReusableTable from '../../Components/common/tables/ReusableTable'
+// import { moduleTableColumns } from '../../Components/common/tables/moduleTableColumns'
+
+// const CourseDetails = () => {
+//   const { courseId } = useParams()
+//   const [course, setCourse] = useState<ICourse | null>(null)
+//   const [loading, setLoading] = useState(true)
+//   const [error, setError] = useState('')
+//   const [isModuleModalOpen, setIsModuleModalOpen] = useState(false)
+//   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false)
+//   const [selectedModuleId, setSelectedModuleId] = useState('')
+//   const [showActivitiesTable, setShowActivitiesTable] = useState(false)
+
+//   const {
+//     modules,
+//     setModules,
+//     currentModule,
+//     setCurrentModule,
+//     handleSubmitModule,
+//   } = useModuleManagement(courseId || '')
+
+//   const {
+//     activities,
+//     setActivities,
+//     currentActivity,
+//     setCurrentActivity,
+//     handleSubmitActivity,
+//   } = useActivityManagement(selectedModuleId)
+
+//   const { showNotification } = useNotification()
+
+//   const {
+//     deletingId: deletingModuleId,
+//     error: deleteModuleError,
+//     deleteItem: deleteModule,
+//   } = useDeleteHandler<IModule>(
+//     (moduleId: string) => moduleService.deleteModule(courseId!, moduleId),
+//     setModules,
+//     modules
+//   )
+
+//   const {
+//     deletingId: deletingActivityId,
+//     // error: deleteActivityError,
+//     deleteItem: deleteActivity,
+//   } = useDeleteHandler<IActivity>(
+//     (activityId: string) =>
+//       activityService.deleteActivity(selectedModuleId, activityId),
+//     setActivities,
+//     activities
+//   )
+
+//   const fetchCourseAndModules = async () => {
+//     try {
+//       if (!courseId) {
+//         setError('No course ID provided')
+//         return
+//       }
+
+//       setLoading(true)
+//       setError('')
+
+//       const [courseResponse, modulesResponse] = await Promise.all([
+//         courseService.getCourseById<ICourse>(courseId),
+//         moduleService.getAllModules<IModule[]>(courseId),
+//       ])
+
+//       setCourse(courseResponse.data)
+//       setModules(modulesResponse.data)
+//     } catch (err) {
+//       setError('Failed to load course or modules')
+//       console.error(err)
+//     } finally {
+//       setLoading(false)
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchCourseAndModules()
+//   }, [courseId])
+//   useEffect(() => {
+//     if (modules.length > 0) {
+//       const firstModule = modules[0]
+//       setSelectedModuleId(firstModule.id)
+//       handleFetchActivities(firstModule.id)
+//     }
+//   }, [modules])
+
+//   const handleFetchActivities = async (moduleId: string) => {
+//     setSelectedModuleId(moduleId)
+//     try {
+//       const response =
+//         await activityService.getAllActivities<IActivity[]>(moduleId)
+//       setActivities(response.data)
+//     } catch (err) {
+//       console.error('Failed to fetch activities', err)
+//     }
+//   }
+
+//   if (loading) return <p>Loading...</p>
+//   if (error) return <p>{error}</p>
+//   if (!course) return <p>No course found.</p>
+
+//   return (
+//     <main className='container p-5 d-flex justify-content-center flex-column align-items-center '>
+//       <h2 className='p-4'>Course Details</h2>
+//       <section className=' border rounded p-2 w-100'>
+//         <section className='card p-4'>
+//           <h3>Title: {course.title}</h3>
+//           <h4>Name: {course.name}</h4>
+//           <h5>Description: {course.description}</h5>
+//           <h6>
+//             Start:
+//             {course.startDate ? course.startDate.toLocaleString() : 'N/A'}
+//           </h6>
+//           <h6>
+//             End: {course.endDate ? course.endDate.toLocaleString() : 'N/A'}
+//           </h6>
+//         </section>
+
+//         <section className='mb-3 border border-2 p-2 mt-2 rounded'>
+//           <h2>Modules</h2>
+//           {deleteModuleError && (
+//             <div className='alert alert-danger'>{deleteModuleError}</div>
+//           )}
+
+//           <ReusableButton
+//             onClick={() => {
+//               setCurrentModule(null)
+//               setIsModuleModalOpen(true)
+//             }}
+//             theme='dark'
+//             className='bg-success'
+//             label='Add Module'
+//           />
+//         </section>
+
+//         <div className='accordion' id='modulesAccordion'>
+//           <section className='mb-3 border border-2 p-2 mt-2 rounded'>
+//             <h2>Modules</h2>
+//             {deleteModuleError && (
+//               <div className='alert alert-danger'>{deleteModuleError}</div>
+//             )}
+
+//             <ReusableButton
+//               onClick={() => {
+//                 setCurrentModule(null)
+//                 setIsModuleModalOpen(true)
+//               }}
+//               theme='dark'
+//               className='bg-success mb-3'
+//               label='Add Module'
+//             />
+
+//             <ReusableTable
+//               data={modules.map((module) => ({
+//                 ...module,
+//                 actions: (
+//                   <div className='d-flex gap-2'>
+//                     <ReusableButton
+//                       onClick={() => {
+//                         setCurrentModule(module)
+//                         setIsModuleModalOpen(true)
+//                       }}
+//                       theme='light'
+//                       className='bg-primary'
+//                       label='Edit'
+//                     />
+//                     <ReusableButton
+//                       onClick={async () => {
+//                         const deleted = await deleteModule(
+//                           module.id,
+//                           'Are you sure you want to delete this module?'
+//                         )
+//                         if (deleted) {
+//                           showNotification({
+//                             message: 'Module deleted successfully!',
+//                             variant: 'danger',
+//                           })
+//                         }
+//                       }}
+//                       theme='light'
+//                       className='bg-danger'
+//                       disabled={deletingModuleId === module.id}
+//                       loading={deletingModuleId === module.id}
+//                       label='Delete'
+//                     />
+//                     <ReusableButton
+//                       onClick={() => {
+//                         setSelectedModuleId(module.id)
+//                         handleFetchActivities(module.id)
+//                         setShowActivitiesTable(true)
+//                       }}
+//                       theme='dark'
+//                       className='bg-info'
+//                       label='View Activities'
+//                     />
+//                   </div>
+//                 ),
+//               }))}
+//               columns={moduleTableColumns}
+//               searchPlaceholder='Search modules...'
+//             />
+//           </section>
+//           {showActivitiesTable && selectedModuleId && (
+//             <section className='mb-3 border border-2 p-2 mt-2 rounded'>
+//               <h2>Activities</h2>
+//               <ReusableButton
+//                 onClick={() => {
+//                   setCurrentActivity(null)
+//                   setIsActivityModalOpen(true)
+//                 }}
+//                 theme='dark'
+//                 className='bg-success mb-3'
+//                 label='Add Activity'
+//               />
+
+//               <ReusableTable
+//                 data={activities.map((activity) => ({
+//                   ...activity,
+//                   dueDate: formatDate(activity.dueDate),
+//                   actions: (
+//                     <div className='d-flex gap-2'>
+//                       <ReusableButton
+//                         onClick={() => {
+//                           setCurrentActivity(activity)
+//                           setIsActivityModalOpen(true)
+//                         }}
+//                         theme='dark'
+//                         className='bg-info'
+//                         label='Edit'
+//                       />
+//                       <ReusableButton
+//                         onClick={async () => {
+//                           const deleted = await deleteActivity(
+//                             activity.id,
+//                             'Are you sure you want to delete this activity?'
+//                           )
+//                           if (deleted) {
+//                             showNotification({
+//                               message: 'Activity deleted successfully!',
+//                               variant: 'danger',
+//                             })
+//                           }
+//                         }}
+//                         theme='dark'
+//                         className='bg-danger'
+//                         disabled={deletingActivityId === activity.id}
+//                         loading={deletingActivityId === activity.id}
+//                         label='Delete'
+//                       />
+//                     </div>
+//                   ),
+//                 }))}
+//                 columns={activityTableColumns}
+//                 searchPlaceholder='Search activities...'
+//               />
+//             </section>
+//           )}
+//           {/* ) : (
+//              <p>No modules found for this course.</p>
+//           )} */}
+//         </div>
+
+//         {/* Module Resource Manager */}
+//         <ResourceManager<IModule>
+//           fields={moduleFields}
+//           isOpen={isModuleModalOpen}
+//           onClose={() => setIsModuleModalOpen(false)}
+//           onSubmit={async (data) => {
+//             const success = await handleSubmitModule(data)
+//             if (success ?? null) setIsModuleModalOpen(false)
+//           }}
+//           initialData={currentModule || undefined}
+//           title={currentModule?.id ? 'Edit Module' : 'Create New Module'}
+//         />
+
+//         {/* Activity Resource Manager */}
+//         <ResourceManager<IActivity>
+//           fields={activityFields}
+//           isOpen={isActivityModalOpen}
+//           onClose={() => setIsActivityModalOpen(false)}
+//           onSubmit={async (data) => {
+//             await handleSubmitActivity(data)
+//             setIsActivityModalOpen(false)
+//             // Refresh activities after successful submission
+//             handleFetchActivities(selectedModuleId)
+//           }}
+//           initialData={currentActivity || undefined}
+//           title={currentActivity?.id ? 'Edit Activity' : 'Create New Activity'}
+//         />
+
+//         <GoBackButton />
+//       </section>
+//     </main>
+//   )
+// }
+
+// export default CourseDetails
 // src/pages/CourseDetails.tsx
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import courseService from '../../services/coursesService'
+import moduleService from '../../services/moduleService'
+import activityService from '../../services/activityService'
+
 import { ICourse } from '../../interfaces/components/ICourse'
 import { IModule } from '../../interfaces/components/IModule'
+import { IActivity } from '../../interfaces/components/IActivity'
+
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
-import { ResourceManager } from '../../Components/ResourceManager'
-import { useNotification } from '../../context/NotificationContext'
-import { moduleFields } from '../../Components/common/forms/moduleFields'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
-import moduleService from '../../services/moduleService'
+import { ResourceManager } from '../../Components/ResourceManager'
+
+import { useNotification } from '../../context/NotificationContext'
+import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 import { useModuleManagement } from '../../hooks/useModuleManagement'
 import useActivityManagement from '../../hooks/useActivitymanagement'
+
+import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
-import { IActivity } from '../../interfaces/components/IActivity'
-import activityService from '../../services/activityService'
+
 import { formatDate } from '../../utils/dateUtils'
 
 const CourseDetails = () => {
@@ -26,6 +350,8 @@ const CourseDetails = () => {
   const [isModuleModalOpen, setIsModuleModalOpen] = useState(false)
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false)
   const [selectedModuleId, setSelectedModuleId] = useState('')
+
+  const { showNotification } = useNotification()
 
   const {
     modules,
@@ -43,8 +369,6 @@ const CourseDetails = () => {
     handleSubmitActivity,
   } = useActivityManagement(selectedModuleId)
 
-  const { showNotification } = useNotification()
-
   const {
     deletingId: deletingModuleId,
     error: deleteModuleError,
@@ -55,24 +379,21 @@ const CourseDetails = () => {
     modules
   )
 
-  const {
-    deletingId: deletingActivityId,
-    // error: deleteActivityError,
-    deleteItem: deleteActivity,
-  } = useDeleteHandler<IActivity>(
-    (activityId: string) =>
-      activityService.deleteActivity(selectedModuleId, activityId),
-    setActivities,
-    activities
-  )
+  const { deletingId: deletingActivityId, deleteItem: deleteActivity } =
+    useDeleteHandler<IActivity>(
+      (activityId: string) =>
+        activityService.deleteActivity(selectedModuleId, activityId),
+      setActivities,
+      activities
+    )
 
   const fetchCourseAndModules = async () => {
-    try {
-      if (!courseId) {
-        setError('No course ID provided')
-        return
-      }
+    if (!courseId) {
+      setError('No course ID provided')
+      return
+    }
 
+    try {
       setLoading(true)
       setError('')
 
@@ -91,10 +412,6 @@ const CourseDetails = () => {
     }
   }
 
-  useEffect(() => {
-    fetchCourseAndModules()
-  }, [courseId])
-
   const handleFetchActivities = async (moduleId: string) => {
     setSelectedModuleId(moduleId)
     try {
@@ -106,25 +423,25 @@ const CourseDetails = () => {
     }
   }
 
+  useEffect(() => {
+    fetchCourseAndModules()
+  }, [courseId])
+
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>
   if (!course) return <p>No course found.</p>
 
   return (
-    <main className='container p-5 d-flex justify-content-center flex-column align-items-center '>
+    <main className='container p-5 d-flex justify-content-center flex-column align-items-center'>
       <h2 className='p-4'>Course Details</h2>
-      <section className=' border rounded p-2 w-100'>
+
+      <section className='border rounded p-2 w-100'>
         <section className='card p-4'>
           <h3>Title: {course.title}</h3>
           <h4>Name: {course.name}</h4>
           <h5>Description: {course.description}</h5>
-          <h6>
-            Start:
-            {course.startDate ? course.startDate.toLocaleString() : 'N/A'}
-          </h6>
-          <h6>
-            End: {course.endDate ? course.endDate.toLocaleString() : 'N/A'}
-          </h6>
+          <h6>Start: {formatDate(course.startDate)}</h6>
+          <h6>End: {formatDate(course.endDate)}</h6>
         </section>
 
         <section className='mb-3 border border-2 p-2 mt-2 rounded'>
@@ -132,7 +449,6 @@ const CourseDetails = () => {
           {deleteModuleError && (
             <div className='alert alert-danger'>{deleteModuleError}</div>
           )}
-
           <ReusableButton
             onClick={() => {
               setCurrentModule(null)
@@ -146,15 +462,18 @@ const CourseDetails = () => {
 
         <div className='accordion' id='modulesAccordion'>
           {modules.length > 0 ? (
-            modules.map((module, index) => (
+            modules.map((module) => (
+              // modules.map((module, index) => (
               <div className='accordion-item' key={module.id}>
                 <h2 className='accordion-header'>
                   <button
-                    className={`accordion-button ${index !== 0 ? 'collapsed' : ''}`}
+                    className={`accordion-button collapsed `}
+                    // className={`accordion-button ${index !== 0 ? 'collapsed' : ''}`}
                     type='button'
                     data-bs-toggle='collapse'
                     data-bs-target={`#collapseModule${module.id}`}
-                    aria-expanded={index === 0 ? 'true' : 'false'}
+                    aria-expanded={'false'}
+                    // aria-expanded={index === 0 ? 'true' : 'false'}
                     aria-controls={`collapseModule${module.id}`}
                     onClick={() => handleFetchActivities(module.id)}
                   >
@@ -164,7 +483,8 @@ const CourseDetails = () => {
                 </h2>
                 <div
                   id={`collapseModule${module.id}`}
-                  className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
+                  className={`accordion-collapse collapse `}
+                  // className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
                   data-bs-parent='#modulesAccordion'
                 >
                   <div className='accordion-body'>
@@ -190,14 +510,16 @@ const CourseDetails = () => {
                         <div className='list-group'>
                           {activities.map((activity) => (
                             <div key={activity.id} className='list-group-item'>
-                              <h6>{activity.title}</h6>
-                              <p>{activity.description}</p>
-                              <h4>{formatDate(activity.dueDate)}</h4>
-                              {/* <h4>{formatDate(activity.endDate)}</h4> */}
+                              <h6>Title: {activity.title}</h6>
+                              <p>Description: {activity.description}</p>
+                              <h3>Content: {activity.content}</h3>
+                              <h4>Due Date: {formatDate(activity.dueDate)}</h4>
+
                               <ReusableButton className='my-4'>
-                                {/* TODO Let this code navigate to the assignment  */}
+                                {/* TODO: Navigate to the assignment view */}
                                 {activity.activityType}
                               </ReusableButton>
+
                               <div className='d-flex gap-2'>
                                 <ReusableButton
                                   onClick={async () => {
@@ -281,28 +603,33 @@ const CourseDetails = () => {
           )}
         </div>
 
-        {/* Module Resource Manager */}
+        {/* Module Modal */}
         <ResourceManager<IModule>
           fields={moduleFields}
           isOpen={isModuleModalOpen}
-          onClose={() => setIsModuleModalOpen(false)}
+          onClose={() => {
+            setIsModuleModalOpen(false)
+            setCurrentModule(null)
+          }}
           onSubmit={async (data) => {
             const success = await handleSubmitModule(data)
-            if (success ?? null) setIsModuleModalOpen(false)
+            if (success) setIsModuleModalOpen(false)
           }}
           initialData={currentModule || undefined}
           title={currentModule?.id ? 'Edit Module' : 'Create New Module'}
         />
 
-        {/* Activity Resource Manager */}
+        {/* Activity Modal */}
         <ResourceManager<IActivity>
           fields={activityFields}
           isOpen={isActivityModalOpen}
-          onClose={() => setIsActivityModalOpen(false)}
+          onClose={() => {
+            setIsActivityModalOpen(false)
+            setCurrentActivity(null)
+          }}
           onSubmit={async (data) => {
             await handleSubmitActivity(data)
             setIsActivityModalOpen(false)
-            // Refresh activities after successful submission
             handleFetchActivities(selectedModuleId)
           }}
           initialData={currentActivity || undefined}

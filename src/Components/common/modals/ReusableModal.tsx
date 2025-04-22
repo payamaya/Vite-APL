@@ -3,7 +3,7 @@ import ReusableTextarea from '../inputs/ReusableTextarea'
 import ReusableInput from '../inputs/ReusableInput'
 import ReusableButton from '../buttons/ReusableButton'
 import { ReusableModalProps } from './ReusableModalProps'
-
+import ReusableSelect from '../selects/ReusableSelect'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ReusableModal = <T extends Record<string, any>>({
   isOpen,
@@ -24,7 +24,9 @@ const ReusableModal = <T extends Record<string, any>>({
   }, [isOpen, initialData])
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -38,6 +40,7 @@ const ReusableModal = <T extends Record<string, any>>({
 
     // Simple validation
     const newErrors: Record<string, string> = {}
+
     fields.forEach((field) => {
       if (field.required && !formData[field.name]) {
         newErrors[field.name as string] = `${field.label} is required`
@@ -72,7 +75,16 @@ const ReusableModal = <T extends Record<string, any>>({
             <form onSubmit={handleSubmit}>
               {fields.map((field) => (
                 <div key={field.name as string} className='mb-3'>
-                  {field.type === 'textarea' ? (
+                  {field.type === 'custom' && field.render ? (
+                    field.render({
+                      value: formData[field.name] || '',
+                      onChange: (value: string) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          [field.name]: value,
+                        })),
+                    })
+                  ) : field.type === 'textarea' ? (
                     <ReusableTextarea
                       label={field.label}
                       name={field.name as string}
@@ -80,6 +92,19 @@ const ReusableModal = <T extends Record<string, any>>({
                       onChange={handleChange}
                       error={errors[field.name as string]}
                       required={field.required}
+                    />
+                  ) : field.type === 'select' ? (
+                    <ReusableSelect
+                      label={field.label}
+                      name={field.name as string}
+                      value={formData[field.name] || ''}
+                      onChange={handleChange}
+                      error={errors[field.name as string]}
+                      required={field.required}
+                      options={(field.options || []).map((option) => ({
+                        ...option,
+                        value: String(option.value),
+                      }))} // ensure all values are strings
                     />
                   ) : (
                     <ReusableInput
@@ -94,6 +119,7 @@ const ReusableModal = <T extends Record<string, any>>({
                   )}
                 </div>
               ))}
+
               <div className='modal-footer'>
                 <ReusableButton
                   type='button'

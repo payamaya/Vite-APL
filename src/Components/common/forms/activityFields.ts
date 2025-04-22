@@ -1,4 +1,5 @@
 // src/Components/common/forms/activityFields.ts
+import { activityTypeOptions } from '../../../interfaces/components/activityTypeOptions'
 import { ModalField } from '../../../interfaces/components/common/ModalField'
 import { IActivity } from '../../../interfaces/components/IActivity'
 
@@ -20,12 +21,7 @@ export const activityFields: ModalField<IActivity>[] = [
     label: 'Activity Type',
     type: 'select',
     required: true,
-    options: [
-      { value: 'lecture', label: 'Lecture' },
-      { value: 'exercise', label: 'Exercise' },
-      { value: 'assignment', label: 'Assignment' },
-      { value: 'quiz', label: 'Quiz' },
-    ],
+    options: activityTypeOptions,
   },
   {
     name: 'content',
