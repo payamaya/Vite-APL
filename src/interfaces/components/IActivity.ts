@@ -1,5 +1,5 @@
 // src/interfaces/components/IActivity.ts
-export type ActivityType = 'lecture' | 'exercise' | 'assignment' | 'quiz'
+export type ActivityType = 'assignment' | 'quiz' | 'polls' | 'discussion'
 
 export interface IActivity {
   id: string

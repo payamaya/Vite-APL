@@ -1,5 +1,5 @@
 import authService from '../../api/authService'
-import Cards from '../../Components/Cards'
+import Cards from '../../Components/common/cards/Cards'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
 import React, { useState } from 'react'

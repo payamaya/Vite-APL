@@ -1,21 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/Components/common/Table/ReusableTable.tsx
 import { useState, useMemo } from 'react'
 import { FaSort, FaSortUp, FaSortDown, FaSearch } from 'react-icons/fa'
-
-interface Column {
-  header: string
-  accessor: string
-  sortable?: boolean
-  width?: string
-}
-
-interface ReusableTableProps {
-  data: any[]
-  columns: Column[]
-  onRowClick?: (row: any) => void
-  searchPlaceholder?: string
-}
+import { ReusableTableProps } from './ReusableTableProps'
 
 const ReusableTable = ({
   data,
@@ -114,7 +99,11 @@ const ReusableTable = ({
               className={onRowClick ? 'cursor-pointer' : ''}
             >
               {columns.map((column) => (
-                <td key={column.accessor}>{row[column.accessor]}</td>
+                <td key={column.accessor}>
+                  {column.render
+                    ? column.render(row[column.accessor], row)
+                    : row[column.accessor]}
+                </td>
               ))}
             </tr>
           ))}
