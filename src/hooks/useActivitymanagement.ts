@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/hooks/useActivityManagement.ts
 import { useState } from 'react'
 import activityService from '../services/activityService'
 import { useNotification } from '../context/NotificationContext'
@@ -28,7 +27,6 @@ export const useActivityManagement = (moduleId: string) => {
     }
   }
 
-  // src/hooks/useActivityManagement.ts
   const handleSubmitActivity = async (activityData: IActivity) => {
     try {
       setLoading(true)
@@ -57,16 +55,14 @@ export const useActivityManagement = (moduleId: string) => {
           message: 'Activity updated successfully!',
           variant: 'success',
         })
-        // Update state
       } else {
         response = await activityService.createActivity<IActivity>(
           moduleId,
           payload
         )
-        // Update state
       }
     } catch (err) {
-      // Error handling
+      console.error(`${err}: Error: manage activity`)
     } finally {
       setLoading(false)
     }

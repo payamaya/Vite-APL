@@ -1,5 +1,4 @@
 import authService from '../../api/authService'
-import Cards from '../../Components/common/cards/Cards'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
 import React, { useState } from 'react'
@@ -39,17 +38,9 @@ const Home = () => {
     }
   }
   return (
-    <section className='container'>
-      <h1>Home</h1>
-      {/* <div>{import.meta.env.VITE_API_URL}</div> */}
-      <Cards
-        imgSrc={'/public/read.png'}
-        title={'Home Title'}
-        text={'Home'}
-        buttonLink={'https://getbootstrap.com/docs/5.3/components/card/'}
-      />
-
-      <form onSubmit={handleSubmit}>
+    <section className='container d-flex justify-content-center'>
+      <form onSubmit={handleSubmit} className='card w-50 p-4 my-4 border-2'>
+        <h1 className='d-flex justify-content-center pb-4'>Login</h1>
         <ReusableInput
           label='Email'
           name='email'

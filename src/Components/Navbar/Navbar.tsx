@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { NavbarProps } from './navbarInterfaces'
 import { handleMenuClose, toggleMenu } from './navbarUtils'
 import ReusableButton from '../common/buttons/ReusableButton'
+import { filterNavItemsByRole } from '../../utils/navUtils'
 
 const Navbar: React.FC<NavbarProps> = ({
   brand,
@@ -14,19 +15,12 @@ const Navbar: React.FC<NavbarProps> = ({
 }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  // Filter nav items based on role
-  const filteredNavItems = navItems.filter((item) => {
-    if (!item.role) return true
-    if (item.role === 'all') return true
-    return item.role === currentRole
-  })
+  const filteredNavItems = filterNavItemsByRole(navItems, currentRole)
 
-  // Filter dropdown items based on role
-  const filteredDropdownItems = dropdownItems?.filter((item) => {
-    if (!item.role) return true
-    if (item.role === 'all') return true
-    return item.role === currentRole
-  })
+  const filteredDropdownItems = filterNavItemsByRole(
+    dropdownItems || [],
+    currentRole
+  )
 
   return (
     <nav

@@ -28,3 +28,8 @@ export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', link: '/student/dashboard', role: 'student' },
   { label: 'My Courses', link: '/student/courses', role: 'student' },
 ]
+export const FOOTER_NAV_ITEMS: NavItem[] = [
+  { label: 'Privacy', link: '/privacy', role: 'all' },
+  { label: 'Terms', link: '/terms', role: 'all' },
+  { label: 'Support', link: '/support', role: 'all' },
+]

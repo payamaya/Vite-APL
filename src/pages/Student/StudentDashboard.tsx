@@ -1,5 +1,5 @@
 // src/pages/student/Dashboard.tsx
-import DashboardLayout from '../../Components/common/DashboardLayout'
+import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 
 const StudentDashboard = () => {

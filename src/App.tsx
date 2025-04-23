@@ -1,8 +1,13 @@
 // src/App.tsx
 import Navbar from './Components/navbar/Navbar'
 import AppRoutes from './routes/AppRoutes'
-import { NAV_BRAND, PUBLIC_NAV_ITEMS } from './config/navItems'
+import {
+  FOOTER_NAV_ITEMS,
+  NAV_BRAND,
+  PUBLIC_NAV_ITEMS,
+} from './config/navItems'
 import { RoleOrPublic } from './types'
+import Footer from './Components/common/footer/Footer'
 
 function App() {
   const currentRole: RoleOrPublic = 'teacher' // or get from auth context
@@ -16,6 +21,11 @@ function App() {
         fixed={'top'}
       />
       <AppRoutes />
+      <Footer
+        currentRole={currentRole}
+        footerItems={FOOTER_NAV_ITEMS}
+        brand='My E-Learning Platform'
+      />
     </>
   )
 }
