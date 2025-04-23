@@ -1,5 +1,5 @@
 export interface ReusableSelectProps {
-  label: string
+  // label: string
   name: string
   value: string
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void

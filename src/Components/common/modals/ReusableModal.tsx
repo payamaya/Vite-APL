@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import ReusableTextarea from '../inputs/ReusableTextarea';
-import ReusableInput from '../inputs/ReusableInput';
-import ReusableButton from '../buttons/ReusableButton';
-import { ReusableModalProps } from './ReusableModalProps';
-import ReusableSelect from '../selects/ReusableSelect';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from 'react'
+import ReusableTextarea from '../inputs/ReusableTextarea'
+import ReusableInput from '../inputs/ReusableInput'
+import ReusableButton from '../buttons/ReusableButton'
+import { ReusableModalProps } from './ReusableModalProps'
+import ReusableSelect from '../selects/ReusableSelect'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ReusableModal = <T extends Record<string, any>>({
@@ -16,57 +16,57 @@ const ReusableModal = <T extends Record<string, any>>({
   title,
   fields,
 }: ReusableModalProps<T>) => {
-  const [formData, setFormData] = useState<T>(initialData || ({} as T));
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [formData, setFormData] = useState<T>(initialData || ({} as T))
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   // Initialize form data when modal opens or initialData changes
   useEffect(() => {
     if (isOpen) {
-      setFormData(initialData || ({} as T));
+      setFormData(initialData || ({} as T))
     }
-  }, [isOpen, initialData]);
+  }, [isOpen, initialData])
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleDateChange = (date: Date | null, name: string) => {
     setFormData((prev) => ({
       ...prev,
       [name]: date,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Simple validation
-    const newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {}
 
     fields.forEach((field) => {
       if (field.required && !formData[field.name]) {
-        newErrors[field.name as string] = `${field.label} is required`;
+        newErrors[field.name as string] = `${field.label} is required`
       }
-    });
+    })
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+      setErrors(newErrors)
+      return
     }
 
-    onSubmit(formData);
-    onClose();
-  };
+    onSubmit(formData)
+    onClose()
+  }
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div
@@ -107,7 +107,7 @@ const ReusableModal = <T extends Record<string, any>>({
                     />
                   ) : field.type === 'select' ? (
                     <ReusableSelect
-                    label= {field.label}
+                      // label={field.label}
                       name={field.name as string}
                       value={formData[field.name] || ''}
                       onChange={handleChange}
@@ -120,17 +120,23 @@ const ReusableModal = <T extends Record<string, any>>({
                     />
                   ) : field.type === 'date' ? (
                     <DatePicker
-                      selected={formData[field.name] ? new Date(formData[field.name]) : null}
-                      onChange={(date) => handleDateChange(date, field.name as string)}
+                      selected={
+                        formData[field.name]
+                          ? new Date(formData[field.name])
+                          : null
+                      }
+                      onChange={(date) =>
+                        handleDateChange(date, field.name as string)
+                      }
                       minDate={field.minDate}
                       maxDate={field.maxDate}
                       excludeDates={field.disabledDates}
-                      className="form-control"
-                      dateFormat="MMMM d, yyyy"
+                      className='form-control'
+                      dateFormat='MMMM d, yyyy'
                       placeholderText={field.label}
                       required={field.required}
                       showYearDropdown
-                      dropdownMode="select"
+                      dropdownMode='select'
                     />
                   ) : (
                     <ReusableInput
@@ -143,7 +149,7 @@ const ReusableModal = <T extends Record<string, any>>({
                     />
                   )}
                   {errors[field.name as string] && (
-                    <div className="invalid-feedback d-block">
+                    <div className='invalid-feedback d-block'>
                       {errors[field.name as string]}
                     </div>
                   )}
@@ -169,7 +175,7 @@ const ReusableModal = <T extends Record<string, any>>({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReusableModal;
+export default ReusableModal

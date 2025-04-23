@@ -30,21 +30,21 @@ export const activityFields: ModalField<IActivity>[] = [
     type: 'textarea',
     required: false,
   },
-  { 
-      name: 'startDate', 
-      label: 'Start Date', 
-      type: 'date',
-      required: true,
-      minDate: new Date(), // Disable past dates
-      maxDate: addYears(new Date(), 1), // Only allow dates within 1 year
-    },
-    { 
-      name: 'endDate', 
-      label: 'End Date', 
-      type: 'date',
-      required: true,
-      minDate: new Date(), // Will need to be dynamically set based on startDate in your component
-    },
+  {
+    name: 'startDate',
+    label: 'Start Date',
+    type: 'date',
+    required: true,
+    minDate: new Date(), // Disable past dates
+    maxDate: addYears(new Date(), 1), // Only allow dates within 1 year
+  },
+  {
+    name: 'endDate',
+    label: 'End Date',
+    type: 'date',
+    required: true,
+    minDate: new Date(), // Will need to be dynamically set based on startDate in your component
+  },
   // {
   //   name: 'endDate',
   //   label: 'End Date',
