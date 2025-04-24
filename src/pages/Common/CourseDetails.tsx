@@ -513,7 +513,8 @@ const CourseDetails = () => {
                               <h6>Title: {activity.title}</h6>
                               <p>Description: {activity.description}</p>
                               <h3>Content: {activity.content}</h3>
-                              <h4>Due Date: {formatDate(activity.dueDate)}</h4>
+                              <h4>Start Date: {formatDate(activity.startDate)}</h4>
+                              <h4>End Date: {formatDate(activity.endDate)}</h4>
 
                               <ReusableButton className='my-4'>
                                 {/* TODO: Navigate to the assignment view */}

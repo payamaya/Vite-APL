@@ -8,7 +8,7 @@ export interface IActivity {
   description: string
   activityType: ActivityType
   content?: string
-  dueDate?: string | Date // Can be string or Date object
-  // endDate?: string | Date // Can be string or Date object
+  startDate?: string | Date // Can be string or Date object
+  endDate?: string | Date 
   createdAt?: string
 }
