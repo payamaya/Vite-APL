@@ -17,10 +17,10 @@ const AppRoutes = () => {
         path={ROUTES.ADMIN.ROOT}
         // element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}
       >
-        {adminRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element}>
-            {route.children?.map((childRoute) => (
-              <Route key={childRoute.path} {...childRoute} />
+        {adminRoutes.map((route, i) => (
+          <Route key={i} path={route.path} element={route.element}>
+            {route.children?.map((childRoute, i) => (
+              <Route key={i} {...childRoute} />
             ))}
           </Route>
         ))}

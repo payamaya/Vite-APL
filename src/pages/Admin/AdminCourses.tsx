@@ -35,6 +35,7 @@ function AdminCourses() {
                 Admin Dashboard Courses
               </h5>
             </header>
+
             <div className='card-body'>
               {loading && (
                 <p className='text-center' role='status'>

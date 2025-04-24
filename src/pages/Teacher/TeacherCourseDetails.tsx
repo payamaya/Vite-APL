@@ -112,7 +112,7 @@ const TeacherCourseDetails = () => {
   if (!course) return <p>No course found.</p>
 
   return (
-    <main className='container p-5 d-flex justify-content-center flex-column align-items-center'>
+    <main className=' p-5 d-flex justify-content-center flex-column align-items-center'>
       <h2 className='p-4'>Course Details</h2>
 
       <section className='border rounded p-2 w-100'>

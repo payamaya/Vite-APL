@@ -40,7 +40,7 @@ const DashboardLayout = ({
   }
 
   return (
-    <div className='d-flex flex-column vh-100'>
+    <div className='d-flex flex-column vh-100 vw-100 '>
       <Navbar
         brand={NAV_BRAND}
         navItems={PUBLIC_NAV_ITEMS}

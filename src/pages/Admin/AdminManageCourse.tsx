@@ -59,20 +59,29 @@ const AdminManageCourse = () => {
           label='Add Course'
         />
       </div>
-
       <section className='border border-2 border-primary rounded'>
-        {loading && <p>Loading courses...</p>}
-        {error && <div className='alert alert-danger'>{error}</div>}
+        {loading && (
+          <p className='text-center' role='status'>
+            Loading courses...
+          </p>
+        )}
+        {error && (
+          <div className='alert alert-danger' role='alert'>
+            {error}
+          </div>
+        )}
         {deleteError && <div className='alert alert-danger'>{deleteError}</div>}
 
         {courses.length === 0 ? (
           <p className='text-danger fs-5 p-2'>There is no course available!</p>
         ) : (
-          <ul className='list-group'>
+          <ul className='list-group d-flex flex-wrap direction-raw'>
             {courses.map((course) => (
               <li
                 key={course.id}
                 className='list-group-item border rounded m-2'
+                role='listitem'
+                aria-labelledby={`course-${course.id}-title`}
               >
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
                   <div className='mb-4'>
