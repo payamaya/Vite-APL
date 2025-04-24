@@ -15,7 +15,7 @@ const AppRoutes = () => {
       {/* Admin Route */}
       <Route
         path={ROUTES.ADMIN.ROOT}
-        element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}
+        // element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}
         // element={<ProtectedRoute allowedRoles={['admin']} />}
       >
         {adminRoutes.map((route) => (
@@ -49,7 +49,7 @@ const AppRoutes = () => {
       {/* Student Routes */}
       <Route
         path={ROUTES.STUDENT.ROOT}
-        element={<ProtectedRoute allowedRoles={[ROLES.STUDENT]} />}
+        // element={<ProtectedRoute allowedRoles={[ROLES.STUDENT]} />}
       >
         {studentRoutes.map((route) => (
           <Route key={route.path || 'index'} {...route} />

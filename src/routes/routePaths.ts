@@ -24,6 +24,8 @@ export const ROUTES = {
     ROOT: '/student',
     DASHBOARD: 'dashboard',
     COURSES: 'courses',
+    COURSE_DETAILS: '/courses/:courseId',
+    MODULE_DETAILS: '/courses/:courseId/module/:moduleId',
   },
 
   NOT_FOUND: '*',

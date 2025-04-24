@@ -35,11 +35,11 @@ export const useActivityManagement = (moduleId: string) => {
       // Prepare payload with proper date handling
       const payload = {
         ...activityData,
-        dueDate: activityData.dueDate
-          ? new Date(activityData.dueDate).toISOString()
+        dueDate: activityData.startDate
+          ? new Date(activityData.startDate).toISOString()
           : undefined,
         // Ensure assignments have due dates
-        ...(activityData.activityType === 'assignment' && !activityData.dueDate
+        ...(activityData.activityType === 'assignment' && !activityData.startDate
           ? { dueDate: new Date().toISOString() }
           : {}),
       }
