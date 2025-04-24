@@ -1,6 +1,9 @@
 // Barrel file
 export { default as AdminDashboard } from './AdminDashboard'
-export { default as AdminUser } from './AdminUser'
+export { default as AdminManageCourse } from './AdminManageCourse'
+export { default as AdminCourses } from './AdminCourses'
+export { default as AdminManageTeacher } from './AdminManageTeacher'
+// export { default as AdminCourseDetails } from './AdminCourseDetails'
 
 // Or export grouped functionality
 // export const AdminUsers = {

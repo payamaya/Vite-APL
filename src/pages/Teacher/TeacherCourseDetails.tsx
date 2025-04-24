@@ -22,7 +22,7 @@ import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
 
-const CourseDetails = () => {
+const TeacherCourseDetails = () => {
   const { courseId } = useParams()
   const [course, setCourse] = useState<ICourse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -325,4 +325,4 @@ const CourseDetails = () => {
   )
 }
 
-export default CourseDetails
+export default TeacherCourseDetails

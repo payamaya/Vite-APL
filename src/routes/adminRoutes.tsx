@@ -1,8 +1,33 @@
 import { Navigate } from 'react-router-dom'
 import * as Admin from '../pages/Admin' // Adjust the path as necessary
+import { ROUTES } from './routePaths'
+import ModuleDetails from '../pages/Common/ModuleDetails'
 
 export const adminRoutes = [
-  { index: true, element: <Navigate to='dashboard' replace /> },
-  { path: 'dashboard', element: <Admin.AdminDashboard /> },
-  { path: 'users', element: <Admin.AdminUser /> },
+  {
+    path: ROUTES.ADMIN.ROOT,
+    element: <Admin.AdminDashboard />,
+    children: [
+      {
+        index: true,
+        element: <Admin.AdminManageCourse />,
+      },
+      {
+        path: ROUTES.ADMIN.DASHBOARD,
+        element: <Navigate to={ROUTES.ADMIN.ROOT} replace />,
+      },
+      {
+        path: ROUTES.ADMIN.COURSES,
+        element: <Admin.AdminCourses />,
+      },
+      {
+        path: ROUTES.ADMIN.MANAGE_TEACHER,
+        element: <Admin.AdminManageTeacher />,
+      },
+      {
+        path: ROUTES.ADMIN.MODULE_DETAILS,
+        element: <ModuleDetails />,
+      },
+    ],
+  },
 ]

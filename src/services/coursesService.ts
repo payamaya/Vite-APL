@@ -6,10 +6,6 @@ const courseService = {
     console.log('Fetching all courses')
     return apiService.getAll<T>('course')
   },
-  getAllStudentCourses<T>(courseId:string): Promise<ApiResponse<T>> {
-    console.log('Fetching all courses')
-    return apiService.getAll<T>(`student/course/${courseId}`)
-  },
   getCourseById<T>(courseId: string): Promise<ApiResponse<T>> {
     if (!courseId) {
       throw new Error('Course ID is required')

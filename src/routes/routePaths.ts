@@ -10,6 +10,11 @@ export const ROUTES = {
   ADMIN: {
     ROOT: '/admin',
     DASHBOARD: 'dashboard',
+    COURSES: 'courses',
+    COURSE_DETAILS: '/admin/courses/:courseId',
+    MANAGE_TEACHER: '/admin/teachers',
+    MANAGE_TEACHER_DETAILS: '/admin/teachers/:courseId',
+    MODULE_DETAILS: '/admin/courses/:courseId/module/:moduleId',
     USERS: 'users',
   },
 
@@ -17,6 +22,8 @@ export const ROUTES = {
     ROOT: '/teacher',
     DASHBOARD: 'dashboard',
     COURSES: 'courses',
+    COURSE_DETAILS: '/teacher/courses/:courseId',
+    MODULE_DETAILS: '/teacher/courses/:courseId/module/:moduleId',
     NOTICES: 'notices',
   },
 
@@ -24,8 +31,8 @@ export const ROUTES = {
     ROOT: '/student',
     DASHBOARD: 'dashboard',
     COURSES: 'courses',
-    COURSE_DETAILS: '/courses/:courseId',
-    MODULE_DETAILS: '/courses/:courseId/module/:moduleId',
+    COURSE_DETAILS: '/student/courses/:courseId',
+    MODULE_DETAILS: '/student/courses/:courseId/module/:moduleId',
   },
 
   NOT_FOUND: '*',

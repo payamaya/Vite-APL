@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import courseService from '../../services/coursesService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import { Link } from 'react-router-dom'
+import { ROUTES } from '../../routes/routePaths'
 
 const TeacherHome = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -108,7 +109,10 @@ const TeacherHome = () => {
                               : course.description}
                           </p>
                           <Link
-                            to={`/courses/${course.id}`}
+                            to={ROUTES.TEACHER.COURSE_DETAILS.replace(
+                              ':courseId',
+                              course.id
+                            )}
                             className='btn btn-sm btn-outline-primary mt-3 align-self-start'
                             aria-label={`View details for ${course.name}`}
                           >
