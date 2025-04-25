@@ -3,6 +3,7 @@ import courseService from '../../services/coursesService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../routes/routePaths'
+import { formatDate } from '../../utils/dateUtils'
 
 const TeacherHome = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -79,15 +80,11 @@ const TeacherHome = () => {
                 >
                   <div className='card h-100 shadow-sm'>
                     <div className='card-body'>
-                      <h3 className='card-title fw-bold'>{course.name}</h3>
-                      <h4 className='card-subtitle text-primary mb-2'>
-                        {course.title}
-                      </h4>
-                      <p className='card-text'>
-                        {course.description?.length > 120
-                          ? `${course.description.slice(0, 120)}...`
-                          : course.description}
-                      </p>
+                      <h3>Title: {course.title}</h3>
+                      <h4>Name: {course.name}</h4>
+                      <h5>Description: {course.description}</h5>
+                      <h6>Start: {formatDate(course.startDate)}</h6>
+                      <h6>End: {formatDate(course.endDate)}</h6>
                     </div>
                     <div className='card-footer bg-transparent'>
                       <Link

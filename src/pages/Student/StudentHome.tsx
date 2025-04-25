@@ -3,6 +3,7 @@ import courseService from '../../services/coursesService'
 import { ICourse } from '../../interfaces/components/ICourse'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../routes/routePaths'
+import { formatDate } from '../../utils/dateUtils'
 
 const StudentHome = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -71,11 +72,19 @@ const StudentHome = () => {
                         role='listitem'
                         aria-labelledby={`course-${course.id}-title`}
                       >
-                        <div className='card h-100 shadow-sm border-0 course-card'>
-                          <div className='card-body d-flex flex-column'>
-                            <h3
+                        <Link
+                          to={ROUTES.STUDENT.COURSE_DETAILS.replace(
+                            ':courseId',
+                            course.id
+                          )}
+                          // className='btn btn-sm btn-outline-primary mt-3 align-self-start'
+                          aria-label={`View details for ${course.name}`}
+                        >
+                          <div className='card h-100 shadow-sm border-0 course-card'>
+                            <div className='card-body d-flex flex-column'>
+                              {/* <h3
                               id={`course-${course.id}-title`}
-                              className='h5 fw-bold text-dark mb-2'
+                            
                             >
                               {course.name}
                             </h3>
@@ -86,19 +95,17 @@ const StudentHome = () => {
                               {course.description?.length > 120
                                 ? `${course.description.slice(0, 120)}...`
                                 : course.description}
-                            </p>
-                            <Link
-                              to={ROUTES.STUDENT.COURSE_DETAILS.replace(
-                                ':courseId',
-                                course.id
-                              )}
-                              className='btn btn-sm btn-outline-primary mt-3 align-self-start'
-                              aria-label={`View details for ${course.name}`}
-                            >
-                              View Details
-                            </Link>
+                            </p> */}
+                              <div className='card-body'>
+                                <h3>Title: {course.title}</h3>
+                                <h4>Name: {course.name}</h4>
+                                <h5>Description: {course.description}</h5>
+                                <h6>Start: {formatDate(course.startDate)}</h6>
+                                <h6>End: {formatDate(course.endDate)}</h6>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       </article>
                     ))}
                   </div>
