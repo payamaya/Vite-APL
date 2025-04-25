@@ -11,6 +11,7 @@ import {
 import { NavItem } from '../../../interfaces/components/NavbarInterfaces'
 
 import { DashboardLayoutProps } from './DashboardLayoutProps'
+import { Outlet } from 'react-router-dom'
 
 const DashboardLayout = ({
   role,
@@ -39,19 +40,25 @@ const DashboardLayout = ({
   }
 
   return (
-    <div className='d-flex flex-column vh-100'>
+    <div className='d-flex flex-column vh-100 vw-100 '>
       <Navbar
         brand={NAV_BRAND}
         navItems={PUBLIC_NAV_ITEMS}
         currentRole={role}
       />
 
-      <div className='d-flex flex-grow-1'>
+      <div className='d-flex flex-grow-1 overflow-hidden'>
         <Sidebar role={role} navItems={roleNavItems} />
-        <div className='flex-grow-1 p-4 overflow-auto'>
-          <h2 className='mb-4'>{title}</h2>
-          {children}
-        </div>
+
+        <main className='flex-grow-1 overflow-auto p-4'>
+          <div className='container-fluid py-4'>
+            <div className='d-flex justify-content-between align-items-center mb-4'>
+              <h1>{title}</h1>
+              {/* Add contextual actions here if needed */}
+            </div>
+            {children || <Outlet />}
+          </div>
+        </main>
       </div>
     </div>
   )

@@ -10,9 +10,10 @@ export const PUBLIC_NAV_ITEMS: NavItem[] = [
 ]
 
 export const ADMIN_NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', link: '/admin/dashboard', role: 'admin' },
-  { label: 'Manage Courses', link: '/admin/courses', role: 'admin' },
+  { label: 'Dashboard', link: '/admin/courses', role: 'admin' },
+  { label: ' Manage Courses', link: '/admin', role: 'admin' },
   { label: 'Manage Teachers', link: '/admin/teachers', role: 'admin' },
+  { label: 'Manage Students', link: '/admin/students', role: 'admin' },
 ]
 
 export const TEACHER_NAV_ITEMS: NavItem[] = [

@@ -5,7 +5,7 @@ import { ICourse } from '../../interfaces/components/ICourse'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 
-function StudentCourses() {
+function AdminCourses() {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -32,9 +32,10 @@ function StudentCourses() {
           <div className='card shadow-sm'>
             <header className='card-header bg-warning text-white'>
               <h5 id='courses-section' className='h5'>
-                Student Courses
+                Admin Dashboard Courses
               </h5>
             </header>
+
             <div className='card-body'>
               {loading && (
                 <p className='text-center' role='status'>
@@ -69,4 +70,4 @@ function StudentCourses() {
   )
 }
 
-export default StudentCourses
+export default AdminCourses

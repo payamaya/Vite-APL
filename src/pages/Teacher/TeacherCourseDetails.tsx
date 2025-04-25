@@ -22,7 +22,7 @@ import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
 
-const CourseDetails = () => {
+const TeacherCourseDetails = () => {
   const { courseId } = useParams()
   const [course, setCourse] = useState<ICourse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -112,18 +112,10 @@ const CourseDetails = () => {
   if (!course) return <p>No course found.</p>
 
   return (
-    <main className='container p-5 d-flex justify-content-center flex-column align-items-center'>
+    <main className=' p-5 d-flex justify-content-center flex-column align-items-center'>
       <h2 className='p-4'>Course Details</h2>
 
       <section className='border rounded p-2 w-100'>
-        <section className='card p-4'>
-          <h3>Title: {course.title}</h3>
-          <h4>Name: {course.name}</h4>
-          <h5>Description: {course.description}</h5>
-          <h6>Start: {formatDate(course.startDate)}</h6>
-          <h6>End: {formatDate(course.endDate)}</h6>
-        </section>
-
         <section className='mb-3 border border-2 p-2 mt-2 rounded'>
           <h2>Modules</h2>
           {deleteModuleError && (
@@ -325,4 +317,4 @@ const CourseDetails = () => {
   )
 }
 
-export default CourseDetails
+export default TeacherCourseDetails
