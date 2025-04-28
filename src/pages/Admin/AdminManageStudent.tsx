@@ -86,9 +86,10 @@ const AdminManageStudent = () => {
               >
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
                   <div className='mb-4'>
-                    <h3 className='fw-bold text-dark mb-1'>
-                      {student.firstName} {student.lastName}
-                    </h3>
+                    <p className='fw-bold text-dark mb-1'>
+                      {student.firstName}
+                    </p>
+                    <p className='fw-bold text-dark mb-1'>{student.lastName}</p>
 
                     <p className='text-secondary mb-0'>{student.email}</p>
                     <p className='text-secondary mb-0'>{student.address}</p>
@@ -99,29 +100,6 @@ const AdminManageStudent = () => {
                         : 'No date'}
                     </p>
                   </div>
-
-                  {/* <div className='row g-3'>
-                    <div className='col-md-6'>
-                      <div className='bg-white border rounded-4 p-3 shadow-sm h-100'>
-                        <div className='mb-1 text-muted text-uppercase small'>
-                          Start Date
-                        </div>
-                        <div className='fw-semibold text-dark'>
-                          {formatDate(student.startDate)}
-                        </div>
-                      </div>
-                    </div>
-                    <div className='col-md-6'>
-                      <div className='bg-white border rounded-4 p-3 shadow-sm h-100'>
-                        <div className='mb-1 text-muted text-uppercase small'>
-                          End Date
-                        </div>
-                        <div className='fw-semibold text-dark'>
-                          {formatDate(student.endDate)}
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
                 </section>
 
                 <div className='d-flex justify-content-evenly gap-2 ms-3'>
