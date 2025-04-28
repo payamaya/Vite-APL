@@ -7,7 +7,7 @@ import { courseFields } from '../../Components/common/forms/courseFields'
 import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
 import { useNotification } from '../../context/NotificationContext'
 import { formatDate } from '../../utils/dateUtils'
 

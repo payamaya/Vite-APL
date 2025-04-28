@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import courseService from '../../services/coursesService'
 import moduleService from '../../services/moduleService'
-import { ICourse } from '../../interfaces/components/ICourse'
-import { IModule } from '../../interfaces/components/IModule'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
+import { IModule } from '../../interfaces/components/entities/IModule'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 const ModuleDetails = () => {

@@ -1,5 +1,5 @@
 import { RoleOrPublic } from '../../../types'
-import { NavItem } from '../../navbar/navbarInterfaces'
+import { NavItem } from '../navbar/navbarInterfaces'
 
 export interface FooterProps {
   footerItems: NavItem[]

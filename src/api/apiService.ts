@@ -2,7 +2,7 @@
 import axios from 'axios'
 import API_BASE_URL from './apiConfig'
 import authService from './authService'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 const api = axios.create({
   baseURL: API_BASE_URL,

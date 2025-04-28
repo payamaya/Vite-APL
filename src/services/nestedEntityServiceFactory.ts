@@ -1,5 +1,5 @@
 // src/services/nestedEntityServiceFactory.ts
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 import apiService from '../api/apiService'
 
 const createNestedEntityService = <T>(

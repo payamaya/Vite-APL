@@ -1,4 +1,4 @@
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 export interface ServiceInterface<T> {
   getAll(): Promise<ApiResponse<T[]>>

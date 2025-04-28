@@ -1,8 +1,8 @@
 // src/Components/common/forms/activityFields.ts
 import { addYears } from 'date-fns'
-import { activityTypeOptions } from '../../../interfaces/components/activityTypeOptions'
+import { activityTypeOptions } from '../../../interfaces/components/options/activityTypeOptions'
 import { ModalField } from '../../../interfaces/components/common/ModalField'
-import { IActivity } from '../../../interfaces/components/IActivity'
+import { IActivity } from '../../../interfaces/components/entities/IActivity'
 
 export const activityFields: ModalField<IActivity>[] = [
   {

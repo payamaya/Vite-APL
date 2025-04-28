@@ -1,6 +1,6 @@
 // import { addYears } from 'date-fns'
 import { ModalField } from '../../../interfaces/components/common/ModalField'
-import { IStudent } from '../../../interfaces/components/IStudent'
+import { IStudent } from '../../../interfaces/components/entities/IStudent'
 
 export const studentFields: ModalField<IStudent>[] = [
   { name: 'firstName', label: 'First Name', type: 'text', required: true },

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
-import { ICourse } from '../interfaces/components/ICourse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
+import { ICourse } from '../interfaces/components/entities/ICourse'
 import courseService from '../services/coursesService'
 import { useNotification } from '../context/NotificationContext'
 

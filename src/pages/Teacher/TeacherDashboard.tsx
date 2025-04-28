@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import { useEffect, useState } from 'react'
 import courseService from '../../services/coursesService'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
 import { useCourseManagement } from '../../hooks/useCourseManagement'
 
 const TeacherDashboard = () => {

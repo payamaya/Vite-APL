@@ -1,7 +1,7 @@
 // useModuleManagement.ts
 import { useState } from 'react'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
-import { IModule } from '../interfaces/components/IModule'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
+import { IModule } from '../interfaces/components/entities/IModule'
 import moduleService from '../services/moduleService'
 import { useNotification } from '../context/NotificationContext'
 

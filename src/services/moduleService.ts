@@ -1,4 +1,4 @@
-import { IModule } from '../interfaces/components/IModule'
+import { IModule } from '../interfaces/components/entities/IModule'
 import createNestedEntityService from './nestedEntityServiceFactory'
 
 const baseService = createNestedEntityService<IModule>('course', 'module')

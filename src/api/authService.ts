@@ -1,6 +1,6 @@
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
-import { AuthResponse } from '../interfaces/components/AuthResponse'
+import { AuthResponse } from '../interfaces/api/AuthResponse'
 
 const authService = {
   login: async (credentials: {

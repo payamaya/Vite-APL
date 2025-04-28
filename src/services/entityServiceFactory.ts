@@ -1,5 +1,5 @@
 import apiService from '../api/apiService'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 const createEntityService = <T>(baseEndpoint: string) => ({
   getAll(): Promise<ApiResponse<T>> {

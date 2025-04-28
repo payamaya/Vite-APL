@@ -1,0 +1,6 @@
+export * from './ICourse'
+export * from './IModule'
+export * from './IActivity'
+export * from './IPerson'
+export * from './IStudent'
+export * from './ITeacher'

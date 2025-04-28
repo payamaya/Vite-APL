@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import noticeTableColumns from '../../Components/common/tables/noticeTableColumns'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 
-import { INotice } from '../../interfaces/components/INotice'
+import { INotice } from '../../interfaces/ui/INotice'
 import courseService from '../../services/coursesService'
 
 function TeacherNotice() {

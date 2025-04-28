@@ -10,7 +10,7 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 import { useNotification } from '../../context/NotificationContext'
 // import { formatDate } from '../../utils/dateUtils'
-import { IStudent } from '../../interfaces/components/IStudent'
+import { IStudent } from '../../interfaces/components/entities/IStudent'
 
 const AdminManageStudent = () => {
   const [loading, setLoading] = useState(true)

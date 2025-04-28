@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import courseService from '../../services/coursesService'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
 // import { Link } from "react-router-dom"
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 import studentableColumns from '../../Components/common/tables/studentTableCoulmn'
 import studentsService from '../../services/studentsService'
-import { IStudent } from '../../interfaces/components/IStudent'
+import { IStudent } from '../../interfaces/components/entities/IStudent'
 
 function AdminCourses() {
   const [courses, setCourses] = useState<ICourse[]>([])

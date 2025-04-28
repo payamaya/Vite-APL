@@ -1,5 +1,5 @@
 // import { Link } from 'react-router-dom'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
 
 interface CourseListProps {
   courses: ICourse[]

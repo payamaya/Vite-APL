@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 import studentService from '../services/studentsService'
 import { useNotification } from '../context/NotificationContext'
-import { IStudent } from '../interfaces/components/IStudent'
+import { IStudent } from '../interfaces/components/entities/IStudent'
 
 export const useStudentManagement = (initialStudents: IStudent[] = []) => {
   const [students, setStudents] = useState<IStudent[]>(initialStudents)

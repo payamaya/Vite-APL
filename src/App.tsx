@@ -1,5 +1,5 @@
 // src/App.tsx
-import Navbar from './Components/navbar/Navbar'
+import Navbar from './Components/common/navbar/Navbar'
 import AppRoutes from './routes/AppRoutes'
 import {
   FOOTER_NAV_ITEMS,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
 
 import courseService from '../../services/coursesService'
 import ReusableTable from '../../Components/common/tables/ReusableTable'

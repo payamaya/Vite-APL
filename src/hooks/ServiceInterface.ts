@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 export interface ServiceInterface<T> {
   create(data: T, ...args: any[]): Promise<ApiResponse<T>>

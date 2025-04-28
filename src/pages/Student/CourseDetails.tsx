@@ -4,9 +4,9 @@ import courseService from '../../services/coursesService'
 import moduleService from '../../services/moduleService'
 import activityService from '../../services/activityService'
 
-import { ICourse } from '../../interfaces/components/ICourse'
-import { IModule } from '../../interfaces/components/IModule'
-import { IActivity } from '../../interfaces/components/IActivity'
+import { ICourse } from '../../interfaces/components/entities/ICourse'
+import { IModule } from '../../interfaces/components/entities/IModule'
+import { IActivity } from '../../interfaces/components/entities/IActivity'
 
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { formatDate } from '../../utils/dateUtils'
