@@ -31,12 +31,13 @@ const StudentCourseDetails = () => {
       setError('')
 
       const [courseResponse, modulesResponse] = await Promise.all([
-        courseService.getCourseById<ICourse>(courseId),
-        moduleService.getAllModules<IModule[]>(courseId),
+        courseService.getCourseById(courseId),
+        moduleService.getAllModules(courseId),
       ])
 
-      setCourse(courseResponse.data)
-      setModules(modulesResponse.data)
+      // Ensure we're setting arrays for modules and single object for course
+      setCourse(courseResponse.data as ICourse)
+      setModules(modulesResponse.data as unknown as IModule[])
     } catch (err) {
       setError('Failed to load course or modules')
       console.error(err)
@@ -48,11 +49,11 @@ const StudentCourseDetails = () => {
   const handleFetchActivities = async (moduleId: string) => {
     setSelectedModuleId(moduleId)
     try {
-      const response =
-        await activityService.getAllActivities<IActivity[]>(moduleId)
-      setActivities(response.data)
+      const response = await activityService.getAllActivities(moduleId)
+      setActivities(response.data as unknown as IActivity[])
     } catch (err) {
       console.error('Failed to fetch activities', err)
+      setActivities([])
     }
   }
 
@@ -60,9 +61,10 @@ const StudentCourseDetails = () => {
     fetchCourseAndModules()
   }, [courseId])
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>{error}</p>
-  if (!course) return <p>No course found.</p>
+  if (loading) return <div className='text-center mt-4'>Loading...</div>
+  if (error) return <div className='alert alert-danger mt-4'>{error}</div>
+  if (!course)
+    return <div className='alert alert-info mt-4'>No course found.</div>
 
   return (
     <main className='mt-4 container p-5 d-flex justify-content-center flex-column align-items-center'>

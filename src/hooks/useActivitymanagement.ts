@@ -16,9 +16,8 @@ export const useActivityManagement = (moduleId: string) => {
     try {
       setLoading(true)
       setError('')
-      const response =
-        await activityService.getAllActivities<IActivity[]>(moduleId)
-      setActivities(response.data)
+      const response = await activityService.getAllActivities(moduleId)
+      setActivities(response.data as unknown as IActivity[])
     } catch (err) {
       setError('Failed to fetch activities')
       console.error(err)
@@ -39,14 +38,15 @@ export const useActivityManagement = (moduleId: string) => {
           ? new Date(activityData.startDate).toISOString()
           : undefined,
         // Ensure assignments have due dates
-        ...(activityData.activityType === 'assignment' && !activityData.startDate
+        ...(activityData.activityType === 'assignment' &&
+        !activityData.startDate
           ? { dueDate: new Date().toISOString() }
           : {}),
       }
 
       let response: any
       if (currentActivity?.id) {
-        response = await activityService.updateActivity<IActivity>(
+        response = await activityService.updateActivity(
           moduleId,
           currentActivity.id,
           payload
@@ -56,10 +56,7 @@ export const useActivityManagement = (moduleId: string) => {
           variant: 'success',
         })
       } else {
-        response = await activityService.createActivity<IActivity>(
-          moduleId,
-          payload
-        )
+        response = await activityService.createActivity(moduleId, payload)
       }
     } catch (err) {
       console.error(`${err}: Error: manage activity`)

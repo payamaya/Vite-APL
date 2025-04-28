@@ -13,8 +13,8 @@ function AdminCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
+        const response = await courseService.getAllCourses()
+        setCourses(response.data as unknown as ICourse[])
       } catch (err) {
         setError(err as Error)
       } finally {

@@ -13,7 +13,7 @@ const StudentHome = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true)
-      const response = await courseService.getAllCourses<ICourse[]>()
+      const response = await courseService.getAllCourses()
 
       if (Array.isArray(response.data)) {
         setCourses(response.data)
@@ -82,20 +82,6 @@ const StudentHome = () => {
                         >
                           <div className='card h-100 shadow-sm border-0 course-card'>
                             <div className='card-body d-flex flex-column'>
-                              {/* <h3
-                              id={`course-${course.id}-title`}
-                            
-                            >
-                              {course.name}
-                            </h3>
-                            <h4 className='text-secondary mb-2 h6'>
-                              {course.title}
-                            </h4>
-                            <p className='text-muted flex-grow-1 small'>
-                              {course.description?.length > 120
-                                ? `${course.description.slice(0, 120)}...`
-                                : course.description}
-                            </p> */}
                               <div className='card-body'>
                                 <h3>Title: {course.title}</h3>
                                 <h4>Name: {course.name}</h4>

@@ -1,40 +1,56 @@
-import { ApiResponse } from '../interfaces/components/ApiResponse'
-import apiService from '../api/apiService'
+// import { ApiResponse } from '../interfaces/components/ApiResponse'
+// import apiService from '../api/apiService'
 
-const moduleService = {
-  getAllModules<T>(courseId: string): Promise<ApiResponse<T>> {
-    return apiService.getAll<T>(`course/${courseId}/module`)
-  },
+import createNestedEntityService from './nestedEntityServiceFactory'
 
-  getModuleById<T>(
-    courseId: string,
-    moduleId: string
-  ): Promise<ApiResponse<T>> {
-    return apiService.getById<T>(`course/${courseId}/module`, moduleId)
-  },
+// const moduleService = {
+//   getAllModules<T>(courseId: string): Promise<ApiResponse<T>> {
+//     return apiService.getAll<T>(`course/${courseId}/module`)
+//   },
 
-  createModule<T>(courseId: string, moduleData: T): Promise<ApiResponse<T>> {
-    return apiService.create<T, T>(`course/${courseId}/module`, {
-      ...moduleData,
-      courseId, // Ensure courseId is included
-    })
-  },
+//   getModuleById<T>(
+//     courseId: string,
+//     moduleId: string
+//   ): Promise<ApiResponse<T>> {
+//     return apiService.getById<T>(`course/${courseId}/module`, moduleId)
+//   },
 
-  updateModule<T>(
-    courseId: string,
-    moduleId: string,
-    moduleData: T
-  ): Promise<ApiResponse<T>> {
-    return apiService.update<T, T>(
-      `course/${courseId}/module`,
-      moduleId,
-      moduleData
-    )
-  },
+//   createModule<T>(courseId: string, moduleData: T): Promise<ApiResponse<T>> {
+//     return apiService.create<T, T>(`course/${courseId}/module`, {
+//       ...moduleData,
+//       courseId, // Ensure courseId is included
+//     })
+//   },
 
-  deleteModule<T>(courseId: string, moduleId: string): Promise<ApiResponse<T>> {
-    return apiService.delete<T>(`course/${courseId}/module`, moduleId)
-  },
+//   updateModule<T>(
+//     courseId: string,
+//     moduleId: string,
+//     moduleData: T
+//   ): Promise<ApiResponse<T>> {
+//     return apiService.update<T, T>(
+//       `course/${courseId}/module`,
+//       moduleId,
+//       moduleData
+//     )
+//   },
+
+//   deleteModule<T>(courseId: string, moduleId: string): Promise<ApiResponse<T>> {
+//     return apiService.delete<T>(`course/${courseId}/module`, moduleId)
+//   },
+// }
+
+// export default moduleService
+
+// src/services/moduleService.ts
+
+import { IModule } from '../interfaces/components/IModule'
+
+const baseService = createNestedEntityService<IModule>('course', 'module')
+
+export default {
+  getAllModules: baseService.getAll,
+  getModuleById: baseService.getById,
+  createModule: baseService.create,
+  updateModule: baseService.update,
+  deleteModule: baseService.delete,
 }
-
-export default moduleService
