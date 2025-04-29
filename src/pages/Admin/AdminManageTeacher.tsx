@@ -86,8 +86,10 @@ const AdminManageTeacher = () => {
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
                   <div className='mb-4'>
                     <h3 className='fw-bold text-dark mb-1'>{teacher.name}</h3>
-                    <h4 className='text-primary mb-2'>{teacher.title}</h4>
-                    <p className='text-secondary mb-0'>{teacher.description}</p>
+                    <h3 className='fw-bold text-dark mb-1'>{teacher.title}</h3>
+                    <h3 className='fw-bold text-dark mb-1'>TeacherType:{teacher.teacherType}</h3>
+                    <p className='text-secondary mb-0'>{teacher.email}</p>
+                    <h3 className='fw-bold text-dark mb-1'>{teacher.telephone}</h3>
                   </div>
 
                   {/* <div className='row g-3'>

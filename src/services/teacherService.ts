@@ -16,7 +16,7 @@ const teacherService = {
   createTeacher: async <T>(data: T): Promise<ApiResponse<T>> => {
     try {
       console.log('Creating teacher with data:', data)
-      const response = await apiService.create<T, T>('teacher', data)
+      const response = await apiService.create<T, T>(`teacher`, data)
       console.log('Teacher created successfully:', response)
       return response
     } catch (error) {

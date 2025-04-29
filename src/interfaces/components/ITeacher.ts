@@ -1,14 +1,14 @@
 export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'
 
 export interface ITeacher {
-  teacherType: TeacherTypeProfession
-  createdAt?: string
-  message: string
-  email: string
-  telephone?: string | number
   id: string
   name: string
   title: string
+  teacherType: TeacherTypeProfession
+  email: string
+  telephone?: string | number
+  role: string
   description: string
   img?: string
+  createdAt?: string
 }
