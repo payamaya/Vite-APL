@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { activityService } from '../services'
 import { useNotification } from '../context/NotificationContext'
-import { IActivity } from '../interfaces/components/entities/IActivity'
+import { IActivity } from '../interfaces/components/entities'
 
 export const useActivityManagement = (moduleId: string) => {
   const [activities, setActivities] = useState<IActivity[]>([])

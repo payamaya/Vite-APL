@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { useStudentManagement } from '../../hooks/useStudentManagement'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
-import { studentService } from '../../services/studentService'
+import { useStudentManagement, useDeleteHandler } from '../../hooks'
+
+import { studentService } from '../../services'
 import { studentFields } from '../../Components/common/forms/studentField'
 import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'

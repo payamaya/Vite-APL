@@ -3,7 +3,7 @@ import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import { useEffect, useState } from 'react'
 import { courseService } from '../../services'
 
-import { useCourseManagement } from '../../hooks/useCourseManagement'
+import { useCourseManagement } from '../../hooks'
 
 const TeacherDashboard = () => {
   const { setCourses } = useCourseManagement()
