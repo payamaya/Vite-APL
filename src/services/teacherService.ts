@@ -1,12 +1,12 @@
 import createEntityService from './entityServiceFactory'
 import { ITeacher } from '../interfaces/components/entities/ITeacher'
 
-const baseService = createEntityService<ITeacher>('teacher')
+const teachersService = createEntityService<ITeacher>('teacher')
 
-export default {
-  getAllTeachers: baseService.getAll,
-  getTeacherById: baseService.getById,
-  createTeacher: baseService.create,
-  updateTeacher: baseService.update,
-  deleteTeacher: baseService.delete,
+export const teacherService = {
+  getAllTeachers: teachersService.getAll,
+  getTeacherById: teachersService.getById,
+  createTeacher: teachersService.create,
+  updateTeacher: teachersService.update,
+  deleteTeacher: teachersService.delete,
 }

@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import courseService from '../../services/coursesService'
-import moduleService from '../../services/moduleService'
-import activityService from '../../services/activityService'
+import { courseService, moduleService, activityService } from '../../services'
 
-import { ICourse } from '../../interfaces/components/entities/ICourse'
-import { IModule } from '../../interfaces/components/entities/IModule'
-import { IActivity } from '../../interfaces/components/entities/IActivity'
+import {
+  ICourse,
+  IModule,
+  IActivity,
+} from '../../interfaces/components/entities'
+import {
+  useDeleteHandler,
+  useActivityManagement,
+  useModuleManagement,
+} from '../../hooks'
 
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
 
 import { useNotification } from '../../context/NotificationContext'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
-import { useModuleManagement } from '../../hooks/useModuleManagement'
-import { useActivityManagement } from '../../hooks/useActivityManagement'
 
 import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'

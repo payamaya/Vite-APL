@@ -1,12 +1,12 @@
 import { IModule } from '../interfaces/components/entities/IModule'
 import createNestedEntityService from './nestedEntityServiceFactory'
 
-const baseService = createNestedEntityService<IModule>('course', 'module')
+const modulesService = createNestedEntityService<IModule>('course', 'module')
 
-export default {
-  getAllModules: baseService.getAll,
-  getModuleById: baseService.getById,
-  createModule: baseService.create,
-  updateModule: baseService.update,
-  deleteModule: baseService.delete,
+export const moduleService = {
+  getAllModules: modulesService.getAll,
+  getModuleById: modulesService.getById,
+  createModule: modulesService.create,
+  updateModule: modulesService.update,
+  deleteModule: modulesService.delete,
 }

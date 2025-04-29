@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/Components/pages/TeacherNotice.tsx
+
 import { useState, useEffect } from 'react'
 import noticeTableColumns from '../../Components/common/tables/noticeTableColumns'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
-
-// import { INotice } from '../../interfaces/components/INotice'
-import courseService from '../../services/coursesService'
+import { courseService } from '../../services'
 
 function TeacherNotice() {
   const [notices, setNotices] = useState<any[]>([]) // You can replace 'any' with a specific type if you have one
@@ -15,7 +13,7 @@ function TeacherNotice() {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        // TODO Must change the courseService to noticeService
+        // TODO Must change the coursesService to noticeService
         //TODO Must change getAllCourses() to getAllNotices()
         //  const response = await noticeService.getAllNotices()
         const response = await courseService.getAllCourses() // example: replace with your actual service

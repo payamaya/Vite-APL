@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 
-import studentService from '../services/studentsService'
+import { studentService } from '../services'
 import { useNotification } from '../context/NotificationContext'
 import { IStudent } from '../interfaces/components/entities/IStudent'
 

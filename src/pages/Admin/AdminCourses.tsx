@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import courseService from '../../services/coursesService'
+import { courseService, studentService } from '../../services'
 import { ICourse } from '../../interfaces/components/entities/ICourse'
 // import { Link } from "react-router-dom"
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 import studentableColumns from '../../Components/common/tables/studentTableCoulmn'
-import studentsService from '../../services/studentsService'
+
 import { IStudent } from '../../interfaces/components/entities/IStudent'
 
 function AdminCourses() {
@@ -33,7 +33,7 @@ function AdminCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await studentsService.getAllStudents()
+        const response = await studentService.getAllStudents()
         setStudents(response.data as unknown as IStudent[])
       } catch (err) {
         setError(err as Error)

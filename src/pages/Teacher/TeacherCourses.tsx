@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ICourse } from '../../interfaces/components/entities/ICourse'
 
-import courseService from '../../services/coursesService'
+import { courseService } from '../../services'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 

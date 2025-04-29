@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import { useEffect, useState } from 'react'
-import courseService from '../../services/coursesService'
+import { courseService } from '../../services'
 
 import { useCourseManagement } from '../../hooks/useCourseManagement'
 

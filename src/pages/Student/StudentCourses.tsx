@@ -1,7 +1,7 @@
 // StudentCourses.tsx
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import courseService from '../../services/coursesService'
+import { courseService } from '../../services'
 import { ICourse } from '../../interfaces/components/entities/ICourse'
 import { ROUTES } from '../../routes/routePaths'
 import { formatDate } from '../../utils/dateUtils'
