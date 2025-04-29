@@ -5,7 +5,6 @@ import { ICourse } from '../../interfaces/components/entities/ICourse'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 import studentableColumns from '../../Components/common/tables/studentTableCoulmn'
-
 import { IStudent } from '../../interfaces/components/entities/IStudent'
 
 function AdminCourses() {
