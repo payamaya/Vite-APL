@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { RoleOrPublic } from '../../../types'
-import { NavItem } from '../navbar/navbarInterfaces'
+import { NavItem } from '../navbar/Navbar.types'
 
 export interface DashboardLayoutProps {
   role: RoleOrPublic

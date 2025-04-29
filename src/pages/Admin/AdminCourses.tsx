@@ -18,7 +18,9 @@ function AdminCourses() {
     const fetchCourses = async () => {
       try {
         const response = await courseService.getAllCourses()
-        setCourses(response.data as unknown as ICourse[])
+        setCourses(
+          Array.isArray(response.data) ? response.data : [response.data]
+        )
       } catch (err) {
         setError(err as Error)
       } finally {

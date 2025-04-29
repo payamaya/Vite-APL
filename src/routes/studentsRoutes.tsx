@@ -22,7 +22,7 @@ export const studentRoutes = [
       },
       {
         path: ROUTES.STUDENT.COURSE_DETAILS,
-        element: <Student.StudentCourses />,
+        element: <Student.StudentCourseDetails />,
       },
       {
         path: ROUTES.STUDENT.MODULE_DETAILS,

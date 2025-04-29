@@ -13,8 +13,10 @@ const TeacherCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
+        const response = await courseService.getAllCourses()
+        setCourses(
+          Array.isArray(response.data) ? response.data : [response.data]
+        )
       } catch (err) {
         setError(err as Error)
       } finally {

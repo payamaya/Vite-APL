@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import noticeTableColumns from '../../Components/common/tables/noticeTableColumns'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 
-import { INotice } from '../../interfaces/ui/INotice'
+// import { INotice } from '../../interfaces/components/INotice'
 import courseService from '../../services/coursesService'
 
 function TeacherNotice() {
@@ -19,8 +19,8 @@ function TeacherNotice() {
         //TODO Must change getAllCourses() to getAllNotices()
         //  const response = await noticeService.getAllNotices()
         const response = await courseService.getAllCourses() // example: replace with your actual service
-        const data = response.data as INotice[]
-        setNotices(data)
+        const data = response.data
+        setNotices(Array.isArray(data) ? data : [data])
       } catch (err) {
         setError(err as Error)
       } finally {

@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
 import { useEffect, useState } from 'react'
 import courseService from '../../services/coursesService'
-import { ICourse } from '../../interfaces/components/entities/ICourse'
+
 import { useCourseManagement } from '../../hooks/useCourseManagement'
 
 const TeacherDashboard = () => {
@@ -13,8 +13,10 @@ const TeacherDashboard = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
+        const response = await courseService.getAllCourses()
+        setCourses(
+          Array.isArray(response.data) ? response.data : [response.data]
+        )
       } catch (err) {
         setError(err as Error)
       } finally {

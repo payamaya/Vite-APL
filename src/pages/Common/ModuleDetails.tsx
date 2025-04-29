@@ -24,12 +24,11 @@ const ModuleDetails = () => {
       }
 
       // Fetch the course details
-      const courseResponse =
-        await courseService.getCourseById<ICourse>(courseId)
+      const courseResponse = await courseService.getCourseById(courseId)
       setCourse(courseResponse.data)
 
       // Fetch the specific module details using moduleId
-      const moduleResponse = await moduleService.getModuleById<IModule>(
+      const moduleResponse = await moduleService.getModuleById(
         courseId,
         moduleId
       )
