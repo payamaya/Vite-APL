@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { useTeacherManagement } from '../../hooks/useTeacherManagement'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
+import { useTeacherManagement, useDeleteHandler } from '../../hooks'
 import { teacherService } from '../../services'
 import { teacherFields } from '../../Components/common/forms/teacherFields'
 import { ResourceManager } from '../../Components/ResourceManager'
@@ -10,7 +9,7 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 import { useNotification } from '../../context/NotificationContext'
 import { formatDate } from '../../utils/dateUtils'
-import { ITeacher } from '../../interfaces/components/entities/ITeacher'
+import { ITeacher } from '../../interfaces/components/entities'
 
 const AdminManageTeacher = () => {
   const [loading, setLoading] = useState(true)

@@ -1,6 +1,6 @@
 // StudentDashboard.tsx
 import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
-import { useCourseManagement } from '../../hooks/useCourseManagement'
+import { useCourseManagement } from '../../hooks'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 

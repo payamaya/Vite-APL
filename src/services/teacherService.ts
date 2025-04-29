@@ -1,5 +1,5 @@
 import createEntityService from './entityServiceFactory'
-import { ITeacher } from '../interfaces/components/entities/ITeacher'
+import { ITeacher } from '../interfaces/components/entities'
 
 const teachersService = createEntityService<ITeacher>('teacher')
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { courseService, moduleService, activityService } from '../../services'
+import { activityService, courseService, moduleService } from '../../services'
 
 import {
   ICourse,

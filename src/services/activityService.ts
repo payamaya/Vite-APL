@@ -1,5 +1,5 @@
 import createNestedEntityService from './nestedEntityServiceFactory'
-import { IActivity } from '../interfaces/components/entities/IActivity'
+import { IActivity } from '../interfaces/components/entities'
 
 const activitiesService = createNestedEntityService<IActivity>(
   'course/module',

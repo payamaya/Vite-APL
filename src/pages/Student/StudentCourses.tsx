@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { courseService } from '../../services'
-import { ICourse } from '../../interfaces/components/entities/ICourse'
+import { ICourse } from '../../interfaces/components/entities'
 import { ROUTES } from '../../routes/routePaths'
 import { formatDate } from '../../utils/dateUtils'
 
