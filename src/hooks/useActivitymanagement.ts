@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
-import activityService from '../services/activityService'
+import { activityService } from '../services'
 import { useNotification } from '../context/NotificationContext'
 import { IActivity } from '../interfaces/components/entities/IActivity'
 

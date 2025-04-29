@@ -1,15 +1,15 @@
 import createNestedEntityService from './nestedEntityServiceFactory'
 import { IActivity } from '../interfaces/components/entities/IActivity'
 
-const baseService = createNestedEntityService<IActivity>(
+const activitiesService = createNestedEntityService<IActivity>(
   'course/module',
   'activity'
 )
 
-export default {
-  getAllActivities: baseService.getAll,
-  getActivityById: baseService.getById,
-  createActivity: baseService.create,
-  updateActivity: baseService.update,
-  deleteActivity: baseService.delete,
+export const activityService = {
+  getAllActivities: activitiesService.getAll,
+  getActivityById: activitiesService.getById,
+  createActivity: activitiesService.create,
+  updateActivity: activitiesService.update,
+  deleteActivity: activitiesService.delete,
 }

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import courseService from '../../services/coursesService'
-import moduleService from '../../services/moduleService'
-import activityService from '../../services/activityService'
+import { courseService, moduleService, activityService } from '../../services'
 
-import { ICourse } from '../../interfaces/components/entities/ICourse'
-import { IModule } from '../../interfaces/components/entities/IModule'
-import { IActivity } from '../../interfaces/components/entities/IActivity'
+import {
+  ICourse,
+  IModule,
+  IActivity,
+} from '../../interfaces/components/entities'
 
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { formatDate } from '../../utils/dateUtils'
