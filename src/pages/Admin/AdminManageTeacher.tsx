@@ -9,7 +9,6 @@ import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 import { useNotification } from '../../context/NotificationContext'
-import { formatDate } from '../../utils/dateUtils'
 import { ITeacher } from '../../interfaces/components/ITeacher'
 
 const AdminManageTeacher = () => {
@@ -87,11 +86,13 @@ const AdminManageTeacher = () => {
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
                   <div className='mb-4'>
                     <h3 className='fw-bold text-dark mb-1'>{teacher.name}</h3>
-                    <h4 className='text-primary mb-2'>{teacher.title}</h4>
-                    <p className='text-secondary mb-0'>{teacher.description}</p>
+                    <h3 className='fw-bold text-dark mb-1'>{teacher.title}</h3>
+                    <h3 className='fw-bold text-dark mb-1'>TeacherType:{teacher.teacherType}</h3>
+                    <p className='text-secondary mb-0'>{teacher.email}</p>
+                    <h3 className='fw-bold text-dark mb-1'>{teacher.telephone}</h3>
                   </div>
 
-                  <div className='row g-3'>
+                  {/* <div className='row g-3'>
                     <div className='col-md-6'>
                       <div className='bg-white border rounded-4 p-3 shadow-sm h-100'>
                         <div className='mb-1 text-muted text-uppercase small'>
@@ -112,7 +113,7 @@ const AdminManageTeacher = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </section>
 
                 <div className='d-flex justify-content-evenly gap-2 ms-3'>
