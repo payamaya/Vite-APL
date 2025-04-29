@@ -20,7 +20,7 @@ import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
-import { useActivityManagement } from '../../hooks/useActivitymanagement'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
 
 const CourseDetails = () => {
   const { courseId } = useParams()

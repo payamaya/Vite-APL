@@ -15,7 +15,7 @@ import { ResourceManager } from '../../Components/ResourceManager'
 import { useNotification } from '../../context/NotificationContext'
 import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 import { useModuleManagement } from '../../hooks/useModuleManagement'
-import { useActivityManagement } from '../../hooks/useActivitymanagement'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
 
 import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
