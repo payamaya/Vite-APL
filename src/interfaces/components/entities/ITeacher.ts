@@ -1,17 +1,19 @@
 // src/interfaces/components/entities/ITeacher.ts
 
 import { IDescriptiveEntity, ITimeBoundEntity } from '../../base'
+import { IPerson } from './IPerson'
 
 export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'
 
-export interface ITeacher extends IDescriptiveEntity, ITimeBoundEntity {
-  id: string
-  name: string
-  teacherType: TeacherTypeProfession
-  email: string
+export interface ITeacher
+  extends IDescriptiveEntity,
+    ITimeBoundEntity,
+    IPerson {
+  //TODO FIx later name like we have in the IPerson to prevent duplication
+
   message?: string
-  telephone?: string | number
+  address?: string
+  teacherType: TeacherTypeProfession
   role: string
-  img?: string
-  createdAt?: string
+  description?: string
 }

@@ -8,8 +8,11 @@ import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 import { useNotification } from '../../context/NotificationContext'
-import { formatDate } from '../../utils/dateUtils'
+// import { formatDate } from '../../utils/dateUtils'
 import { ITeacher } from '../../interfaces/components/entities'
+import { FaEnvelope, FaPhone } from 'react-icons/fa'
+import { AddressWithMap } from '../../Components/common/maps/AddressWithMap'
+// import { AddressWithMap } from '../../Components/common/maps/AddressWithMap'
 
 const AdminManageTeacher = () => {
   const [loading, setLoading] = useState(true)
@@ -84,30 +87,87 @@ const AdminManageTeacher = () => {
                 className='list-group-item border rounded m-2'
               >
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
-                  <div className='mb-4'>
-                    <h3 className='fw-bold text-dark mb-1'>{teacher.name}</h3>
-                    <h4 className='text-primary mb-2'>{teacher.title}</h4>
-                    <p className='text-secondary mb-0'>{teacher.description}</p>
-                  </div>
-
-                  <div className='row g-3'>
-                    <div className='col-md-6'>
-                      <div className='bg-white border rounded-4 p-3 shadow-sm h-100'>
-                        <div className='mb-1 text-muted text-uppercase small'>
-                          Start Date
-                        </div>
-                        <div className='fw-semibold text-dark'>
-                          {formatDate(teacher.startDate)}
-                        </div>
+                  <div className='d-flex flex-column flex-md-row gap-4'>
+                    {/* Avatar Section - Placeholder for future implementation */}
+                    <div className='text-center'>
+                      <div
+                        className='bg-secondary rounded-circle d-flex align-items-center justify-content-center'
+                        style={{ width: '100px', height: '100px' }}
+                      >
+                        <span className='text-white fs-4'>
+                          {teacher.firstName.charAt(0)}
+                          {teacher.lastName.charAt(0)}
+                        </span>
                       </div>
                     </div>
-                    <div className='col-md-6'>
-                      <div className='bg-white border rounded-4 p-3 shadow-sm h-100'>
-                        <div className='mb-1 text-muted text-uppercase small'>
-                          End Date
+
+                    {/* Teacher Info Section */}
+                    <div className='flex-grow-1'>
+                      {/* Name Row */}
+                      <div className='d-flex flex-column flex-md-row gap-3 mb-3'>
+                        <div className='flex-grow-1'>
+                          <h3 className='fw-bold text-dark mb-1'>
+                            <span className='text-muted small d-block'>
+                              First Name
+                            </span>
+                            {teacher.firstName}
+                          </h3>
                         </div>
-                        <div className='fw-semibold text-dark'>
-                          {formatDate(teacher.endDate)}
+                        <div className='flex-grow-1'>
+                          <h3 className='fw-bold text-dark mb-1'>
+                            <span className='text-muted small d-block'>
+                              Last Name
+                            </span>
+                            {teacher.lastName}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Profession */}
+                      <div className='mb-3'>
+                        <h4 className='text-dark'>
+                          <span className='text-muted small d-block'>
+                            Profession
+                          </span>
+                          <span className='badge bg-primary'>
+                            {teacher.teacherType}
+                          </span>
+                        </h4>
+                      </div>
+
+                      {/* Address Map - Conditional */}
+                      {/* {teacher.address && (
+                        <div className='mb-3'>
+                          <AddressWithMap
+                            address={teacher.address}
+                            className='border rounded p-2 bg-white'
+                          />
+                        </div>
+                      )} */}
+
+                      {/* Contact Information */}
+                      <div className='border-top pt-3'>
+                        <div className='d-flex align-items-center mb-2'>
+                          <FaPhone className='text-secondary me-2' />
+                          <a
+                            href={`tel:${teacher.telephone}`}
+                            className='text-decoration-none text-dark'
+                          >
+                            {teacher.telephone}
+                          </a>
+                        </div>
+                        <div className='d-flex align-items-center'>
+                          <FaEnvelope className='text-secondary me-2' />
+                          <a
+                            href={`mailto:${teacher.email}`}
+                            className='text-decoration-none text-dark'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              window.location.href = `mailto:${teacher.email}?subject=Contact from Website&body=Hello ${teacher.firstName},`
+                            }}
+                          >
+                            {teacher.email}
+                          </a>
                         </div>
                       </div>
                     </div>

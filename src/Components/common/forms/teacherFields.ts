@@ -3,8 +3,11 @@ import { ITeacher } from '../../../interfaces/components/entities/ITeacher'
 import { teacherTypeProfessionOptions } from '../../../interfaces/components/options/teacherTypeProfession'
 
 export const teacherFields: ModalField<ITeacher>[] = [
-  { name: 'name', label: 'Name', type: 'text', required: true },
-  { name: 'title', label: 'Title', type: 'text', required: true },
+  { name: 'firstName', label: 'First Name', type: 'text', required: true },
+  { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+  { name: 'address', label: 'Address', type: 'text', required: true },
+  { name: 'email', label: 'Email', type: 'text', required: true },
+  { name: 'telephone', label: 'Telephone', type: 'text' },
   {
     name: 'teacherType',
     label: 'Profession Type',
@@ -12,8 +15,7 @@ export const teacherFields: ModalField<ITeacher>[] = [
     required: true,
     options: teacherTypeProfessionOptions,
   },
-  { name: 'email', label: 'Email', type: 'text', required: true },
-  { name: 'telephone', label: 'Telephone', type: 'text' },
+  // { name: 'title', label: 'Title', type: 'text', required: true },
 
-  { name: 'description', label: 'Description', type: 'textarea' },
+  // { name: 'description', label: 'Description', type: 'textarea' },
 ]
