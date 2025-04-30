@@ -1,14 +1,17 @@
+// src/interfaces/components/entities/ITeacher.ts
+
+import { IDescriptiveEntity, ITimeBoundEntity } from '../../base'
+
 export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'
 
-export interface ITeacher {
+export interface ITeacher extends IDescriptiveEntity, ITimeBoundEntity {
   id: string
   name: string
-  title: string
   teacherType: TeacherTypeProfession
   email: string
+  message?: string
   telephone?: string | number
   role: string
-  description: string
   img?: string
   createdAt?: string
 }

@@ -1,4 +1,4 @@
-import { ActivityType } from './IActivity'
+import { ActivityType } from '../types/activityType'
 
 export const activityTypeOptions: { label: string; value: ActivityType }[] = [
   { value: 'assignment', label: 'Assignment' },

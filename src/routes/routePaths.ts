@@ -14,6 +14,8 @@ export const ROUTES = {
     COURSE_DETAILS: '/admin/courses/:courseId',
     MANAGE_TEACHER: '/admin/teachers',
     MANAGE_TEACHER_DETAILS: '/admin/teachers/:courseId',
+    MANAGE_STUDENT: '/admin/students',
+    MANAGE_STUDENT_DETAILS: '/admin/students/:courseId',
     MODULE_DETAILS: '/admin/courses/:courseId/module/:moduleId',
     USERS: 'users',
   },

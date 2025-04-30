@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities'
 
-import courseService from '../../services/coursesService'
+import { courseService } from '../../services'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
 
@@ -13,8 +13,10 @@ const TeacherCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
+        const response = await courseService.getAllCourses()
+        setCourses(
+          Array.isArray(response.data) ? response.data : [response.data]
+        )
       } catch (err) {
         setError(err as Error)
       } finally {

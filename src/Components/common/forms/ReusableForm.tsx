@@ -2,7 +2,7 @@ import { useFormHandler } from '../../../hooks/useFormHandler'
 import ReusableButton from '../buttons/ReusableButton'
 import apiService from '../../../api/apiService'
 import { ReusableFormProps } from './ReusableFormProps'
-import { IFormData } from '../../../interfaces/components/IFormData'
+import { IFormData } from '../../../interfaces/components/forms/IFormData'
 import ReusableInput from '../inputs/ReusableInput'
 import ReusableTextarea from '../inputs/ReusableTextarea'
 

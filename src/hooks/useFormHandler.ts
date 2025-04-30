@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 type UseFormHandlerReturn<T> = {
   formData: T

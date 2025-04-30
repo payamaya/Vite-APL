@@ -1,4 +1,4 @@
-import { NavItem } from './navbarInterfaces'
+import { NavItem } from '../Navbar.types'
 
 export interface NavItemListProps {
   items: NavItem[]

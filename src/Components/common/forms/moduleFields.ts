@@ -1,5 +1,5 @@
 import { ModalField } from '../../../interfaces/components/common/ModalField'
-import { IModule } from '../../../interfaces/components/IModule'
+import { IModule } from '../../../interfaces/components/entities/IModule'
 
 export const moduleFields: ModalField<IModule>[] = [
   { name: 'name', label: 'Name', type: 'text', required: true },

@@ -25,6 +25,11 @@ export const adminRoutes = [
         element: <Admin.AdminManageTeacher />,
       },
       {
+        path: ROUTES.ADMIN.MANAGE_STUDENT,
+        element: <Admin.AdminManageStudent />,
+      },
+
+      {
         path: ROUTES.ADMIN.MODULE_DETAILS,
         element: <ModuleDetails />,
       },

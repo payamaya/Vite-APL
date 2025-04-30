@@ -1,5 +1,5 @@
 // utils/navUtils.ts
-import { NavItem } from '../Components/navbar/navbarInterfaces'
+import { NavItem } from '../Components/common/navbar/navbarInterfaces'
 import { RoleOrPublic } from '../types'
 
 export const filterNavItemsByRole = (

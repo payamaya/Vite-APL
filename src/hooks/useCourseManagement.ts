@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { ApiResponse } from '../interfaces/components/ApiResponse'
-import { ICourse } from '../interfaces/components/ICourse'
-import courseService from '../services/coursesService'
+import { ApiResponse } from '../interfaces/api/ApiResponse'
+import { ICourse } from '../interfaces/components/entities'
+import { courseService } from '../services'
 import { useNotification } from '../context/NotificationContext'
 
 export const useCourseManagement = (initialCourses: ICourse[] = []) => {

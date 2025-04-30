@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import courseService from '../../services/coursesService'
-import moduleService from '../../services/moduleService'
-import activityService from '../../services/activityService'
+import { courseService, moduleService, activityService } from '../../services'
 
-import { ICourse } from '../../interfaces/components/ICourse'
-import { IModule } from '../../interfaces/components/IModule'
-import { IActivity } from '../../interfaces/components/IActivity'
+import {
+  ICourse,
+  IModule,
+  IActivity,
+} from '../../interfaces/components/entities'
+import {
+  useDeleteHandler,
+  useActivityManagement,
+  useModuleManagement,
+} from '../../hooks'
 
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
 
 import { useNotification } from '../../context/NotificationContext'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
-import { useModuleManagement } from '../../hooks/useModuleManagement'
-import useActivityManagement from '../../hooks/useActivitymanagement'
 
 import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
@@ -78,12 +80,16 @@ const TeacherCourseDetails = () => {
       setError('')
 
       const [courseResponse, modulesResponse] = await Promise.all([
-        courseService.getCourseById<ICourse>(courseId),
-        moduleService.getAllModules<IModule[]>(courseId),
+        courseService.getCourseById(courseId),
+        moduleService.getAllModules(courseId),
       ])
 
       setCourse(courseResponse.data)
-      setModules(modulesResponse.data)
+      setModules(
+        Array.isArray(modulesResponse.data)
+          ? modulesResponse.data
+          : [modulesResponse.data]
+      )
     } catch (err) {
       setError('Failed to load course or modules')
       console.error(err)
@@ -95,9 +101,10 @@ const TeacherCourseDetails = () => {
   const handleFetchActivities = async (moduleId: string) => {
     setSelectedModuleId(moduleId)
     try {
-      const response =
-        await activityService.getAllActivities<IActivity[]>(moduleId)
-      setActivities(response.data)
+      const response = await activityService.getAllActivities(moduleId)
+      setActivities(
+        Array.isArray(response.data) ? response.data : [response.data]
+      )
     } catch (err) {
       console.error('Failed to fetch activities', err)
     }
@@ -131,7 +138,6 @@ const TeacherCourseDetails = () => {
             label='Add Module'
           />
         </section>
-
         <div className='accordion' id='modulesAccordion'>
           {modules.length > 0 ? (
             modules.map((module) => (
@@ -277,7 +283,6 @@ const TeacherCourseDetails = () => {
             <p>No modules found for this course.</p>
           )}
         </div>
-
         {/* Module Modal */}
         <ResourceManager<IModule>
           fields={moduleFields}
@@ -293,8 +298,8 @@ const TeacherCourseDetails = () => {
           initialData={currentModule || undefined}
           title={currentModule?.id ? 'Edit Module' : 'Create New Module'}
         />
-
         {/* Activity Modal */}
+
         <ResourceManager<IActivity>
           fields={activityFields}
           isOpen={isActivityModalOpen}
@@ -303,14 +308,23 @@ const TeacherCourseDetails = () => {
             setCurrentActivity(null)
           }}
           onSubmit={async (data) => {
-            await handleSubmitActivity(data)
-            setIsActivityModalOpen(false)
-            handleFetchActivities(selectedModuleId)
+            // Ensure moduleId is included in the submitted data
+            const activityData = {
+              ...data,
+              moduleId: selectedModuleId,
+            }
+
+            const success = await handleSubmitActivity(activityData)
+            if (success) {
+              setIsActivityModalOpen(false)
+              // Refresh the activities list
+              handleFetchActivities(selectedModuleId)
+            }
           }}
           initialData={currentActivity || undefined}
           title={currentActivity?.id ? 'Edit Activity' : 'Create New Activity'}
+          key={`activity-modal-${selectedModuleId}-${currentActivity?.id || 'new'}`}
         />
-
         <GoBackButton />
       </section>
     </main>

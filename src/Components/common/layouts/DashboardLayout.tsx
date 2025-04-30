@@ -1,4 +1,4 @@
-import Navbar from '../../navbar/Navbar'
+import Navbar from '../navbar/Navbar'
 import Sidebar from '../sidebar/SideBar'
 import {
   PUBLIC_NAV_ITEMS,

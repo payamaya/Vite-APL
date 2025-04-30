@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { useCourseManagement } from '../../hooks/useCourseManagement'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
-import courseService from '../../services/coursesService'
+import { useCourseManagement, useDeleteHandler } from '../../hooks'
+
+import { courseService } from '../../services'
 import { courseFields } from '../../Components/common/forms/courseFields'
 import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { ICourse } from '../../interfaces/components/entities'
 import { useNotification } from '../../context/NotificationContext'
 import { formatDate } from '../../utils/dateUtils'
 

@@ -5,8 +5,8 @@
  * @property {(responseData: any) => void} [onSuccess] - Callback after successful submission
  * @property {() => void} [onCancel] - Callback for cancel action
  */
-import { ApiResponse } from '../../../interfaces/components/ApiResponse'
-import { IFormData } from '../../../interfaces/components/IFormData'
+import { ApiResponse } from '../../../interfaces/api/ApiResponse'
+import { IFormData } from '../../../interfaces/components/forms/IFormData'
 export interface ReusableFormProps {
   endpoint: string
   initialData?: IFormData // For edit functionality

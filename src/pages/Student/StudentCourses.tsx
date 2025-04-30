@@ -1,22 +1,28 @@
+// StudentCourses.tsx
 import { useEffect, useState } from 'react'
-import courseService from '../../services/coursesService'
-import { ICourse } from '../../interfaces/components/ICourse'
-// import { Link } from "react-router-dom"
-import ReusableTable from '../../Components/common/tables/ReusableTable'
-import courseTableColumns from '../../Components/common/tables/courseTableColumns'
+import { Link } from 'react-router-dom'
+import { courseService } from '../../services'
+import { ICourse } from '../../interfaces/components/entities'
+import { ROUTES } from '../../routes/routePaths'
+import { formatDate } from '../../utils/dateUtils'
 
-function StudentCourses() {
+const StudentCourses = () => {
   const [courses, setCourses] = useState<ICourse[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
+        setLoading(true)
+        const response = await courseService.getAllCourses()
+        setCourses(
+          Array.isArray(response.data) ? response.data : [response.data]
+        )
+        setError(null)
       } catch (err) {
-        setError(err as Error)
+        setError('Failed to load courses. Please try again later.')
+        console.error(err)
       } finally {
         setLoading(false)
       }
@@ -26,46 +32,67 @@ function StudentCourses() {
   }, [])
 
   return (
-    <main className='mt-4'>
-      <article className='row'>
-        <section className='col-12 mt-4'>
-          <div className='card shadow-sm'>
-            <header className='card-header bg-warning text-white'>
-              <h5 id='courses-section' className='h5'>
-                Student Courses
-              </h5>
-            </header>
-            <div className='card-body'>
-              {loading && (
-                <p className='text-center' role='status'>
-                  Loading...
-                </p>
-              )}
-              {error && (
-                <div className='alert alert-danger' role='alert'>
-                  Errorr....
-                </div>
-              )}
-              {courses.length === 0 && !loading && !error && (
-                <div className='alert alert-info' role='status'>
-                  You haven't created any courses yet.
-                </div>
-              )}
-              {courses.length > 0 && (
-                <ReusableTable
-                  data={courses}
-                  columns={courseTableColumns}
-                  searchPlaceholder='Search Courses...'
-                  onRowClick={(course) =>
-                    console.log('Selected course:', course)
-                  }
-                />
-              )}
+    <div className='container mt-4'>
+      <div className='card shadow-sm'>
+        <div className='card-header bg-primary text-white'>
+          <h2 className='h5 mb-0'>My Courses</h2>
+        </div>
+
+        <div className='card-body'>
+          {loading && (
+            <div className='text-center py-4'>
+              <div className='spinner-border text-primary' role='status'>
+                <span className='visually-hidden'>Loading...</span>
+              </div>
             </div>
-          </div>
-        </section>
-      </article>
-    </main>
+          )}
+
+          {error && (
+            <div className='alert alert-danger' role='alert'>
+              {error}
+            </div>
+          )}
+
+          {!loading && courses.length === 0 && (
+            <div className='alert alert-info'>
+              You are not enrolled in any courses yet.
+            </div>
+          )}
+
+          {!loading && courses.length > 0 && (
+            <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4'>
+              {courses.map((course) => (
+                <div key={course.id} className='col'>
+                  <Link
+                    to={ROUTES.STUDENT.COURSE_DETAILS.replace(
+                      ':courseId',
+                      course.id
+                    )}
+                    className='text-decoration-none'
+                  >
+                    <div className='card h-100 shadow-sm hover-shadow transition'>
+                      <div className='card-body'>
+                        <h3 className='h5 card-title'>{course.name}</h3>
+                        <h4 className='h6 text-muted'>{course.title}</h4>
+                        <p className='card-text text-truncate'>
+                          {course.description}
+                        </p>
+                      </div>
+                      <div className='card-footer bg-transparent'>
+                        <small className='text-muted'>
+                          {formatDate(course.startDate)} -{' '}
+                          {formatDate(course.endDate)}
+                        </small>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -1,28 +1,19 @@
-import { useEffect, useState } from 'react'
+// StudentDashboard.tsx
 import DashboardLayout from '../../Components/common/layouts/DashboardLayout'
-import { useCourseManagement } from '../../hooks/useCourseManagement'
-import courseService from '../../services/coursesService'
-import { ICourse } from '../../interfaces/components/ICourse'
+import { useCourseManagement } from '../../hooks'
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 
 const StudentDashboard = () => {
   const { setCourses } = useCourseManagement()
-  const [, setLoading] = useState(true)
-  const [, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await courseService.getAllCourses<ICourse[]>()
-        setCourses(response.data)
-      } catch (err) {
-        setError(err as Error)
-      } finally {
-        setLoading(false)
-      }
+    // The actual course fetching is now handled in the specific components
+    // This ensures we don't fetch data we might not need
+    return () => {
+      // Cleanup if needed
+      setCourses([])
     }
-
-    fetchCourses()
   }, [setCourses])
 
   return (
