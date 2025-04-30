@@ -11,7 +11,6 @@ import { useNotification } from '../../context/NotificationContext'
 // import { formatDate } from '../../utils/dateUtils'
 import { ITeacher } from '../../interfaces/components/entities'
 import { FaEnvelope, FaPhone } from 'react-icons/fa'
-import { AddressWithMap } from '../../Components/common/maps/AddressWithMap'
 // import { AddressWithMap } from '../../Components/common/maps/AddressWithMap'
 
 const AdminManageTeacher = () => {
