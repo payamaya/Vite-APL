@@ -5,7 +5,7 @@ import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { ServiceInterface } from './ServiceInterface'
 
 interface Options {
-  parentId?: string // for modules and activities needing courseId/moduleId
+  parentId?: string
 }
 
 export function useEntityManagement<T>(
