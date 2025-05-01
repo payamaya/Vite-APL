@@ -32,7 +32,7 @@ const StudentCourses = () => {
   }, [])
 
   return (
-    <div className='container mt-4'>
+    <div className='border border-2 border-primary rounded'>
       <div className='card shadow-sm'>
         <div className='card-header bg-primary text-white'>
           <h2 className='h5 mb-0'>My Courses</h2>

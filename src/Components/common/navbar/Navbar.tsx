@@ -4,7 +4,8 @@ import { NavbarProps } from './Navbar.types'
 import { handleMenuClose, toggleMenu } from './Navbar.utils'
 import ReusableButton from '../buttons/ReusableButton'
 import { filterNavItemsByRole } from '../../../utils/navUtils'
-
+import { FaBars, FaTimes } from 'react-icons/fa'
+import './Navbar.css'
 const Navbar: React.FC<NavbarProps> = ({
   brand,
   navItems,
@@ -40,12 +41,12 @@ const Navbar: React.FC<NavbarProps> = ({
           aria-expanded={isOpen}
           aria-label='Toggle navigation'
         >
-          <span className='navbar-toggler-icon'></span>
+          {isOpen ? <FaTimes className='fs-4' /> : <FaBars className='fs-4' />}
         </ReusableButton>
 
         {/* Menu Items */}
         <div
-          className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}
+          className={`collapse navbar-collapse bg-light z-5 ${isOpen ? 'show' : ''}`}
           id='navbarSupportedContent'
         >
           <ul className='navbar-nav me-auto mb-2 mb-lg-0'>

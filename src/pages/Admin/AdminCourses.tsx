@@ -48,7 +48,7 @@ function AdminCourses() {
       <article className='row'>
         <section className='col-12 mt-4'>
           <div className='card shadow-sm'>
-            <header className='card-header bg-warning text-white'>
+            <header className='card-header bg-primary text-white'>
               <h5 id='courses-section' className='h5'>
                 Admin Dashboard Courses
               </h5>
@@ -85,7 +85,7 @@ function AdminCourses() {
         </section>
         <section className='col-12 mt-4'>
           <div className='card shadow-sm'>
-            <header className='card-header bg-warning text-white'>
+            <header className='card-header bg-primary text-white'>
               <h5 id='courses-section' className='h5'>
                 Admin Dashboard Students
               </h5>

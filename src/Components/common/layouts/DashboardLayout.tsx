@@ -1,8 +1,8 @@
-import Navbar from '../navbar/Navbar'
+// import Navbar from '../navbar/Navbar'
 import Sidebar from '../sidebar/SideBar'
 import {
   PUBLIC_NAV_ITEMS,
-  NAV_BRAND,
+  // NAV_BRAND,
   ADMIN_NAV_ITEMS,
   TEACHER_NAV_ITEMS,
   STUDENT_NAV_ITEMS,
@@ -40,13 +40,7 @@ const DashboardLayout = ({
   }
 
   return (
-    <div className='d-flex flex-column vh-100 vw-100 '>
-      <Navbar
-        brand={NAV_BRAND}
-        navItems={PUBLIC_NAV_ITEMS}
-        currentRole={role}
-      />
-
+    <div className='container d-flex flex-column vh-100 vw-100 '>
       <div className='d-flex flex-grow-1 overflow-hidden'>
         <Sidebar role={role} navItems={roleNavItems} />
 
@@ -54,7 +48,6 @@ const DashboardLayout = ({
           <div className='container-fluid py-4'>
             <div className='d-flex justify-content-between align-items-center mb-4'>
               <h1>{title}</h1>
-              {/* Add contextual actions here if needed */}
             </div>
             {children || <Outlet />}
           </div>

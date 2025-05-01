@@ -37,7 +37,7 @@ const TeacherHome = () => {
         className='border border-2 p-2 border-primary rounded shadow-sm mb-2 '
         style={{ maxWidth: '1200px' }}
       >
-        <header className='card-header bg-black text-white'>
+        <header className='card-header bg-primary text-white'>
           <h1 id='dashboard-header' className='d-flex justify-content-center'>
             Teacher Dashboard
           </h1>

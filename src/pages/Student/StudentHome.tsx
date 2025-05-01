@@ -34,74 +34,79 @@ const StudentHome = () => {
   }, [])
 
   return (
-    <section className='container mt-4'>
-      <main className='w-75' aria-labelledby='student-dashboard-heading'>
-        <article
-          className='row d-flex justify-content-center my-2'
-          aria-labelledby='courses-section'
-        >
-          <section className='col-12'>
-            <div className='card shadow-sm'>
-              <header className='card-header bg-warning text-white'>
-                <h5 id='courses-section' className='h5'>
-                  Student Courses
-                </h5>
-              </header>
-              <div className='card-body'>
-                {loading && (
-                  <p className='text-center' role='status'>
-                    Loading courses...
-                  </p>
-                )}
-                {error && (
-                  <div className='alert alert-danger' role='alert'>
-                    {error}
-                  </div>
-                )}
-                {!loading && courses.length === 0 && (
-                  <div className='alert alert-info' role='status'>
-                    No courses available.
-                  </div>
-                )}
-                {!loading && courses.length > 0 && (
-                  <div className='row g-4' role='list'>
-                    {courses.map((course) => (
-                      <article
-                        key={course.id}
-                        className='col-md-6 col-lg-4'
-                        role='listitem'
-                        aria-labelledby={`course-${course.id}-title`}
-                      >
-                        <Link
-                          to={ROUTES.STUDENT.COURSE_DETAILS.replace(
-                            ':courseId',
-                            course.id
-                          )}
-                          // className='btn btn-sm btn-outline-primary mt-3 align-self-start'
-                          aria-label={`View details for ${course.name}`}
-                        >
-                          <div className='card h-100 shadow-sm border-0 course-card'>
-                            <div className='card-body d-flex flex-column'>
-                              <div className='card-body'>
-                                <h3>Title: {course.title}</h3>
-                                <h4>Name: {course.name}</h4>
-                                <h5>Description: {course.description}</h5>
-                                <h6>Start: {formatDate(course.startDate)}</h6>
-                                <h6>End: {formatDate(course.endDate)}</h6>
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </article>
-                    ))}
-                  </div>
-                )}
-              </div>
+    <main
+      className='main d-flex flex-column align-items-center'
+      aria-labelledby='student-dashboard-heading'
+    >
+      <article
+        className='border border-2 p-2 border-primary rounded shadow-sm mb-2'
+        aria-labelledby='courses-section'
+      >
+        <header className='card-header bg-primary text-white'>
+          <h1 id='dashboard-header' className='d-flex justify-content-center'>
+            Student Dashboard
+          </h1>
+        </header>
+
+        <div className='card-body'>
+          <h5 className='h5 d-flex justify-content-center'>
+            Welcome, Student! Here's your dashboard overview.
+          </h5>
+        </div>
+      </article>
+      <section className='border border-2 border-primary rounded w-100'>
+        <div className='shadow-sm p-3'>
+          {loading && (
+            <p className='text-center' role='status'>
+              Loading courses...
+            </p>
+          )}
+          {error && (
+            <div className='alert alert-danger' role='alert'>
+              {error}
             </div>
-          </section>
-        </article>
-      </main>
-    </section>
+          )}
+          {!loading && courses.length === 0 && (
+            <div className='alert alert-info' role='status'>
+              No courses available.
+            </div>
+          )}
+          {!loading && courses.length > 0 && (
+            <div className='row g-4' role='list'>
+              {courses.map((course) => (
+                <article
+                  key={course.id}
+                  className='col-md-6 col-lg-4'
+                  role='listitem'
+                  aria-labelledby={`course-${course.id}-title`}
+                >
+                  <Link
+                    to={ROUTES.STUDENT.COURSE_DETAILS.replace(
+                      ':courseId',
+                      course.id
+                    )}
+                    // className='btn btn-sm btn-outline-primary mt-3 align-self-start'
+                    aria-label={`View details for ${course.name}`}
+                  >
+                    <div className='card h-100 shadow-sm border-0 course-card'>
+                      <div className='card-body d-flex flex-column'>
+                        <div className='card-body'>
+                          <h3>Title: {course.title}</h3>
+                          <h4>Name: {course.name}</h4>
+                          <h5>Description: {course.description}</h5>
+                          <h6>Start: {formatDate(course.startDate)}</h6>
+                          <h6>End: {formatDate(course.endDate)}</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
   )
 }
 
