@@ -14,10 +14,10 @@ const Footer: React.FC<FooterProps> = ({
 
   return (
     <footer
-      className={`bg-dark text-light py-3 mt-auto w-100 ${fixed === 'top' ? 'fixed-top' : 'fixed-bottom'}`}
+      className={`bg-dark text-light py-3 mx-0 position-relative mt-auto  ${fixed === 'top' ? 'fixed-top' : 'fixed-bottom'}`}
     >
       <section className='container-fluid d-flex justify-content-between align-items-center flex-wrap'>
-        <NavLink className='footer-brand fw-bold' to='/'>
+        <NavLink className='text-white footer-brand fw-bold' to='/'>
           {brand}
         </NavLink>
         <NavItemList items={filteredItems} />

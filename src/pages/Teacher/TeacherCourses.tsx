@@ -31,7 +31,7 @@ const TeacherCourses = () => {
     <>
       <section className='border border-2 border-primary rounded'>
         <div className='card shadow-sm'>
-          <header className='card-header bg-warning text-white'>
+          <header className='card-header bg-primary text-white'>
             <h5 id='dashboard-header' className='h5'>
               Teacher Dashboard Courses
             </h5>

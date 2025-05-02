@@ -1,0 +1,38 @@
+.navbar-collapse {
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+.nav-item:hover {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--primary-color);
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    z-index: 1000;
+  }
+  .navbar-collapse ul {
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    z-index: 1000;
+  }
+
+  .navbar-collapse.show {
+    max-height: 1000px;
+    visibility: visible;
+    opacity: 1;
+    padding: 1rem;
+  }
+}

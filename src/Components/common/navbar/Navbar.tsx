@@ -4,7 +4,8 @@ import { NavbarProps } from './Navbar.types'
 import { handleMenuClose, toggleMenu } from './Navbar.utils'
 import ReusableButton from '../buttons/ReusableButton'
 import { filterNavItemsByRole } from '../../../utils/navUtils'
-
+import { FaBars, FaTimes } from 'react-icons/fa'
+import './Navbar.css'
 const Navbar: React.FC<NavbarProps> = ({
   brand,
   navItems,
@@ -24,8 +25,8 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav
-      className={`navbar navbar-expand-lg bg-body-tertiary ${
-        fixed === 'top' ? 'fixed-top' : 'fixed-bottom'
+      className={`navbar navbar-expand-lg bg-body-tertiary mx-0 ${
+        fixed === 'top' ? 'sticky-top' : 'sticky-bottom'
       }`}
     >
       <div className='container-fluid'>
@@ -40,15 +41,15 @@ const Navbar: React.FC<NavbarProps> = ({
           aria-expanded={isOpen}
           aria-label='Toggle navigation'
         >
-          <span className='navbar-toggler-icon'></span>
+          {isOpen ? <FaTimes className='fs-4' /> : <FaBars className='fs-4' />}
         </ReusableButton>
 
         {/* Menu Items */}
         <div
-          className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}
+          className={`collapse navbar-collapse d-flex z-5 ${isOpen ? 'show' : ''}`}
           id='navbarSupportedContent'
         >
-          <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+          <ul className='navbar-nav me-auto m-2 mb-lg-0 d-flex flex-row justify-content-around'>
             {filteredNavItems.map((item, index) => (
               <li className='nav-item' key={index}>
                 <NavLink
