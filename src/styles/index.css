@@ -14,6 +14,7 @@
   --navbar-height: 56px;
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 60px;
+  --primary-color: #0d6efd;
 }
 * {
   transition: all 0.2s ease;
@@ -23,11 +24,11 @@ a {
 }
 
 body {
-  overflow: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
   margin: 0;
   place-items: center;
   width: 100vw;
-  min-height: 100vh;
   align-items: center;
 }
 
@@ -37,18 +38,18 @@ h1 {
 }
 
 main {
-  min-height: 100vh;
   transition: margin-left 0.3s;
-}
-
-.min-vh-100 {
   min-height: 100vh;
 }
 
-/* For the main content area */
-.flex-grow-1 {
-  flex-grow: 1;
+.main {
+  overflow: hidden;
+  width: 100vw;
 }
+.container {
+  min-width: 100vw;
+}
+
 .course-card {
   border-radius: 1rem;
   transition:
@@ -59,9 +60,6 @@ main {
 .course-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
-}
-.container {
-  min-width: 100vw;
 }
 /* HTML: <div class="loader"></div> */
 .loader {
@@ -89,14 +87,6 @@ main {
 .loader::after {
   opacity: 0.83;
   transform: rotate(60deg);
-}
-
-/* Main content area */
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  background-color: #f8f9fa;
 }
 
 /* Responsive behavior */

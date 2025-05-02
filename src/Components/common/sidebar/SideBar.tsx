@@ -67,7 +67,7 @@ const SideBar = ({ role, navItems, fixed = 'left' }: SidebarProps) => {
 
       <ul className='nav  mb-auto'>
         {navItems?.map((item) => (
-          <li key={`${item.link}-${item.label}`} className='nav-item w-100'>
+          <li key={`${item.link}-${item.label}`} className='nav-item '>
             <NavLink
               className={`nav-link py-2 px-3 mb-2 d-flex align-items-center ${
                 isActive(item.link) ? ' text-white' : 'text-dark'

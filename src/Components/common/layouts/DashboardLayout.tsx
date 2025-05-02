@@ -40,14 +40,14 @@ const DashboardLayout = ({
   }
 
   return (
-    <div className='container d-flex flex-column vh-100 vw-100 '>
-      <div className='d-flex flex-grow-1 overflow-hidden'>
+    <div className='container-fluid d-flex flex-column '>
+      <div className='d-flex overflow-hidden position-relative'>
         <Sidebar role={role} navItems={roleNavItems} />
 
-        <main className='flex-grow-1 overflow-auto p-4'>
-          <div className='container-fluid py-4'>
-            <div className='d-flex justify-content-between align-items-center mb-4'>
-              <h1>{title}</h1>
+        <main className=' p-4 container-fluid'>
+          <div className='py-4 sm-container-fluid'>
+            <div className='d-flex justify-content-center align-items-center mb-4'>
+              <h1 className='display-1 display-md-3 display-sm-4'>{title}</h1>
             </div>
             {children || <Outlet />}
           </div>

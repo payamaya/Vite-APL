@@ -20,7 +20,7 @@ function App() {
         currentRole={currentRole}
         fixed={'top'}
       />
-      <main className='flex-grow-1'>
+      <main className='main flex-grow-1'>
         <AppRoutes />
       </main>
       <Footer

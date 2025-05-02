@@ -25,8 +25,8 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav
-      className={`navbar navbar-expand-lg bg-body-tertiary ${
-        fixed === 'top' ? 'fixed-top' : 'fixed-bottom'
+      className={`navbar navbar-expand-lg bg-body-tertiary mx-0 ${
+        fixed === 'top' ? 'sticky-top' : 'sticky-bottom'
       }`}
     >
       <div className='container-fluid'>
@@ -46,10 +46,10 @@ const Navbar: React.FC<NavbarProps> = ({
 
         {/* Menu Items */}
         <div
-          className={`collapse navbar-collapse bg-light z-5 ${isOpen ? 'show' : ''}`}
+          className={`collapse navbar-collapse d-flex z-5 ${isOpen ? 'show' : ''}`}
           id='navbarSupportedContent'
         >
-          <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+          <ul className='navbar-nav me-auto m-2 mb-lg-0 d-flex flex-row justify-content-around'>
             {filteredNavItems.map((item, index) => (
               <li className='nav-item' key={index}>
                 <NavLink
