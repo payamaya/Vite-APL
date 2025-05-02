@@ -11,6 +11,7 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import { useNotification } from '../../context/NotificationContext'
 // import { formatDate } from '../../utils/dateUtils'
 import { IStudent } from '../../interfaces/components/entities/IStudent'
+import { FaCalendar, FaEnvelope, FaPhone } from 'react-icons/fa'
 
 const AdminManageStudent = () => {
   const [loading, setLoading] = useState(true)
@@ -85,20 +86,93 @@ const AdminManageStudent = () => {
                 className='list-group-item border rounded m-2'
               >
                 <section className='p-4 my-4 border rounded-4 shadow-sm bg-light'>
-                  <div className='mb-4'>
-                    <p className='fw-bold text-dark mb-1'>
-                      {student.firstName}
-                    </p>
-                    <p className='fw-bold text-dark mb-1'>{student.lastName}</p>
+                  <div className='d-flex flex-column flex-md-row gap-4'>
+                    {/* Avatar Section - Placeholder for future implementation */}
+                    <div className='text-center'>
+                      <div
+                        className='bg-primary rounded-circle d-flex align-items-center justify-content-center'
+                        style={{ width: '100px', height: '100px' }}
+                      >
+                        <span className='text-white fs-4'>
+                          {student.firstName.charAt(0)}
+                          {student.lastName.charAt(0)}
+                        </span>
+                      </div>
+                    </div>
 
-                    <p className='text-secondary mb-0'>{student.email}</p>
-                    <p className='text-secondary mb-0'>{student.address}</p>
-                    <p className='text-secondary mb-0'>{student.telephone}</p>
-                    <p className='text-secondary mb-0'>
-                      {student.createdAt
-                        ? new Date(student.createdAt).toLocaleString()
-                        : 'No date'}
-                    </p>
+                    {/* Student Info Section */}
+                    <div className='flex-grow-1'>
+                      {/* Name Row */}
+                      <div className='d-flex flex-column flex-md-row gap-3 mb-3'>
+                        <div className='flex-grow-1'>
+                          <h3 className='fw-bold text-dark mb-1'>
+                            <span className='text-muted small d-block'>
+                              First Name
+                            </span>
+                            {student.firstName}
+                          </h3>
+                        </div>
+                        <div className='flex-grow-1'>
+                          <h3 className='fw-bold text-dark mb-1'>
+                            <span className='text-muted small d-block'>
+                              Last Name
+                            </span>
+                            {student.lastName}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Address Map - Conditional */}
+                      {/* {student.address && (
+                        <div className='mb-3'>
+                          <AddressWithMap
+                            address={student.address}
+                            className='border rounded p-2 bg-white'
+                          />
+                        </div>
+                      )} */}
+
+                      {/* Contact Information */}
+                      <div className='border-top pt-3'>
+                        <div className='d-flex align-items-center mb-2'>
+                          <FaPhone className='text-primary me-2' />
+                          <a
+                            href={`tel:${student.telephone}`}
+                            className='text-decoration-none text-dark'
+                          >
+                            {student.telephone}
+                          </a>
+                        </div>
+                        <div className='d-flex align-items-center mb-2'>
+                          <FaEnvelope className='text-primary me-2' />
+                          <a
+                            href={`mailto:${student.email}`}
+                            className='text-decoration-none text-dark'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              window.location.href = `mailto:${student.email}?subject=Contact from Website&body=Hello ${student.firstName},`
+                            }}
+                          >
+                            {student.email}
+                          </a>
+                        </div>
+                        <div className='d-flex align-items-center'>
+                          <FaCalendar className='text-primary me-2' />
+                          <span className='text-dark'>
+                            {student.createdAt
+                              ? new Date(student.createdAt).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  }
+                                )
+                              : 'No date available'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
