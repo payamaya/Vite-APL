@@ -45,7 +45,7 @@ function AdminCourses() {
 
   return (
     // <main className='mt-4'>
-    <article className='row'>
+    <main className='row'>
       <section className='col-12 mt-4'>
         <div className='card shadow-sm'>
           <header className='card-header bg-primary text-white'>
@@ -118,7 +118,7 @@ function AdminCourses() {
           </div>
         </div>
       </section>
-    </article>
+    </main>
     // </main>
   )
 }

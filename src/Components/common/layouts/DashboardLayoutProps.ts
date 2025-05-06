@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
 import { RoleOrPublic } from '../../../types'
+import { ReactNode } from 'react'
 import { NavItem } from '../navbar/Navbar.types'
 
 export interface DashboardLayoutProps {

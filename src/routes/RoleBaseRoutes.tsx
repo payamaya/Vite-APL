@@ -1,0 +1,38 @@
+// RoleBasedRoutes.tsx
+import { Route, RouteObject } from 'react-router-dom'
+// import ProtectedRoute from '../Components/ProtectedRoute'
+import { UserRole } from '../types'
+
+interface RoleBasedRoutesProps {
+  basePath: string
+  routes: RouteObject[]
+  allowedRoles: UserRole[]
+}
+
+const RoleBasedRoutes = ({
+  basePath,
+  routes,
+  // allowedRoles,
+}: RoleBasedRoutesProps) => {
+  return (
+    <Route
+      path={basePath}
+      // element={<ProtectedRoute allowedRoles={allowedRoles} />}
+    >
+      {routes.map((route, i) => (
+        <Route key={i} path={route.path} element={route.element}>
+          {route.children?.map((childRoute, j) => (
+            <Route
+              key={j}
+              path={childRoute.path}
+              element={childRoute.element}
+              index={childRoute.index}
+            />
+          ))}
+        </Route>
+      ))}
+    </Route>
+  )
+}
+
+export default RoleBasedRoutes

@@ -6,6 +6,8 @@ import { adminRoutes } from './adminRoutes'
 import { studentRoutes } from './studentsRoutes'
 import { ROUTES } from './routePaths'
 import { teacherRoutes } from './teacherRoutes'
+import RoleBasedRoutes from './RoleBaseRoutes'
+import { ROLES } from '../contants/RolesEnum'
 // import ProtectedRoute from '../Components/ProtectedRoute'
 // import { ROLES } from '../contants/RolesEnum'
 
@@ -13,47 +15,25 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* Admin Route */}
-      <Route
-        path={ROUTES.ADMIN.ROOT}
-        // element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}
-      >
-        {adminRoutes.map((route, i) => (
-          <Route key={i} path={route.path} element={route.element}>
-            {route.children?.map((childRoute, i) => (
-              <Route key={i} {...childRoute} />
-            ))}
-          </Route>
-        ))}
-      </Route>
 
+      {RoleBasedRoutes({
+        basePath: ROUTES.ADMIN.ROOT,
+        routes: adminRoutes,
+        allowedRoles: [ROLES.ADMIN],
+      })}
       {/* Teacher Route */}
-      <Route
-        path={ROUTES.TEACHER.ROOT}
-        //TODO this is commented out so we can work in the commonent
-        //  element={<ProtectedRoute allowedRoles={[ROLES.TEACHER]} />}
-      >
-        {teacherRoutes.map((route, i) => (
-          <Route key={i} path={route.path} element={route.element}>
-            {route.children?.map((childRoute, j) => (
-              <Route key={j} {...childRoute} />
-            ))}
-          </Route>
-        ))}
-      </Route>
+      {RoleBasedRoutes({
+        basePath: ROUTES.TEACHER.ROOT,
+        routes: teacherRoutes,
+        allowedRoles: [ROLES.TEACHER],
+      })}
 
       {/* Student Routes */}
-      <Route
-        path={ROUTES.STUDENT.ROOT}
-        // element={<ProtectedRoute allowedRoles={[ROLES.STUDENT]} />}
-      >
-        {studentRoutes.map((route, i) => (
-          <Route key={i} path={route.path} element={route.element}>
-            {route.children?.map((childRoute, j) => (
-              <Route key={j} {...childRoute} />
-            ))}
-          </Route>
-        ))}
-      </Route>
+      {RoleBasedRoutes({
+        basePath: ROUTES.STUDENT.ROOT,
+        routes: studentRoutes,
+        allowedRoles: [ROLES.STUDENT],
+      })}
 
       {/* Common Routes */}
       <Route path={ROUTES.HOME} element={<Home />} />

@@ -16,11 +16,14 @@ const Navbar: React.FC<NavbarProps> = ({
 }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const filteredNavItems = filterNavItemsByRole(navItems, currentRole)
+  const filteredNavItems = filterNavItemsByRole(
+    navItems,
+    currentRole ?? undefined
+  )
 
   const filteredDropdownItems = filterNavItemsByRole(
     dropdownItems || [],
-    currentRole
+    currentRole ?? undefined
   )
 
   return (

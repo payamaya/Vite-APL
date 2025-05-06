@@ -24,6 +24,6 @@ export interface NavbarProps {
   dropdownLabel?: string
   dropdownItems?: DropdownItem[]
   fixed?: FixedPosition
-  currentRole?: RoleOrPublic
+  currentRole?: RoleOrPublic | null
   showSearch?: boolean
 }

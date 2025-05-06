@@ -32,23 +32,18 @@ const TeacherHome = () => {
   }, [])
 
   return (
-    <main className='main d-flex flex-column align-items-center'>
-      <article
-        className='border border-2 p-2 border-primary rounded shadow-sm mb-2 '
-        style={{ maxWidth: '1200px' }}
-      >
-        <header className='card-header bg-primary text-white'>
-          <h1 id='dashboard-header' className='d-flex justify-content-center'>
-            Teacher Dashboard
-          </h1>
-        </header>
+    <section className='row ' aria-labelledby='courses-section'>
+      <header className='card-header bg-primary text-white'>
+        <h1 id='dashboard-header' className='d-flex justify-content-center'>
+          Teacher Dashboard
+        </h1>
+      </header>
 
-        <div className='card-body'>
-          <h5 className='h5 d-flex justify-content-center'>
-            Welcome, Teacher! Here's your dashboard overview.
-          </h5>
-        </div>
-      </article>
+      <div className='card-body'>
+        <h5 className='h5 d-flex justify-content-center'>
+          Welcome, Teacher! Here's your dashboard overview.
+        </h5>
+      </div>
 
       <section
         className='border border-2 border-primary rounded w-100'
@@ -105,7 +100,7 @@ const TeacherHome = () => {
           )}
         </div>
       </section>
-    </main>
+    </section>
   )
 }
 
