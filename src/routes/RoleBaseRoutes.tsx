@@ -16,6 +16,7 @@ const RoleBasedRoutes = ({
 }: RoleBasedRoutesProps) => {
   return (
     <Route
+      key={basePath}
       path={basePath}
       // element={<ProtectedRoute allowedRoles={allowedRoles} />}
     >

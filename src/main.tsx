@@ -8,15 +8,18 @@ import './styles/index.css'
 
 import App from './App.tsx'
 import { NotificationProvider } from './context/NotificationContext.tsx'
+import { AuthProvider } from './context/AuthContext.tsx'
 
 const root = document.getElementById('root') as HTMLElement
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <NotificationProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </NotificationProvider>
+    <AuthProvider>
+      <NotificationProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </NotificationProvider>
+    </AuthProvider>
   </React.StrictMode>
 )

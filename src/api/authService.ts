@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
-import { AuthResponse } from '../interfaces/api/AuthResponse'
+// import { AuthResponse } from '../interfaces/api/AuthResponse'
 
 const authService = {
   login: async (credentials: {
     email: string
     password: string
-  }): Promise<string> => {
+  }): Promise<{ token: string; role: string }> => {
     try {
       const response = await apiService.create<
-        { email: string; password: string }, // request type
-        AuthResponse // response type
+        { email: string; password: string },
+        { token: string; role: string; expiresAt: string }
       >('auth/login', credentials)
 
-      const token = response.data.token
+      const { token, role } = response.data
       localStorage.setItem('token', token)
-      return token
+      return { token, role }
     } catch (error) {
       throw new Error(`Invalid credentials: ${error}`)
     }
@@ -34,7 +35,8 @@ const authService = {
     if (!token) return null
 
     try {
-      const decodedToken: DecodedToken = JSON.parse(atob(token.split('.')[1]))
+      // const decodedToken: DecodedToken = JSON.parse(atob(token.split('.')[1]))
+      const decodedToken: DecodedToken = jwt_decode(token)
       return decodedToken.role
     } catch (error) {
       console.error('Error decoding token:', error)
@@ -47,12 +49,24 @@ const authService = {
     if (!token) return false
 
     try {
-      const decodedToken: DecodedToken = JSON.parse(atob(token.split('.')[1]))
+      const decodedToken: DecodedToken = jwt_decode(token)
       return decodedToken.exp * 1000 > Date.now()
-    } catch (error) {
-      console.log(`UnAthorized Token: ${error}`)
-      return false
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message || error.message || 'Login failed'
+      throw new Error(message)
     }
   },
 }
 export default authService
+function jwt_decode(token: string): DecodedToken {
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+      .join('')
+  )
+  return JSON.parse(jsonPayload) as DecodedToken
+}

@@ -1,7 +1,8 @@
 // src/types/index.ts
-export type UserRole = 'admin' | 'teacher' | 'student' | 'public' | 'all'
+import { ROLES } from '../contants/RolesEnum'
+export type UserRole = (typeof ROLES)[keyof typeof ROLES]
 // export type UserRole = 'student' | 'teacher' | 'admin'
-export type RoleOrPublic = UserRole // Add 'all' for public items
+export type RoleOrPublic = UserRole | null // Add 'all' for public items
 export interface DecodedToken {
   role: RoleOrPublic
   exp: number

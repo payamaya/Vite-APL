@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom'
 import authService from '../../api/authService'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
 import React, { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
+
 const Home = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-
+  const navigate = useNavigate()
+  const { setAuthenticated } = useAuth()
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -19,20 +23,27 @@ const Home = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted data:', formData)
     setIsLoading(true)
     setError(null)
-    //Clear input
 
     try {
-      const token = await authService.login({
+      // Get both token and role from the login response
+      const { role } = await authService.login({
         email: formData.email,
         password: formData.password,
       })
-      console.log('Login success. Token', token)
+
       setFormData({ email: '', password: '' })
+
+      // Update authentication state with the role
+      setAuthenticated(true)
+
+      // Navigate based on role after state is updated
+      navigate(`/${role}`)
     } catch (error) {
       console.error('Login failed', error)
+      setError(error instanceof Error ? error.message : 'Login failed')
+      setAuthenticated(false, null)
     } finally {
       setIsLoading(false)
     }
