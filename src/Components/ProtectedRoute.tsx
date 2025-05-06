@@ -10,10 +10,19 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({
   allowedRoles = [],
-  redirectPath = '/dasboard',
+  redirectPath = '/',
   children,
 }: ProtectedRouteProps) => {
   const { isAuthenticated, userRole } = useAuth()
+
+  // Debug logs
+  console.log('ProtectedRoute check:', {
+    isAuthenticated,
+    userRole,
+    allowedRoles,
+    hasRequiredRole:
+      allowedRoles.length > 0 && userRole && allowedRoles.includes(userRole),
+  })
 
   if (!isAuthenticated) {
     return <Navigate to={redirectPath} replace />
@@ -23,6 +32,10 @@ const ProtectedRoute = ({
     allowedRoles.length > 0 &&
     (!userRole || !allowedRoles.includes(userRole))
   ) {
+    console.warn('Unauthorized access attempt', {
+      required: allowedRoles,
+      actual: userRole,
+    })
     return <Navigate to='/unauthorized' replace />
   }
 

@@ -27,19 +27,22 @@ const Home = () => {
     setError(null)
 
     try {
-      // Get both token and role from the login response
-      const { role } = await authService.login({
+      const { role, token } = await authService.login({
         email: formData.email,
         password: formData.password,
       })
+      console.log('token :>> ', token)
 
+      console.log('Login successful - Role:', role)
       setFormData({ email: '', password: '' })
 
-      // Update authentication state with the role
-      setAuthenticated(true)
+      // Set authentication state
+      setAuthenticated(true, role)
 
-      // Navigate based on role after state is updated
-      navigate(`/${role}`)
+      // Navigate after ensuring state is updated
+      setTimeout(() => {
+        navigate(`/${role}`) // Now using lowercase paths to match your ROUTES
+      }, 10)
     } catch (error) {
       console.error('Login failed', error)
       setError(error instanceof Error ? error.message : 'Login failed')
@@ -61,6 +64,7 @@ const Home = () => {
           error={error && error.toLowerCase().includes('email') ? error : ''}
         />
         <ReusableInput
+          autocomplte='true'
           label='Password'
           name='password'
           type='password'

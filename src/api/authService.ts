@@ -1,27 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
+import { ROLES } from '../contants/RolesEnum'
 // import { AuthResponse } from '../interfaces/api/AuthResponse'
 
 const authService = {
   login: async (credentials: {
     email: string
     password: string
-  }): Promise<{ token: string; role: string }> => {
+  }): Promise<{ token: string; role: UserRole }> => {
     try {
       const response = await apiService.create<
         { email: string; password: string },
         { token: string; role: string; expiresAt: string }
       >('auth/login', credentials)
 
-      const { token, role } = response.data
+      const { token, role: rawRole } = response.data
+
+      // Normalize role to match your UserRole type
+      const role = rawRole.toLowerCase() as UserRole
+
+      // Validate the role
+      if (!Object.values(ROLES).includes(role)) {
+        throw new Error(`Invalid role received: ${rawRole}`)
+      }
+
       localStorage.setItem('token', token)
       return { token, role }
     } catch (error) {
       throw new Error(`Invalid credentials: ${error}`)
     }
   },
-
   logout: (): void => {
     localStorage.removeItem('token')
   },
