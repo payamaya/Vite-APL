@@ -46,6 +46,7 @@ const authService = {
     try {
       // const decodedToken: DecodedToken = JSON.parse(atob(token.split('.')[1]))
       const decodedToken: DecodedToken = jwt_decode(token)
+      if (decodedToken.role === 'all') return null // Filter out invalid value
       return decodedToken.role
     } catch (error) {
       console.error('Error decoding token:', error)
