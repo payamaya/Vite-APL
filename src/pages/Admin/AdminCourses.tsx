@@ -44,7 +44,6 @@ function AdminCourses() {
   }, [])
 
   return (
-    // <main className='mt-4'>
     <main className='row'>
       <section className='col-12 mt-4'>
         <div className='card shadow-sm'>
