@@ -7,7 +7,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://localhost:7293', // Must match with the backend URL
+        target: 'https://vite-apl.vercel.app/', // Must match with the backend URL
         changeOrigin: true,
         secure: false, // Only for development
         rewrite: (path) => path.replace(/^\/api/, ''),
