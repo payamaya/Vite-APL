@@ -19,11 +19,8 @@ import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
 
-import {
-  useActivityManagement,
-  useDeleteHandler,
-  useModuleManagement,
-} from '../../hooks'
+import { useDeleteHandler, useModuleManagement } from '../../hooks'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
 
 const TeacherCourseDetails = () => {
   const { courseId } = useParams()
