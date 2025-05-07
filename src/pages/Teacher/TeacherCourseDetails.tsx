@@ -186,7 +186,7 @@ const TeacherCourseDetails = () => {
 
                       {activities.length > 0 ? (
                         <div className='list-group'>
-                          {activities?.map((activity) => (
+                          {activities?.map((activity: IActivity) => (
                             <div key={activity.id} className='list-group-item'>
                               <h6>Title: {activity.title}</h6>
                               <p>Description: {activity.description}</p>
