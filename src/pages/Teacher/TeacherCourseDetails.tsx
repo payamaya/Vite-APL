@@ -7,11 +7,6 @@ import {
   IModule,
   IActivity,
 } from '../../interfaces/components/entities'
-import {
-  useDeleteHandler,
-  useActivityManagement,
-  useModuleManagement,
-} from '../../hooks'
 
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
@@ -23,6 +18,9 @@ import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
+import { useModuleManagement } from '../../hooks/useModuleManagement'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
+import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 
 const TeacherCourseDetails = () => {
   const { courseId } = useParams()
@@ -140,7 +138,7 @@ const TeacherCourseDetails = () => {
         </section>
         <div className='accordion' id='modulesAccordion'>
           {modules.length > 0 ? (
-            modules.map((module) => (
+            modules.map((module: IModule) => (
               // modules.map((module, index) => (
               <div className='accordion-item' key={module.id}>
                 <h2 className='accordion-header'>
