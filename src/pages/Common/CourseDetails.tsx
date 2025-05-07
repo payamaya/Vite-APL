@@ -8,11 +8,6 @@ import {
   IActivity,
 } from '../../interfaces/components/entities'
 
-import {
-  useDeleteHandler,
-  useActivityManagement,
-  useModuleManagement,
-} from '../../hooks'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
@@ -23,6 +18,9 @@ import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
+import { useModuleManagement } from '../../hooks/useModuleManagement'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
+import { useDeleteHandler } from '../../hooks/useDeleteHandler'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
