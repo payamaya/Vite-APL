@@ -18,9 +18,12 @@ import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
-import { useModuleManagement } from '../../hooks/useModuleManagement'
-import { useActivityManagement } from '../../hooks/useActivityManagement'
-import { useDeleteHandler } from '../../hooks/useDeleteHandler'
+
+import {
+  useActivityManagement,
+  useDeleteHandler,
+  useModuleManagement,
+} from '../../hooks'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
@@ -191,7 +194,7 @@ const CourseDetails = () => {
 
                       {activities.length > 0 ? (
                         <div className='list-group'>
-                          {activities?.map((activity: IActivity) => (
+                          {activities.map((activity: IActivity) => (
                             <div key={activity.id} className='list-group-item'>
                               <h6>Title: {activity.title}</h6>
                               <p>Description: {activity.description}</p>
