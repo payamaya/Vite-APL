@@ -15,6 +15,7 @@ export const useActivityManagement = (moduleId: string) => {
     try {
       setLoading(true)
       setError('')
+
       const response = await activityService.getAllActivities(moduleId)
       setActivities(
         Array.isArray(response.data) ? response.data : [response.data]

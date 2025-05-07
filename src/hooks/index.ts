@@ -1,13 +1,9 @@
-export * from './useActivitymanagement'
-export * from './useCourseManagement'
-export * from './useModuleManagement'
-
-export * from './useStudentManagement'
-export * from './useTeacherManagement'
-
-export * from './useDeleteHandler'
-export * from './useEntityManagement'
-
-export * from './useFormHandler'
-export * from './ServiceInterface'
-export * from './useAuth'
+// src/hooks/index.ts
+export { useActivityManagement } from './useActivityManagement'
+export { useCourseManagement } from './useCourseManagement'
+export { useModuleManagement } from './useModuleManagement'
+export { useStudentManagement } from './useStudentManagement'
+export { useTeacherManagement } from './useTeacherManagement'
+export { useDeleteHandler } from './useDeleteHandler'
+export { useEntityManagement } from './useEntityManagement'
+export { useFormHandler } from './useFormHandler'
