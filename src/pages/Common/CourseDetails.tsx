@@ -154,12 +154,10 @@ const CourseDetails = () => {
                 <h2 className='accordion-header'>
                   <button
                     className={`accordion-button collapsed `}
-                    // className={`accordion-button ${index !== 0 ? 'collapsed' : ''}`}
                     type='button'
                     data-bs-toggle='collapse'
                     data-bs-target={`#collapseModule${module.id}`}
                     aria-expanded={'false'}
-                    // aria-expanded={index === 0 ? 'true' : 'false'}
                     aria-controls={`collapseModule${module.id}`}
                     onClick={() => handleFetchActivities(module.id)}
                   >
@@ -170,7 +168,6 @@ const CourseDetails = () => {
                 <div
                   id={`collapseModule${module.id}`}
                   className={`accordion-collapse collapse `}
-                  // className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
                   data-bs-parent='#modulesAccordion'
                 >
                   <div className='accordion-body'>
