@@ -7,7 +7,7 @@ import { studentRoutes } from './studentsRoutes'
 import { ROUTES } from './routePaths'
 import { teacherRoutes } from './teacherRoutes'
 import RoleBasedRoutes from './RoleBaseRoutes'
-import { ROLES } from '../contants/RolesEnum'
+import { ROLES } from '../constants/RolesEnum'
 // import ProtectedRoute from '../Components/ProtectedRoute'
 // import { ROLES } from '../contants/RolesEnum'
 

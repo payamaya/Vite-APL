@@ -1,6 +1,6 @@
 import apiService from './apiService'
 import { DecodedToken, UserRole } from '../types'
-import { ROLES } from '../contants/RolesEnum'
+import { ROLES } from '../constants/RolesEnum'
 
 const authService = {
   login: async (credentials: {

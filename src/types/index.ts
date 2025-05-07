@@ -1,5 +1,5 @@
 // src/types/index.ts
-import { ROLES } from '../contants/RolesEnum'
+import { ROLES } from '../constants/RolesEnum'
 export type UserRole = (typeof ROLES)[keyof typeof ROLES]
 // export type UserRole = 'student' | 'teacher' | 'admin'
 export type RoleOrPublic = UserRole | null // Add 'all' for public items

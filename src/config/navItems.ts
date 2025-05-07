@@ -1,5 +1,5 @@
 // src/constants/navigation.ts
-import { ROLES } from '../contants/RolesEnum'
+import { ROLES } from '../constants/RolesEnum'
 import { NavItem } from '../interfaces/components/NavbarInterfaces'
 
 export const NAV_BRAND = 'My E-Learning Platform'
