@@ -1,4 +1,4 @@
-export * from './useActivityManagement'
+export * from './useActivitymanagement'
 export * from './useCourseManagement'
 export * from './useModuleManagement'
 
