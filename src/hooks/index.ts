@@ -1,4 +1,3 @@
-// src/hooks/index.ts
 export { useActivityManagement } from './useActivityManagement'
 export { useCourseManagement } from './useCourseManagement'
 export { useModuleManagement } from './useModuleManagement'

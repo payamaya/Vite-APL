@@ -118,7 +118,6 @@ function AdminCourses() {
         </div>
       </section>
     </main>
-    // </main>
   )
 }
 
