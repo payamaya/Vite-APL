@@ -5,9 +5,9 @@ import { NavItem } from '../interfaces/components/NavbarInterfaces'
 export const NAV_BRAND = 'My E-Learning Platform'
 
 export const PUBLIC_NAV_ITEMS: NavItem[] = [
-  { label: 'Home', link: '/', role: 'all' },
-  { label: 'About', link: '/about', role: 'all' },
-  { label: 'Courses', link: '/courses', role: 'all' },
+  { label: 'Home', link: '/', role: null },
+  { label: 'About', link: '/about', role: null },
+  { label: 'Courses', link: '/courses', role: null },
 ]
 
 export const ADMIN_NAV_ITEMS: NavItem[] = [
@@ -31,7 +31,7 @@ export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'My Courses', link: '/student/courses', role: ROLES.STUDENT },
 ]
 export const FOOTER_NAV_ITEMS: NavItem[] = [
-  { label: 'Privacy', link: '/privacy', role: 'all' },
-  { label: 'Terms', link: '/terms', role: 'all' },
-  { label: 'Support', link: '/support', role: 'all' },
+  { label: 'Privacy', link: '/privacy', role: null },
+  { label: 'Terms', link: '/terms', role: null },
+  { label: 'Support', link: '/support', role: null },
 ]

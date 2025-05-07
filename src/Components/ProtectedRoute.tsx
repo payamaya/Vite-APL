@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { UserRole } from '../types'
+import authService from '../api/authService'
 
 interface ProtectedRouteProps {
   allowedRoles?: UserRole[]
@@ -13,33 +14,39 @@ const ProtectedRoute = ({
   redirectPath = '/',
   children,
 }: ProtectedRouteProps) => {
-  const { isAuthenticated, userRole } = useAuth()
+  const { isAuthenticated, userRole, isLoading } = useAuth()
 
-  // Debug logs
-  console.log('ProtectedRoute check:', {
-    isAuthenticated,
-    userRole,
-    allowedRoles,
-    hasRequiredRole:
-      allowedRoles.length > 0 && userRole && allowedRoles.includes(userRole),
+  if (isLoading) {
+    return <div>Verifying session...</div>
+  }
+
+  console.log('Route protection check:', {
+    hasToken: !!authService.getToken(),
+    tokenValid: authService.isValidToken(),
+    storedRole: userRole,
+    freshRole: authService.getUserRole(),
   })
 
+  // Primary authentication check
   if (!isAuthenticated) {
     return <Navigate to={redirectPath} replace />
   }
 
-  if (
-    allowedRoles.length > 0 &&
-    (!userRole || !allowedRoles.includes(userRole))
-  ) {
-    console.warn('Unauthorized access attempt', {
-      required: allowedRoles,
-      actual: userRole,
-    })
-    return <Navigate to='/unauthorized' replace />
+  // Role-based access control
+  if (allowedRoles.length > 0) {
+    const effectiveRole = userRole || authService.getUserRole()
+
+    if (!effectiveRole) {
+      console.warn('Role missing but token valid - allowing access')
+      return children ? children : <Outlet />
+    }
+
+    if (!allowedRoles.includes(effectiveRole)) {
+      console.warn('Role not authorized:', effectiveRole)
+      return <Navigate to='/unauthorized' replace />
+    }
   }
 
   return children ? children : <Outlet />
 }
-
 export default ProtectedRoute
