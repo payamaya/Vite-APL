@@ -1,2 +1,2 @@
-const API_BASE_URL = 'https://vite-apl.vercel.app/api/'
+const API_BASE_URL = 'https://localhost:7293/api/'
 export default API_BASE_URL
