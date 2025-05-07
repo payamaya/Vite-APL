@@ -59,10 +59,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    // Initial check with more reliable timing
     const timer = setTimeout(() => {
       checkAuth()
-    }, 150) // Slightly longer delay for more reliability
+    }, 150)
 
     // Storage event listener for cross-tab sync
     const handleStorageChange = (e: StorageEvent) => {
