@@ -1,5 +1,4 @@
-// utils/navUtils.ts
-import { NavItem } from '../Components/common/navbar/navbarInterfaces'
+import { NavItem } from '../Components/common/navbar/Navbar.types'
 import { RoleOrPublic } from '../types'
 
 export const filterNavItemsByRole = (
@@ -7,6 +6,6 @@ export const filterNavItemsByRole = (
   currentRole?: RoleOrPublic
 ): NavItem[] => {
   return items.filter(
-    (item) => !item.role || item.role === 'all' || item.role === currentRole
+    (item) => !item.role || item.role === null || item.role === currentRole
   )
 }

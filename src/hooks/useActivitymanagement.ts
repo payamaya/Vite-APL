@@ -98,5 +98,3 @@ export const useActivityManagement = (moduleId: string) => {
     handleSubmitActivity,
   }
 }
-
-export default useActivityManagement
