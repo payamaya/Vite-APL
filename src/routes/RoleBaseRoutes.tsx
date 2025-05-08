@@ -1,15 +1,15 @@
 // RoleBasedRoutes.tsx
 import { Route, RouteObject } from 'react-router-dom'
 import ProtectedRoute from '../Components/ProtectedRoute'
-import { UserRole } from '../types'
+import { UserRoleValue } from '../constants/RolesEnum'
 
 interface RoleBasedRoutesProps {
   basePath: string
   routes: RouteObject[]
-  allowedRoles: UserRole[]
+  allowedRoles: UserRoleValue[]
 }
 
-const RoleBasedRoutes = ({
+export const RoleBasedRoutes = ({
   basePath,
   routes,
   allowedRoles,
@@ -35,5 +35,3 @@ const RoleBasedRoutes = ({
     </Route>
   )
 }
-
-export default RoleBasedRoutes

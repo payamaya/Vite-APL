@@ -1,7 +1,14 @@
-// src/interfaces/IStudent.ts
-import { IPerson } from './IPerson'
+import { UserRoleValue } from '../../../constants/RolesEnum'
+import { IUserBase } from './IUserBase'
 
-export interface IStudent extends IPerson {
+export interface IStudent extends IUserBase {
   label?: string
-  // Inherits all person properties
+  role: Extract<UserRoleValue, 'student'> // Strictly student role
+  studentId: string
+  enrollmentDate: Date
+  currentCourses?: {
+    courseId: string
+    enrollmentDate: Date
+    status: 'active' | 'completed' | 'withdrawn'
+  }[]
 }

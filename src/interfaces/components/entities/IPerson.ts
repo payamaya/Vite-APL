@@ -1,10 +1,16 @@
 import { IBaseEntity } from '../../base/IBaseEntity'
 
-// src/interfaces/IPerson.ts (common person properties)
 export interface IPerson extends IBaseEntity {
   firstName: string
   lastName: string
   email: string
   telephone?: string | number
-  address?: string
+  address?: {
+    street?: string
+    city?: string
+    postalCode?: string
+    country?: string
+  }
+  dateOfBirth?: Date
+  gender?: 'male' | 'female' | 'other' | 'prefer-not-to-say'
 }

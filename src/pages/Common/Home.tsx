@@ -10,7 +10,7 @@ const Home = () => {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { setAuthenticated } = useAuth()
+  const { setAuthenticated, sessionId } = useAuth()
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -27,10 +27,13 @@ const Home = () => {
     setError(null)
 
     try {
-      const { role, token } = await authService.login({
-        email: formData.email,
-        password: formData.password,
-      })
+      const { role, token } = await authService.login(
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        sessionId // Replace with the actual sessionId value
+      )
       console.log('token :>> ', token)
 
       console.log('Login successful - Role:', role)

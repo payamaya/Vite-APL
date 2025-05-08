@@ -8,24 +8,24 @@ import {
 } from './config/navItems'
 
 import Footer from './Components/common/footer/Footer'
-import { useAuth } from './hooks/useAuth'
+import { useAuth } from './context/AuthContext'
 
 function App() {
-  const { user } = useAuth()
+  const { userRole } = useAuth()
 
   return (
     <>
       <Navbar
         brand={NAV_BRAND}
         navItems={PUBLIC_NAV_ITEMS}
-        currentRole={user ?? undefined}
+        currentRole={userRole ?? undefined}
         fixed={'top'}
       />
       <main className='main flex-grow-1'>
         <AppRoutes />
       </main>
       <Footer
-        currentRole={user ?? undefined}
+        currentRole={userRole ?? undefined}
         footerItems={FOOTER_NAV_ITEMS}
         brand={NAV_BRAND}
         fixed={'bottom'}

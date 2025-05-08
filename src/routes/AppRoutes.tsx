@@ -2,14 +2,15 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Home, About, Courses, CourseDetails } from '../pages/Common'
 import ModuleDetails from '../pages/Common/ModuleDetails'
-import { adminRoutes } from './adminRoutes'
-import { studentRoutes } from './studentsRoutes'
-import { ROUTES } from './routePaths'
-import { teacherRoutes } from './teacherRoutes'
-import RoleBasedRoutes from './RoleBaseRoutes'
-import { ROLES } from '../contants/RolesEnum'
-// import ProtectedRoute from '../Components/ProtectedRoute'
-// import { ROLES } from '../contants/RolesEnum'
+import {
+  adminRoutes,
+  teacherRoutes,
+  studentRoutes,
+  ROUTES,
+  RoleBasedRoutes,
+} from '../routes'
+
+import { ROLES } from '../constants/RolesEnum'
 
 const AppRoutes = () => {
   return (

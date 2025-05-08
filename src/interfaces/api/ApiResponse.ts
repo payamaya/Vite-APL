@@ -10,3 +10,11 @@ export interface ApiResponse<T = any> extends BaseApiResponse {
   statusText: string
   headers?: Record<string, unknown>
 }
+
+// Specific type for login response
+export interface LoginResponse {
+  token: string
+  role: string
+  expiresAt: string
+  sessionId?: string // Optional if you implement session tracking
+}
