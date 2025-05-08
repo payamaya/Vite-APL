@@ -3,18 +3,15 @@
 import { IDescriptiveEntity, ITimeBoundEntity } from '../../base'
 import { IPerson } from './IPerson'
 
-export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'
+export type UserTypeProfession = 'student' | 'teacher'
 
-export interface ITeacher
-  extends IDescriptiveEntity,
-    ITimeBoundEntity,
-    IPerson {
+export interface IUser extends IDescriptiveEntity, ITimeBoundEntity, IPerson {
   //TODO FIx later name like we have in the IPerson to prevent duplication
 
   message?: string
   address?: string
   password?: string
-  teacherType?: TeacherTypeProfession
+  userType?: UserTypeProfession
   role: string
   description?: string
 }

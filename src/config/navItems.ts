@@ -15,6 +15,8 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: ' Manage Courses', link: '/admin', role: ROLES.ADMIN },
   { label: 'Manage Teachers', link: '/admin/teachers', role: ROLES.ADMIN },
   { label: 'Manage Students', link: '/admin/students', role: ROLES.ADMIN },
+  //TODO Change the link address to the correct address
+  { label: 'Manage Users', link: '#', role: ROLES.ADMIN },
 ]
 
 export const TEACHER_NAV_ITEMS: NavItem[] = [

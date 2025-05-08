@@ -64,7 +64,7 @@ const Home = () => {
           error={error && error.toLowerCase().includes('email') ? error : ''}
         />
         <ReusableInput
-          autocomplte='true'
+          autoComplete='true'
           label='Password'
           name='password'
           type='password'
