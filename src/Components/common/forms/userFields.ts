@@ -1,5 +1,7 @@
 import { ModalField } from '../../../interfaces/components/common/ModalField'
-import { IUser } from '../../../interfaces/components/entities/IUser'
+import { IUser } from '../../../interfaces/components/entities'
+import { userRoleOptions } from '../../../interfaces/components/entities/userRoleOptions'
+
 import { userTypeProfessionOptions } from '../../../interfaces/components/options/userTypeRole'
 
 export const userFields: ModalField<IUser>[] = [
@@ -14,5 +16,12 @@ export const userFields: ModalField<IUser>[] = [
     type: 'select',
     required: true,
     options: userTypeProfessionOptions,
+  },
+  {
+    name: 'role',
+    label: 'System Role',
+    type: 'select',
+    required: true,
+    options: userRoleOptions,
   },
 ]

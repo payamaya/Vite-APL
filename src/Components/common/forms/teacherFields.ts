@@ -15,7 +15,4 @@ export const teacherFields: ModalField<ITeacher>[] = [
     required: true,
     options: teacherTypeProfessionOptions,
   },
-  // { name: 'title', label: 'Title', type: 'text', required: true },
-
-  // { name: 'description', label: 'Description', type: 'textarea' },
 ]

@@ -6,6 +6,7 @@ import {
   ADMIN_NAV_ITEMS,
   TEACHER_NAV_ITEMS,
   STUDENT_NAV_ITEMS,
+  USER_NAV_ITEMS,
 } from '../../../config/navItems'
 
 import { NavItem } from '../../../interfaces/components/NavbarInterfaces'
@@ -37,6 +38,9 @@ const DashboardLayout = ({
         break
       case 'student':
         roleNavItems = STUDENT_NAV_ITEMS
+        break
+      case 'user':
+        roleNavItems = USER_NAV_ITEMS
         break
       default:
         roleNavItems = PUBLIC_NAV_ITEMS

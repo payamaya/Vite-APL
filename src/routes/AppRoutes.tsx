@@ -8,9 +8,10 @@ import {
   studentRoutes,
   ROUTES,
   RoleBasedRoutes,
+  userRoutes,
 } from '../routes'
 
-import { ROLES } from '../constants/RolesEnum'
+import { ROLES } from '../contants/RolesEnum'
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,12 @@ const AppRoutes = () => {
         basePath: ROUTES.STUDENT.ROOT,
         routes: studentRoutes,
         allowedRoles: [ROLES.STUDENT],
+      })}
+      {/* uSER Routes */}
+      {RoleBasedRoutes({
+        basePath: ROUTES.USER.ROOT,
+        routes: userRoutes,
+        allowedRoles: [ROLES.USER],
       })}
 
       {/* Common Routes */}

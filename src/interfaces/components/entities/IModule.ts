@@ -17,5 +17,5 @@ export interface IModule
   resources: ModuleResource[]
   activityDetails?: string // Simple string type
   activities: IActivity[]
-  type?: ActivityType
+  moduleType?: ActivityType
 }

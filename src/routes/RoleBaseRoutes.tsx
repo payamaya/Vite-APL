@@ -1,7 +1,7 @@
 // RoleBasedRoutes.tsx
 import { Route, RouteObject } from 'react-router-dom'
 import ProtectedRoute from '../Components/ProtectedRoute'
-import { UserRoleValue } from '../constants/RolesEnum'
+import { UserRoleValue } from '../contants/RolesEnum'
 
 interface RoleBasedRoutesProps {
   basePath: string

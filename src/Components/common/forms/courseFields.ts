@@ -21,5 +21,4 @@ export const courseFields: ModalField<ICourse>[] = [
     required: true,
     minDate: new Date(), // Will need to be dynamically set based on startDate in your component
   },
-  // Add more fields if needed
 ]

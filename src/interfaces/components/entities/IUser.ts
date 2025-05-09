@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../constants/RolesEnum'
+import { UserRoleValue } from '../../../contants/RolesEnum'
 import { IDescriptiveEntity, ITimeBoundEntity } from '../../base'
 import { IPerson } from './IPerson'
 

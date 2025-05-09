@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../constants/RolesEnum'
+import { UserRoleValue } from '../../../contants/RolesEnum'
 import { IUserBase } from './IUserBase'
 
 export interface IAdmin extends IUserBase {

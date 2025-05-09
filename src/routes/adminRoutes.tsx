@@ -28,6 +28,10 @@ export const adminRoutes = [
         path: ROUTES.ADMIN.MANAGE_STUDENT,
         element: <Admin.AdminManageStudent />,
       },
+      {
+        path: ROUTES.ADMIN.MANAGE_USER,
+        element: <Admin.AdminManageUser />,
+      },
 
       {
         path: ROUTES.ADMIN.MODULE_DETAILS,

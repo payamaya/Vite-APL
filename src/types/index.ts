@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../constants/RolesEnum'
+import { UserRoleValue } from '../contants/RolesEnum'
 
 export type RoleOrPublic = UserRoleValue | null
 export type AllRoles = UserRoleValue | 'all'

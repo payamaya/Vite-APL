@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { IUser } from '../interfaces/components/entities/IUser'
-import { userService } from '../services/userService'
 import { useNotification } from '../context/NotificationContext'
+import { registerService } from '../services/registerService'
 
 export const useUserManagement = (
   initialUsers: IUser[] = [],
@@ -17,12 +17,12 @@ export const useUserManagement = (
       let response: ApiResponse<IUser>
 
       if (currentUser) {
-        response = await userService.updateUser(currentUser.id, {
+        response = await registerService.updateRegister(currentUser.id, {
           ...currentUser,
           ...formData,
         })
       } else {
-        response = await userService.createUser(formData)
+        response = await registerService.createRegister(formData)
       }
 
       if (response.status >= 200 && response.status < 300) {

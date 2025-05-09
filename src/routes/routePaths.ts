@@ -16,10 +16,21 @@ export const ROUTES = {
     MANAGE_TEACHER_DETAILS: '/admin/teachers/:courseId',
     MANAGE_STUDENT: '/admin/students',
     MANAGE_STUDENT_DETAILS: '/admin/students/:courseId',
+    MANAGE_USER: '/admin/users',
+    MANAGE_USER_DETAILS: '/admin/users/:courseId',
     MODULE_DETAILS: '/admin/courses/:courseId/module/:moduleId',
     USERS: 'users',
   },
-
+  USER: {
+    ROOT: '/user',
+    DASHBOARD: 'dashboard',
+    COURSES: 'courses',
+    COURSE_DETAILS: '/user/courses/:courseId',
+    MODULE_DETAILS: '/user/courses/:courseId/module/:moduleId',
+    NOTICES: 'notices',
+    SETTINGS: 'settings',
+    FAQ: 'faq',
+  },
   TEACHER: {
     ROOT: '/teacher',
     DASHBOARD: 'dashboard',

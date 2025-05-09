@@ -7,7 +7,7 @@ import {
   useRef,
 } from 'react'
 import authService from '../api/authService'
-import { UserRoleValue } from '../constants/RolesEnum'
+import { UserRoleValue } from '../contants/RolesEnum'
 
 interface AuthContextType {
   isAuthenticated: boolean

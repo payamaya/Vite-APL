@@ -1,7 +1,7 @@
-import { UserRoleValue } from '../../../constants/RolesEnum'
-import { IUserBase } from './IUserBase'
+import { UserRoleValue } from '../../../contants/RolesEnum'
+import { IUser } from './IUser'
 
-export interface IStudent extends IUserBase {
+export interface IStudent extends IUser {
   label?: string
   role: Extract<UserRoleValue, 'student'> // Strictly student role
   studentId: string

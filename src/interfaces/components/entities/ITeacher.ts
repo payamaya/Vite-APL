@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../constants/RolesEnum'
+import { UserRoleValue } from '../../../contants/RolesEnum'
 import { IUser } from './IUser'
 
 export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'

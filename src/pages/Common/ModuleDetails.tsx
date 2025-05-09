@@ -86,7 +86,7 @@ const ModuleDetails = () => {
             <strong>Title:</strong> {module.title}
           </p>
           <p>
-            <strong>Activity Type:</strong> {module.activityType}
+            <strong>Activity Type:</strong> {module.moduleType}
           </p>
           <p>
             <strong>Description:</strong> {module.description}
