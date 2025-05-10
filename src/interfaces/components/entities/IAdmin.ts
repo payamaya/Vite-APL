@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../contants/RolesEnum'
+import { UserRoleValue } from '../../../constants/RolesEnum'
 import { IUserBase } from './IUserBase'
 
 export interface IAdmin extends IUserBase {
@@ -6,6 +6,5 @@ export interface IAdmin extends IUserBase {
   permissions: {
     canManageUsers: boolean
     canManageContent: boolean
-    // etc.
   }
 }

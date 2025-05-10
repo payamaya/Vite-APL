@@ -1,6 +1,6 @@
 import { IColumn } from './IColumn'
 
-const studentableColumns: IColumn[] = [
+const studenTableColumns: IColumn[] = [
   { header: 'First Name', accessor: 'firstName', sortable: true },
   { header: 'Address', accessor: 'address', sortable: true },
 
@@ -16,4 +16,4 @@ const studentableColumns: IColumn[] = [
   },
 ]
 
-export default studentableColumns
+export default studenTableColumns

@@ -1,8 +1,6 @@
-import React from 'react'
 import { ReusableSelectProps } from './ReusableSelectProps'
 
 const ReusableSelect: React.FC<ReusableSelectProps> = ({
-  // label,
   name,
   value,
   onChange,
@@ -12,9 +10,6 @@ const ReusableSelect: React.FC<ReusableSelectProps> = ({
 }) => {
   return (
     <div>
-      {/* <label htmlFor={name} className='form-label'>
-        {label}
-      </label> */}
       <select
         className={`form-select ${error ? 'is-invalid' : ''}`}
         id={name}

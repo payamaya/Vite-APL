@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import authService from '../../api/authService'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
 const Home = () => {

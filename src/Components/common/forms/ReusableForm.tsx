@@ -3,8 +3,7 @@ import ReusableButton from '../buttons/ReusableButton'
 import apiService from '../../../api/apiService'
 import { ReusableFormProps } from './ReusableFormProps'
 import { IFormData } from '../../../interfaces/components/forms/IFormData'
-import ReusableInput from '../inputs/ReusableInput'
-import ReusableTextarea from '../inputs/ReusableTextarea'
+import { ReusableInput, ReusableTextarea } from '../inputs'
 
 const ReusableForm = ({
   endpoint,

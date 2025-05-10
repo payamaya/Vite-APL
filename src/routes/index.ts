@@ -1,6 +1,6 @@
 export * from './adminRoutes'
 export * from './teacherRoutes'
-export * from './studentsRoutes'
+export * from './studentRoutes'
 export * from './routePaths'
 export * from './RoleBaseRoutes'
 export * from './userRoutes'

@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { courseService, moduleService } from '../../services'
 
-import { ICourse } from '../../interfaces/components/entities/ICourse'
-import { IModule } from '../../interfaces/components/entities/IModule'
+import { ICourse, IModule } from '../../interfaces/components/entities'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
 const ModuleDetails = () => {

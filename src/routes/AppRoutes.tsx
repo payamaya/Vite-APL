@@ -11,7 +11,7 @@ import {
   userRoutes,
 } from '../routes'
 
-import { ROLES } from '../contants/RolesEnum'
+import { ROLES } from '../constants/RolesEnum'
 
 const AppRoutes = () => {
   return (

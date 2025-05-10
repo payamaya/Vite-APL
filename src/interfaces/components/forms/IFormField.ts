@@ -1,4 +1,3 @@
-// src/interfaces/components/IFormField.ts
 export interface FormFieldOption {
   value: string
   label: string

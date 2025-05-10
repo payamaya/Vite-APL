@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export interface NotificationProps {
-  message?: ReactNode // Changed to ReactNode and made optional
+  message?: ReactNode
   variant: 'success' | 'danger' | 'warning' | 'info'
   onClose?: () => void
   duration?: number

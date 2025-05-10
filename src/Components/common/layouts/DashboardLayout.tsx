@@ -1,8 +1,6 @@
-// import Navbar from '../navbar/Navbar'
 import Sidebar from '../sidebar/SideBar'
 import {
   PUBLIC_NAV_ITEMS,
-  // NAV_BRAND,
   ADMIN_NAV_ITEMS,
   TEACHER_NAV_ITEMS,
   STUDENT_NAV_ITEMS,
@@ -43,6 +41,7 @@ const DashboardLayout = ({
         roleNavItems = USER_NAV_ITEMS
         break
       default:
+        console.warn(`Unknown role: ${role}`)
         roleNavItems = PUBLIC_NAV_ITEMS
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { NavbarProps } from './Navbar.types'
 import { handleMenuClose, toggleMenu } from './Navbar.utils'

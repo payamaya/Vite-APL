@@ -1,5 +1,3 @@
-// src/routes/routePaths.ts
-
 export const ROUTES = {
   HOME: '/',
   ABOUT: '/about',

@@ -1,6 +1,3 @@
-// interfaces/components/common/inputTypes.ts
-import React from 'react'
-
 export interface BaseFieldProps {
   label?: string
   name: string

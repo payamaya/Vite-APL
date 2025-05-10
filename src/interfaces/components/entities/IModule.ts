@@ -3,10 +3,8 @@ import { ActivityType } from '../types/activityType'
 import { IActivity } from './IActivity'
 import { ModuleResource } from './ModuleResources'
 
-// src/interfaces/IModule.ts
 export type ActivityDetails = string | string[] | Record<string, unknown>
 
-// src/interfaces/IModule.ts
 export interface IModule
   extends IBaseEntity,
     ITimeBoundEntity,

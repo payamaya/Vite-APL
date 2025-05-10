@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../contants/RolesEnum'
+import { UserRoleValue } from '../../../constants/RolesEnum'
 import { IUser } from './IUser'
 
 export interface IStudent extends IUser {

@@ -1,4 +1,4 @@
-import { UserRoleValue } from '../../../contants/RolesEnum'
+import { UserRoleValue } from '../../../constants/RolesEnum'
 import { IBaseEntity, ITimeBoundEntity } from '../../base'
 
 export interface IUserBase extends IBaseEntity, ITimeBoundEntity {
