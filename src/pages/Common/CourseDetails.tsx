@@ -8,11 +8,6 @@ import {
   IActivity,
 } from '../../interfaces/components/entities'
 
-import {
-  useDeleteHandler,
-  useActivityManagement,
-  useModuleManagement,
-} from '../../hooks'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
@@ -23,6 +18,9 @@ import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
 
 import { formatDate } from '../../utils/dateUtils'
+
+import { useDeleteHandler, useModuleManagement } from '../../hooks'
+import { useActivityManagement } from '../../hooks/useActivityManagement'
 
 const CourseDetails = () => {
   const { courseId } = useParams()
@@ -153,12 +151,10 @@ const CourseDetails = () => {
                 <h2 className='accordion-header'>
                   <button
                     className={`accordion-button collapsed `}
-                    // className={`accordion-button ${index !== 0 ? 'collapsed' : ''}`}
                     type='button'
                     data-bs-toggle='collapse'
                     data-bs-target={`#collapseModule${module.id}`}
                     aria-expanded={'false'}
-                    // aria-expanded={index === 0 ? 'true' : 'false'}
                     aria-controls={`collapseModule${module.id}`}
                     onClick={() => handleFetchActivities(module.id)}
                   >
@@ -169,7 +165,6 @@ const CourseDetails = () => {
                 <div
                   id={`collapseModule${module.id}`}
                   className={`accordion-collapse collapse `}
-                  // className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
                   data-bs-parent='#modulesAccordion'
                 >
                   <div className='accordion-body'>
@@ -193,7 +188,7 @@ const CourseDetails = () => {
 
                       {activities.length > 0 ? (
                         <div className='list-group'>
-                          {activities.map((activity) => (
+                          {activities.map((activity: IActivity) => (
                             <div key={activity.id} className='list-group-item'>
                               <h6>Title: {activity.title}</h6>
                               <p>Description: {activity.description}</p>
