@@ -1,21 +1,26 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import { Home, About, Courses, CourseDetails } from '../pages/Common'
 import ModuleDetails from '../pages/Common/ModuleDetails'
-import { adminRoutes } from './adminRoutes'
-import { studentRoutes } from './studentsRoutes'
-import { ROUTES } from './routePaths'
-import { teacherRoutes } from './teacherRoutes'
-import RoleBasedRoutes from './RoleBaseRoutes'
+import {
+  adminRoutes,
+  teacherRoutes,
+  studentRoutes,
+  ROUTES,
+  RoleBasedRoutes,
+  userRoutes,
+} from '../routes'
+
 import { ROLES } from '../constants/RolesEnum'
-// import ProtectedRoute from '../Components/ProtectedRoute'
-// import { ROLES } from '../contants/RolesEnum'
+import VerifyEmailPage from '../pages/VerifyEmailPage'
+import OTPVerificationPage from '../pages/OTPVerificationPage'
+import NotFound from '../pages/NotFound'
+import Unauthorized from '../pages/Unauthorized'
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Admin Route */}
-
       {RoleBasedRoutes({
         basePath: ROUTES.ADMIN.ROOT,
         routes: adminRoutes,
@@ -27,14 +32,18 @@ const AppRoutes = () => {
         routes: teacherRoutes,
         allowedRoles: [ROLES.TEACHER],
       })}
-
       {/* Student Routes */}
       {RoleBasedRoutes({
         basePath: ROUTES.STUDENT.ROOT,
         routes: studentRoutes,
         allowedRoles: [ROLES.STUDENT],
       })}
-
+      {/* uSER Routes */}
+      {RoleBasedRoutes({
+        basePath: ROUTES.USER.ROOT,
+        routes: userRoutes,
+        allowedRoles: [ROLES.USER],
+      })}
       {/* Common Routes */}
       <Route path={ROUTES.HOME} element={<Home />} />
       <Route path={ROUTES.ABOUT} element={<About />} />
@@ -42,10 +51,13 @@ const AppRoutes = () => {
       <Route path={ROUTES.COURSE_DETAILS} element={<CourseDetails />} />
       <Route path={ROUTES.MODULE_DETAILS} element={<ModuleDetails />} />
 
+      <Route path={ROUTES.AUTH.CONFIRM_EMAIL} element={<VerifyEmailPage />} />
+      <Route path={ROUTES.AUTH.VERIFY_OTP} element={<OTPVerificationPage />} />
       {/* Fallback */}
-      <Route path={ROUTES.NOT_FOUND} element={<Navigate to='/' replace />} />
+      <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
       {/*TODO later fix:Where Unauthorized is a component with guidance like "Please log in with the appropriate account."
-       <Route path='/unauthorized' element={<Unauthorized />} /> */}
+       */}
+      <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
     </Routes>
   )
 }

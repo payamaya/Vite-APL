@@ -1,4 +1,3 @@
-// src/Components/common/tables/noticeTableColumns.ts
 import { IColumn } from './IColumn'
 
 const noticeTableColumns: IColumn[] = [

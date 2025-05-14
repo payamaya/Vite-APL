@@ -4,7 +4,7 @@ import { NavItem } from '../navbar/Navbar.types'
 
 export interface DashboardLayoutProps {
   role: RoleOrPublic
-  children: ReactNode
+  children?: ReactNode
   title: string
   navItems?: NavItem[]
 }

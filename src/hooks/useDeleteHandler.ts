@@ -1,4 +1,3 @@
-// Updated useDeleteHandler hook
 import { useState } from 'react'
 
 type UseDeleteHandlerReturn = {

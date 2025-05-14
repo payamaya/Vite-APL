@@ -12,9 +12,12 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = authService.getToken()
   if (token && config.headers) {
+    if (!authService.isValidToken(token)) {
+      authService.logout(token) // Optional: redirect to login
+      throw new Error('Token expired. Please login again.')
+    }
     config.headers['Authorization'] = `Bearer ${token}`
   }
-  console.log('Request URL:', config.baseURL, config.url)
   return config
 })
 
@@ -33,9 +36,12 @@ const handleError = <T>(error: any): Promise<ApiResponse<T>> => {
 }
 
 const apiService = {
-  getAll: async <T>(endpoint: string): Promise<ApiResponse<T>> => {
+  getAll: async <T>(
+    endpoint: string,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> => {
     try {
-      const response = await api.get<T>(endpoint)
+      const response = await api.get<T>(endpoint, { params })
       return {
         data: response.data,
         status: response.status,

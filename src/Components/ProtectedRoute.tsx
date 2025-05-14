@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { UserRole } from '../types'
+import { UserRoleValue } from '../constants/RolesEnum'
 import authService from '../api/authService'
 
 interface ProtectedRouteProps {
-  allowedRoles?: UserRole[]
+  allowedRoles?: UserRoleValue[]
   redirectPath?: string
   children?: React.ReactElement
 }
@@ -14,7 +14,7 @@ const ProtectedRoute = ({
   redirectPath = '/',
   children,
 }: ProtectedRouteProps) => {
-  const { isAuthenticated, userRole, isLoading } = useAuth()
+  const { isAuthenticated, userRole, isLoading, sessionId } = useAuth()
 
   if (isLoading) {
     return <div>Verifying session...</div>
@@ -22,9 +22,9 @@ const ProtectedRoute = ({
 
   console.log('Route protection check:', {
     hasToken: !!authService.getToken(),
-    tokenValid: authService.isValidToken(),
+    tokenValid: authService.isValidToken(''),
     storedRole: userRole,
-    freshRole: authService.getUserRole(),
+    freshRole: authService.getUserRole(sessionId),
   })
 
   // Primary authentication check
@@ -34,7 +34,7 @@ const ProtectedRoute = ({
 
   // Role-based access control
   if (allowedRoles.length > 0) {
-    const effectiveRole = userRole || authService.getUserRole()
+    const effectiveRole = userRole || authService.getUserRole(sessionId)
 
     if (!effectiveRole) {
       console.warn('Role missing but token valid - allowing access')

@@ -1,5 +1,6 @@
 export interface IBaseEntity {
   id: string
   createdAt?: string | Date
-  img?: string
+  updatedAt?: string | Date
+  imgUrl?: string
 }

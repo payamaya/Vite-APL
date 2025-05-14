@@ -1,98 +1,117 @@
 import apiService from './apiService'
-import { DecodedToken, UserRole } from '../types'
-import { ROLES } from '../constants/RolesEnum'
+import { DecodedToken } from '../types'
+import { ROLES, UserRoleValue } from '../constants/RolesEnum'
+import { LoginResponse } from '../interfaces/api/ApiResponse'
 
 const authService = {
-  login: async (credentials: {
-    email: string
-    password: string
-  }): Promise<{ token: string; role: UserRole }> => {
+  login: async (
+    credentials: {
+      email: string
+      password: string
+    },
+    sessionId: string
+  ): Promise<{ token: string; role: UserRoleValue }> => {
     try {
       const response = await apiService.create<
         { email: string; password: string },
-        { token: string; role: string; expiresAt: string }
+        LoginResponse
       >('auth/login', credentials)
-
       const { token, role: rawRole } = response.data
-      const role = rawRole.toLowerCase() as UserRole
 
-      if (!Object.values(ROLES).includes(role)) {
+      // Convert to lowercase and validate
+      const normalizedRole = rawRole.toLowerCase()
+      if (!Object.values(ROLES).includes(normalizedRole as UserRoleValue)) {
         throw new Error(`Invalid role received: ${rawRole}`)
       }
+      localStorage.setItem(`token_${sessionId}`, token)
+      localStorage.setItem(`role_${sessionId}`, normalizedRole)
 
       localStorage.setItem('token', token)
-      return { token, role }
+      localStorage.setItem('userRole', normalizedRole)
+      return { token, role: normalizedRole as UserRoleValue }
     } catch (error) {
-      throw new Error(`Invalid credentials: ${error}`)
+      throw new Error(
+        `Invalid credentials: ${error instanceof Error ? error.message : String(error)}`
+      )
     }
   },
-  getUserRole: (): UserRole | null => {
-    const token = authService.getToken()
-    if (!token) return null
 
+  getUserRole: (sessionId: string): UserRoleValue | null => {
     try {
-      const decodedToken = jwt_decode(token)
-      console.warn('Decoded token role:', decodedToken.role) // Debug log
+      const token =
+        localStorage.getItem(`token_${sessionId}`) ||
+        localStorage.getItem('token')
+      if (!token || token.split('.').length !== 3) {
+        console.warn('No valid token found or token format is invalid')
+        return null
+      }
 
-      // Handle case where role might be undefined or invalid
-      //ERROR Must fix the backend with role
+      const decodedToken = jwt_decode(token)
       if (!decodedToken.role) {
         console.warn('No role found in token')
         return null
       }
 
-      // Convert to lowercase and validate
-      const role = decodedToken.role.toLowerCase()
-      if (!Object.values(ROLES).includes(role as UserRole)) {
-        console.warn('Invalid role in token:', role)
+      const tokenRole = decodedToken.role.toLowerCase()
+      if (!Object.values(ROLES).includes(tokenRole as UserRoleValue)) {
+        console.warn('Invalid role in token:', tokenRole)
         return null
       }
 
-      return role as UserRole
+      return tokenRole as UserRoleValue
     } catch (error) {
       console.error('Error decoding token:', error)
       return null
     }
   },
-  logout: (): void => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userRole') // Clear role on logout
-  },
 
+  logout: (sessionId: string): void => {
+    localStorage.removeItem(`token_${sessionId}`)
+    localStorage.removeItem(`role_${sessionId}`)
+    localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
+    localStorage.removeItem('sessionId')
+  },
   getToken: (): string | null => {
     return localStorage.getItem('token')
   },
-
+  setToken: (token: string): void => {
+    localStorage.setItem('token', token)
+  },
+  setUserRole: (sessionId: string, role: UserRoleValue): void => {
+    localStorage.setItem(`role_${sessionId}`, role)
+    localStorage.setItem('userRole', role)
+  },
   isAuthenticated: (): boolean => {
     const token = authService.getToken()
     if (!token) return false
-    return authService.isValidToken()
+    return authService.isValidToken(token)
   },
 
-  isValidToken: (): boolean => {
-    const token = authService.getToken()
+  isValidToken: (token: string | null): boolean => {
     if (!token) return false
 
     try {
       const decodedToken = jwt_decode(token)
-      const isExpired = decodedToken.exp * 1000 < Date.now()
-
-      console.log('Token expiry check:', {
-        now: new Date(Date.now()),
-        expires: new Date(decodedToken.exp * 1000),
-        isExpired,
-      })
-
-      return !isExpired
+      return decodedToken.exp * 1000 > Date.now()
     } catch (error) {
       console.error('Token validation error:', error)
       return false
     }
   },
+  clearSession: (sessionId: string): void => {
+    localStorage.removeItem(`token_${sessionId}`)
+    localStorage.removeItem(`role_${sessionId}`)
+  },
 }
 
 function jwt_decode(token: string): DecodedToken {
-  const base64Url = token.split('.')[1]
+  const parts = token.split('.')
+  if (parts.length !== 3) {
+    throw new Error('Invalid JWT format')
+  }
+
+  const base64Url = parts[1]
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
   const jsonPayload = decodeURIComponent(
     atob(base64)

@@ -8,4 +8,11 @@ export interface IActivity
   moduleId?: string
   content?: string
   activityType: ActivityType
+
+  metadata?: Record<string, unknown>
+  submissionRequirements?: {
+    isRequired: boolean
+    deadline?: Date
+    maxAttempts?: number
+  }
 }

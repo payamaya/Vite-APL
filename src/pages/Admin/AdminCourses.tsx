@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { courseService, studentService } from '../../services'
-import { ICourse, IStudent } from '../../interfaces/components/entities'
+
 // import { Link } from "react-router-dom"
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import courseTableColumns from '../../Components/common/tables/courseTableColumns'
-import studentableColumns from '../../Components/common/tables/studentTableCoulmn'
+import studenTableColumns from '../../Components/common/tables/studentTableCoulmn'
+import { ICourse, IStudent } from '../../interfaces/components/entities'
 
 function AdminCourses() {
   const [courses, setCourses] = useState<ICourse[]>([])
@@ -107,7 +108,7 @@ function AdminCourses() {
             {students.length > 0 && (
               <ReusableTable
                 data={students}
-                columns={studentableColumns}
+                columns={studenTableColumns}
                 searchPlaceholder='Search Students...'
                 onRowClick={(student) =>
                   console.log('Selected student:', student)

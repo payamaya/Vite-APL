@@ -6,5 +6,9 @@ export interface ICourse
     IDescriptiveEntity {
   name: string
   message: string
-  // No need to redeclare title, description, startDate, endDate, img, etc.
+  code?: string // Course code like "CS101"
+  credits?: number
+  prerequisites?: string[] // Array of course IDs
+  instructorIds?: string[] // Array of teacher IDs
+  status?: 'draft' | 'published' | 'archived'
 }

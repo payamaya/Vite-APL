@@ -1,19 +1,13 @@
-// src/interfaces/components/entities/ITeacher.ts
-
-import { IDescriptiveEntity, ITimeBoundEntity } from '../../base'
-import { IPerson } from './IPerson'
+import { UserRoleValue } from '../../../constants/RolesEnum'
+import { IUser } from './IUser'
 
 export type TeacherTypeProfession = 'it' | 'matematik' | 'design' | 'teknik'
 
-export interface ITeacher
-  extends IDescriptiveEntity,
-    ITimeBoundEntity,
-    IPerson {
+export interface ITeacher extends IUser {
   //TODO FIx later name like we have in the IPerson to prevent duplication
-
-  message?: string
-  address?: string
-  teacherType: TeacherTypeProfession
-  role: string
-  description?: string
+  role: Extract<UserRoleValue, 'teacher'>
+  teacherType?: TeacherTypeProfession
+  department?: string
+  coursesTaught?: string[] // Course IDs
+  bio?: string
 }

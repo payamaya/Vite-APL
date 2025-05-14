@@ -1,0 +1,5 @@
+export { default as UserDashboard } from '../User/UserDashboard'
+export { default as UserCourses } from '../User/UserCourses'
+export { default as UserHome } from '../User/UserHome'
+export { default as UserNotice } from '../User/UserNotice'
+export { default as UserCourseDetails } from '../User/UserCourseDetails'

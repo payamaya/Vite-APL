@@ -153,7 +153,7 @@ const TeacherCourseDetails = () => {
                     aria-controls={`collapseModule${module.id}`}
                     onClick={() => handleFetchActivities(module.id)}
                   >
-                    <div className='p-3'>{module.activityType}</div>
+                    <div className='p-3'>{module.moduleType}</div>
                     {module.title}
                   </button>
                 </h2>

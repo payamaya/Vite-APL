@@ -1,4 +1,3 @@
-// components/footer/Footer.tsx
 import { FooterProps } from './FooterProps'
 import { filterNavItemsByRole } from '../../../utils/navUtils'
 import NavItemList from '../navbar/NavItemList/NavItemList'

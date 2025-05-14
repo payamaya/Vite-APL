@@ -1,4 +1,3 @@
-// src/constants/navigation.ts
 import { ROLES } from '../constants/RolesEnum'
 import { NavItem } from '../interfaces/components/NavbarInterfaces'
 
@@ -15,20 +14,26 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: ' Manage Courses', link: '/admin', role: ROLES.ADMIN },
   { label: 'Manage Teachers', link: '/admin/teachers', role: ROLES.ADMIN },
   { label: 'Manage Students', link: '/admin/students', role: ROLES.ADMIN },
+  //TODO Change the link address to the correct address
+  { label: 'Manage Users', link: '/admin/users', role: ROLES.ADMIN },
 ]
 
 export const TEACHER_NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', link: '/teacher/dashboard', role: ROLES.TEACHER },
-  { label: 'My Courses', link: '/teacher/courses', role: ROLES.TEACHER },
-  { label: 'Notice', link: '/teacher/notices', role: ROLES.TEACHER },
-  { label: 'FQA', link: '/teacher/fqa', role: ROLES.TEACHER },
-  { label: 'Settings', link: '/teacher/settings', role: ROLES.TEACHER },
-  { label: 'About', link: '/teacher/about', role: ROLES.TEACHER },
+  { label: 'Dashboard', link: '/teacher/dashboard', role: ROLES.USER },
+  { label: 'My Courses', link: '/teacher/courses', role: ROLES.USER },
+  { label: 'Notice', link: '/teacher/notices', role: ROLES.USER },
+  { label: 'FQA', link: '/teacher/fqa', role: ROLES.USER },
+  { label: 'Settings', link: '/teacher/settings', role: ROLES.USER },
+  { label: 'About', link: '/teacher/about', role: ROLES.USER },
 ]
 
 export const STUDENT_NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', link: '/student/dashboard', role: ROLES.STUDENT },
-  { label: 'My Courses', link: '/student/courses', role: ROLES.STUDENT },
+  { label: 'Dashboard', link: '/student/dashboard', role: ROLES.USER },
+  { label: 'My Courses', link: '/student/courses', role: ROLES.USER },
+]
+export const USER_NAV_ITEMS: NavItem[] = [
+  { label: 'Dashboard', link: '/user/dashboard', role: ROLES.USER },
+  { label: 'My Courses', link: '/user/courses', role: ROLES.USER },
 ]
 export const FOOTER_NAV_ITEMS: NavItem[] = [
   { label: 'Privacy', link: '/privacy', role: null },

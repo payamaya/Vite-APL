@@ -23,26 +23,6 @@ const SideBar = ({ role, navItems, fixed = 'left' }: SidebarProps) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Close sidebar when clicking outside
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     // Only close if it's mobile view and sidebar is open
-  //     if (
-  //       window.innerWidth < 768 &&
-  //       isOpen &&
-  //       sidebarRef.current &&
-  //       !sidebarRef.current.contains(event.target as Node)
-  //     ) {
-  //       setIsOpen(false)
-  //     }
-  //   }
-
-  //   document.addEventListener('mousedown', handleClickOutside)
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside)
-  //   }
-  // }, [isOpen])
-
   const isActive = (path: string) =>
     location.pathname.startsWith(`/${role}${path}`)
 

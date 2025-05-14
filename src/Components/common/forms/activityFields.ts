@@ -1,4 +1,3 @@
-// src/Components/common/forms/activityFields.ts
 import { addYears } from 'date-fns'
 import { activityTypeOptions } from '../../../interfaces/components/options/activityTypeOptions'
 import { ModalField } from '../../../interfaces/components/common/ModalField'
@@ -45,12 +44,4 @@ export const activityFields: ModalField<IActivity>[] = [
     required: true,
     minDate: new Date(), // Will need to be dynamically set based on startDate in your component
   },
-  // {
-  //   name: 'endDate',
-  //   label: 'End Date',
-  //   type: 'date',
-  //   required: false,
-  //   // Remove the min restriction to allow past dates if needed
-  //   // Or set to reasonable minimum if future dates only
-  // },
 ]

@@ -4,34 +4,46 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
 } from 'react'
 import authService from '../api/authService'
-import { UserRole } from '../types'
+import { UserRoleValue } from '../constants/RolesEnum'
 
 interface AuthContextType {
   isAuthenticated: boolean
-  userRole: UserRole | null
+  userRole: UserRoleValue | null
   isLoading: boolean
-  setAuthenticated: (auth: boolean, role?: UserRole | null) => void
+  sessionId: string
+  setAuthenticated: (auth: boolean, role?: UserRoleValue | null) => void
+  logout: () => void
 }
 
-const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false,
-  userRole: null,
-  isLoading: true,
-  setAuthenticated: () => {},
-})
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState({
     isAuthenticated: false,
-    userRole: null as UserRole | null,
+    userRole: null as UserRoleValue | null,
     isLoading: true,
   })
-  // Enhanced auth check function
+
+  const [sessionId, setSessionId] = useState(() => {
+    const existingSession = localStorage.getItem('sessionId')
+    if (existingSession) return existingSession
+
+    const newSessionId = Math.random().toString(36).substring(2, 9)
+    localStorage.setItem('sessionId', newSessionId)
+    return newSessionId
+  })
+  const authChannelRef = useRef<BroadcastChannel | null>(
+    new BroadcastChannel('auth_channel')
+  )
+
   const checkAuth = useCallback(() => {
     const token = authService.getToken()
-    if (!token) {
+    const storedRole = authService.getUserRole(sessionId)
+
+    if (!token || !authService.isValidToken(token)) {
       setAuthState({
         isAuthenticated: false,
         userRole: null,
@@ -40,54 +52,75 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return
     }
 
-    // Verify token first
-    if (!authService.isValidToken()) {
-      setAuthState({
-        isAuthenticated: false,
-        userRole: null,
-        isLoading: false,
-      })
-      return
-    }
-    // Then get role
-    const userRole = authService.getUserRole()
     setAuthState({
       isAuthenticated: true,
-      userRole,
+      userRole: storedRole as UserRoleValue,
       isLoading: false,
     })
-  }, [])
+  }, [sessionId])
+
+  const setAuthenticated = useCallback(
+    (isAuthenticated: boolean, role?: UserRoleValue | null) => {
+      if (!isAuthenticated) {
+        authService.clearSession(sessionId)
+        authChannelRef.current?.postMessage({ type: 'LOGOUT', sessionId })
+        setAuthState({
+          isAuthenticated: false,
+          userRole: null,
+          isLoading: false,
+        })
+      } else {
+        authService.setToken('valid_token')
+        if (role) {
+          authService.setUserRole(sessionId, role)
+        }
+
+        authChannelRef.current?.postMessage({ type: 'LOGIN', sessionId, role })
+        setAuthState({
+          isAuthenticated: true,
+          userRole: role ?? null,
+          isLoading: false,
+        })
+      }
+    },
+    [sessionId]
+  )
+
+  const logout = useCallback(() => {
+    localStorage.removeItem('sessionId')
+    setSessionId('') // optionally reset state
+    setAuthenticated(false, null)
+  }, [setAuthenticated])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      checkAuth()
-    }, 150)
-
-    // Storage event listener for cross-tab sync
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'token') {
+      if (e.key === `token_${sessionId}`) {
         checkAuth()
       }
     }
 
+    const handleAuthMessage = (e: MessageEvent) => {
+      if (e.data.type === 'LOGOUT' && e.data.sessionId !== sessionId) {
+        setAuthState({
+          isAuthenticated: false,
+          userRole: null,
+          isLoading: false,
+        })
+      }
+    }
+
     window.addEventListener('storage', handleStorageChange)
+    authChannelRef.current?.addEventListener('message', handleAuthMessage)
+
+    checkAuth()
 
     return () => {
-      clearTimeout(timer)
       window.removeEventListener('storage', handleStorageChange)
+      authChannelRef.current?.removeEventListener('message', handleAuthMessage)
+      authChannelRef.current?.close()
+      authChannelRef.current = null
     }
-  }, [checkAuth])
-
-  const setAuthenticated = (
-    isAuthenticated: boolean,
-    role?: UserRole | null
-  ) => {
-    setAuthState((prev) => ({
-      ...prev,
-      isAuthenticated,
-      userRole: role ?? authService.getUserRole(),
-    }))
-  }
+  }, [checkAuth, sessionId])
 
   return (
     <AuthContext.Provider
@@ -95,7 +128,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated: authState.isAuthenticated,
         userRole: authState.userRole,
         isLoading: authState.isLoading,
+        sessionId,
         setAuthenticated,
+        logout,
       }}
     >
       {authState.isLoading ? <div>Loading...</div> : children}
