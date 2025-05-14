@@ -45,6 +45,12 @@ export const ROUTES = {
     COURSE_DETAILS: '/student/courses/:courseId',
     MODULE_DETAILS: '/student/courses/:courseId/module/:moduleId',
   },
-
+  AUTH: {
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    CONFIRM_EMAIL: '/auth/confirm-email',
+    VERIFY_OTP: '/api/auth/verify-otp',
+  },
+  UNAUTHORIZED: '/unauthorized',
   NOT_FOUND: '*',
 }
