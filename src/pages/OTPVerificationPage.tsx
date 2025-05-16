@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import API_BASE_URL from '../api/apiConfig'
 import { ROUTES } from '../routes'
@@ -10,9 +10,32 @@ const OTPVerificationPage = () => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isSendingOtp, setIsSendingOtp] = useState(false)
   const navigate = useNavigate()
   const { state } = useLocation()
   const email = state?.email || ''
+
+  // ✅ Send OTP when the page loads
+  useEffect(() => {
+    const sendInitialOtp = async () => {
+      if (!email) return
+      setIsSendingOtp(true)
+      try {
+        await axios.post(`${API_BASE_URL}auth/send-otp`, { email })
+        setMessage('OTP has been sent to your email.')
+      } catch (err: any) {
+        console.error('Failed to send OTP on load:', err)
+        setError(
+          err.response?.data?.message ||
+            'Failed to send OTP. Please try again later.'
+        )
+      } finally {
+        setIsSendingOtp(false)
+      }
+    }
+
+    sendInitialOtp()
+  }, [email])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,21 +48,18 @@ const OTPVerificationPage = () => {
     setIsLoading(true)
 
     try {
-      const response = // In the OTP sending request in your frontend
-        await axios.post(
-          `${API_BASE_URL}auth/verify-otp`,
-          { code: otp },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-            },
-          }
-        )
+      const response = await axios.post(
+        `${API_BASE_URL}auth/verify-otp`,
+        { code: otp, email }, // Include email if backend expects it
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        }
+      )
 
       if (response.data.success) {
-        console.log(`OTP sent to email: ${email}`)
         setMessage('OTP verified successfully!')
-        // Redirect based on user role or to dashboard
         navigate(ROUTES.USER.DASHBOARD)
       } else {
         setError('Verification failed. Please try again.')
@@ -55,13 +75,13 @@ const OTPVerificationPage = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post(`${API_BASE_URL}auth/resend-otp`, {})
+      await axios.post(`${API_BASE_URL}auth/send-otp`, { email })
       setMessage('New OTP sent to your email')
       setError('')
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          '🔅⏺️Failed to resend OTP. Please try again later.⏺️🔅'
+          '🔅⏺️ Failed to resend OTP. Please try again later. ⏺️🔅'
       )
     }
   }
@@ -69,7 +89,8 @@ const OTPVerificationPage = () => {
   return (
     <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto' }}>
       <h2>Verify OTP</h2>
-      <p>Enter the 6-digit code sent to {email}</p>
+      <p>Enter the 6-digit code sent to <strong>{email}</strong></p>
+      {isSendingOtp && <p>Sending OTP...</p>}
       <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
         <input
           type='text'

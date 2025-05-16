@@ -34,7 +34,6 @@ const VerifyEmailPage: React.FC = () => {
         const response = await axios.get(`${API_BASE_URL}auth/confirm-email`, {
           params: { token },
           timeout: 10000,
-
           headers: {
             'Content-Type': 'application/json',
           },
