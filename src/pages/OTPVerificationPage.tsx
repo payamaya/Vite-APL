@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState, useRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import API_BASE_URL from '../api/apiConfig'
 import { ROUTES } from '../routes'
 
@@ -17,9 +17,13 @@ const OTPVerificationPage = () => {
   const token = location.state?.token || localStorage.getItem('authToken')
 
 // Use `token` in headers or send to backend if needed
+  const hasSentOtpRef = useRef(false)                                      // ← ADDED guard ref
 
   //✅ Send OTP when the page loads
   useEffect(() => {
+    if (hasSentOtpRef.current) return                                      // ← SKIP if already run
+    hasSentOtpRef.current = true                                           // ← MARK as run
+
     const sendInitialOtp = async () => {
       if (!email) return
       setIsSendingOtp(true)

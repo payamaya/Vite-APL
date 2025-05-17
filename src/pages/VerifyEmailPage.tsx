@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import API_BASE_URL from '../api/apiConfig'
@@ -16,7 +16,11 @@ const VerifyEmailPage: React.FC = () => {
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
 
+    const hasVerifiedRef = useRef(false)                                      // ← ADDED guard ref
+
   useEffect(() => {
+    if (hasVerifiedRef.current) return                                      // ← SKIP if already run
+    hasVerifiedRef.current = true                                           // ← MARK as run
     const token = searchParams.get('token')
 
     if (!token) {
