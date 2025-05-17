@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import API_BASE_URL from '../api/apiConfig'
 import { ROUTES } from '../routes'
 
@@ -14,28 +14,40 @@ const OTPVerificationPage = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const email = state?.email || ''
+  const location = useLocation();
+  const token = location.state?.token || ''
+
+// Use `token` in headers or send to backend if needed
 
   // ✅ Send OTP when the page loads
-  useEffect(() => {
-    const sendInitialOtp = async () => {
-      if (!email) return
-      setIsSendingOtp(true)
-      try {
-        await axios.post(`${API_BASE_URL}auth/send-otp`, { email })
-        setMessage('OTP has been sent to your email.')
-      } catch (err: any) {
-        console.error('Failed to send OTP on load:', err)
-        setError(
-          err.response?.data?.message ||
-            'Failed to send OTP. Please try again later.'
-        )
-      } finally {
-        setIsSendingOtp(false)
-      }
-    }
+  // useEffect(() => {
+  //   const sendInitialOtp = async () => {
+  //     if (!email) return
+  //     setIsSendingOtp(true)
+  //     try {
+  //       await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             'Content-Type': 'application/json',
+  //           },
+  //            withCredentials: true,
+  //         }
+  //       )
+  //       setMessage('OTP has been sent to your email.')
+  //     } catch (err: any) {
+  //       console.error('Failed to send OTP on load:', err)
+  //       setError(
+  //         err.response?.data?.message ||
+  //           'Failed to send OTP. Please try again later.'
+  //       )
+  //     } finally {
+  //       setIsSendingOtp(false)
+  //     }
+  //   }
 
-    sendInitialOtp()
-  }, [email])
+  //   sendInitialOtp()
+  // }, [email, token])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -52,9 +64,10 @@ const OTPVerificationPage = () => {
         `${API_BASE_URL}auth/verify-otp`,
         { code: otp, email }, // Include email if backend expects it
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          },
+           headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
         }
       )
 
@@ -75,7 +88,15 @@ const OTPVerificationPage = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post(`${API_BASE_URL}auth/send-otp`, { email })
+      await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
+        {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+             withCredentials: true,
+          }
+      )
       setMessage('New OTP sent to your email')
       setError('')
     } catch (err: any) {

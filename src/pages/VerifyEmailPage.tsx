@@ -31,13 +31,16 @@ const VerifyEmailPage: React.FC = () => {
           'Making request to:',
           `${API_BASE_URL}auth/confirm-email?token=${token}`
         )
+
         const response = await axios.get(`${API_BASE_URL}auth/confirm-email`, {
           params: { token },
           timeout: 10000,
+          withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
           },
-        })
+        });
+
         console.log('Full response:', {
           status: response.status,
           data: response.data,
@@ -54,7 +57,8 @@ const VerifyEmailPage: React.FC = () => {
           setTimeout(
             () =>
               navigate('/api/auth/verify-otp', {
-                state: { email: response.data.email },
+                state: { email: response.data.email, 
+                         token: token },
               }),
             3000
           )
