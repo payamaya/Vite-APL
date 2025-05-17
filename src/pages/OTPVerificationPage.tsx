@@ -12,42 +12,41 @@ const OTPVerificationPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSendingOtp, setIsSendingOtp] = useState(false)
   const navigate = useNavigate()
-  const { state } = useLocation()
-  const email = state?.email || ''
-  const location = useLocation();
-  const token = location.state?.token || ''
+  const location = useLocation()
+  const email = location.state?.email || localStorage.getItem('email')
+  const token = location.state?.token || localStorage.getItem('authToken')
 
 // Use `token` in headers or send to backend if needed
 
-  // ✅ Send OTP when the page loads
-  // useEffect(() => {
-  //   const sendInitialOtp = async () => {
-  //     if (!email) return
-  //     setIsSendingOtp(true)
-  //     try {
-  //       await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             'Content-Type': 'application/json',
-  //           },
-  //            withCredentials: true,
-  //         }
-  //       )
-  //       setMessage('OTP has been sent to your email.')
-  //     } catch (err: any) {
-  //       console.error('Failed to send OTP on load:', err)
-  //       setError(
-  //         err.response?.data?.message ||
-  //           'Failed to send OTP. Please try again later.'
-  //       )
-  //     } finally {
-  //       setIsSendingOtp(false)
-  //     }
-  //   }
+  //✅ Send OTP when the page loads
+  useEffect(() => {
+    const sendInitialOtp = async () => {
+      if (!email) return
+      setIsSendingOtp(true)
+      try {
+        await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+             withCredentials: true,
+          }
+        )
+        setMessage('OTP has been sent to your email.')
+      } catch (err: any) {
+        console.error('Failed to send OTP on load:', err)
+        setError(
+          err.response?.data?.message ||
+            'Failed to send OTP. Please try again later.'
+        )
+      } finally {
+        setIsSendingOtp(false)
+      }
+    }
 
-  //   sendInitialOtp()
-  // }, [email, token])
+    sendInitialOtp()
+  }, [email, token])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -73,7 +72,7 @@ const OTPVerificationPage = () => {
 
       if (response.data.success) {
         setMessage('OTP verified successfully!')
-        navigate(ROUTES.USER.DASHBOARD)
+        navigate(ROUTES.HOME)
       } else {
         setError('Verification failed. Please try again.')
       }

@@ -50,6 +50,8 @@ const VerifyEmailPage: React.FC = () => {
         console.log('Verification response:', response)
 
         if (response.status === 200) {
+          localStorage.setItem('authToken', token!); // using `!` since you already checked for null
+          localStorage.setItem('email', response.data.email); // also save email for OTP
           setStatus('success')
           setMessage('Email verified! Check your inbox for OTP.')
 
@@ -58,15 +60,16 @@ const VerifyEmailPage: React.FC = () => {
             () =>
               navigate('/api/auth/verify-otp', {
                 state: { email: response.data.email, 
-                         token: token },
+                         token: searchParams.get('token') },
               }),
             3000
           )
           return
+        } else {
+          setStatus('error')
+          setMessage(response.data?.message || 'Verification failed')
         }
 
-        setStatus('error')
-        setMessage(response.data?.message || 'Verification failed')
       } catch (err: any) {
         console.error('Verification error:', err)
         setStatus('error')
