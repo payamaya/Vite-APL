@@ -14,7 +14,7 @@ const ProtectedRoute = ({
   redirectPath = '/',
   children,
 }: ProtectedRouteProps) => {
-  const { isAuthenticated, userRole, isLoading, sessionId } = useAuth()
+  const { isAuthenticated, userRole, isLoading } = useAuth()
 
   if (isLoading) {
     return <div>Verifying session...</div>
@@ -24,7 +24,7 @@ const ProtectedRoute = ({
     hasToken: !!authService.getToken(),
     tokenValid: authService.isValidToken(''),
     storedRole: userRole,
-    freshRole: authService.getUserRole(sessionId),
+    freshRole: authService.getUserRole(),
   })
 
   // Primary authentication check
@@ -34,7 +34,7 @@ const ProtectedRoute = ({
 
   // Role-based access control
   if (allowedRoles.length > 0) {
-    const effectiveRole = userRole || authService.getUserRole(sessionId)
+    const effectiveRole = userRole || authService.getUserRole()
 
     if (!effectiveRole) {
       console.warn('Role missing but token valid - allowing access')
