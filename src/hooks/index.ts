@@ -4,7 +4,6 @@ export * from './useStudentManagement'
 export * from './useTeacherManagement'
 export * from './useActivityManagement'
 
-
 export * from './useUserManagement'
 
 export * from './useDeleteHandler'
