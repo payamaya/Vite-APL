@@ -41,7 +41,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkAuth = useCallback(() => {
     const token = authService.getToken()
-    const storedRole = authService.getUserRole(sessionId)
+    //const storedRole = authService.getUserRole(sessionId)
+    const storedRole = authService.getUserRole()
 
     if (!token || !authService.isValidToken(token)) {
       setAuthState({
@@ -62,7 +63,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const setAuthenticated = useCallback(
     (isAuthenticated: boolean, role?: UserRoleValue | null) => {
       if (!isAuthenticated) {
-        authService.clearSession(sessionId)
+        //authService.clearSession(sessionId)
+        authService.clearSession()
         authChannelRef.current?.postMessage({ type: 'LOGOUT', sessionId })
         setAuthState({
           isAuthenticated: false,
@@ -72,7 +74,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         //authService.setToken('valid_token')
         if (role) {
-          authService.setUserRole(sessionId, role)
+          //authService.setUserRole(sessionId, role)
+          authService.setUserRole(role)
         }
 
         authChannelRef.current?.postMessage({ type: 'LOGIN', sessionId, role })
