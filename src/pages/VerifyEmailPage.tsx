@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import API_BASE_URL from '../api/apiConfig'
 
 import { Spinner } from 'react-bootstrap'
 import { ROUTES } from '../routes'
+import authService from '../api/authService'
 
 const VerifyEmailPage: React.FC = () => {
   const [searchParams] = useSearchParams()
@@ -16,7 +17,12 @@ const VerifyEmailPage: React.FC = () => {
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
 
+    const hasVerifiedRef = useRef(false)                                      // ← ADDED guard ref
+
   useEffect(() => {
+    if (hasVerifiedRef.current) return                                      // ← SKIP if already run
+    hasVerifiedRef.current = true                                           // ← MARK as run
+    
     const token = searchParams.get('token')
 
     if (!token) {
@@ -31,14 +37,16 @@ const VerifyEmailPage: React.FC = () => {
           'Making request to:',
           `${API_BASE_URL}auth/confirm-email?token=${token}`
         )
+
         const response = await axios.get(`${API_BASE_URL}auth/confirm-email`, {
           params: { token },
           timeout: 10000,
-
+          withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
           },
-        })
+        });
+
         console.log('Full response:', {
           status: response.status,
           data: response.data,
@@ -48,6 +56,10 @@ const VerifyEmailPage: React.FC = () => {
         console.log('Verification response:', response)
 
         if (response.status === 200) {
+          const tokenFromUrl = searchParams.get('token');
+          const email = response.data.email;
+
+          authService.setToken(tokenFromUrl!); // ✅ uses your central service
           setStatus('success')
           setMessage('Email verified! Check your inbox for OTP.')
 
@@ -55,15 +67,17 @@ const VerifyEmailPage: React.FC = () => {
           setTimeout(
             () =>
               navigate('/api/auth/verify-otp', {
-                state: { email: response.data.email },
+                state: { email: email, 
+                         token: tokenFromUrl },
               }),
             3000
           )
           return
+        } else {
+          setStatus('error')
+          setMessage(response.data?.message || 'Verification failed')
         }
 
-        setStatus('error')
-        setMessage(response.data?.message || 'Verification failed')
       } catch (err: any) {
         console.error('Verification error:', err)
         setStatus('error')

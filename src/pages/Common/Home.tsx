@@ -10,7 +10,8 @@ const Home = () => {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { setAuthenticated, sessionId } = useAuth()
+  //const { setAuthenticated, sessionId } = useAuth()
+  const { setAuthenticated } = useAuth()
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -32,7 +33,7 @@ const Home = () => {
           email: formData.email,
           password: formData.password,
         },
-        sessionId // Replace with the actual sessionId value
+        //sessionId // Replace with the actual sessionId value
       )
       console.log('token :>> ', token)
 
