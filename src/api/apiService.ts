@@ -9,17 +9,52 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+// api.interceptors.request.use((config) => {
+//   const token = authService.getToken()     // <-- This is not receiving the token
+//   //const token = localStorage.getItem('token') 
+//   //console.log('Interceptor fired. Token:', token)
+//   if (token && config.headers) {
+//     if (!authService.isValidToken(token)) {
+//       authService.logout(token) // Optional: redirect to login
+//       throw new Error('Token expired. Please login again.')
+//     }
+//     config.headers['Authorization'] = `Bearer ${token}`
+//   }
+//   return config
+// })
+
 api.interceptors.request.use((config) => {
+   if (config.url?.includes('auth/login')) {
+    return config // skip token
+  }
   const token = authService.getToken()
+
+  console.log('%c[Interceptor]', 'color: cyan', {
+    tokenFromAuthService: token,
+    localStorageToken: localStorage.getItem('token'),
+    url: config.url,
+    method: config.method,
+    headersBefore: { ...config.headers }
+  })
+
   if (token && config.headers) {
     if (!authService.isValidToken(token)) {
-      authService.logout(token) // Optional: redirect to login
+      console.warn('[Interceptor] Token is invalid or expired. Logging out.')
+      authService.logout()
       throw new Error('Token expired. Please login again.')
     }
+
     config.headers['Authorization'] = `Bearer ${token}`
+    console.log('%c[Interceptor] Authorization header added.', 'color: green', {
+      headersAfter: config.headers
+    })
+  } else {
+    console.warn('%c[Interceptor] No valid token found.', 'color: orange')
   }
+
   return config
 })
+
 
 const handleError = <T>(error: any): Promise<ApiResponse<T>> => {
   console.error('API error: ', error)
@@ -36,6 +71,7 @@ const handleError = <T>(error: any): Promise<ApiResponse<T>> => {
 }
 
 const apiService = {
+
   getAll: async <T>(
     endpoint: string,
     params?: Record<string, any>

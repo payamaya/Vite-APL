@@ -6,6 +6,7 @@ import API_BASE_URL from '../api/apiConfig'
 
 import { Spinner } from 'react-bootstrap'
 import { ROUTES } from '../routes'
+import authService from '../api/authService'
 
 const VerifyEmailPage: React.FC = () => {
   const [searchParams] = useSearchParams()
@@ -21,6 +22,7 @@ const VerifyEmailPage: React.FC = () => {
   useEffect(() => {
     if (hasVerifiedRef.current) return                                      // ← SKIP if already run
     hasVerifiedRef.current = true                                           // ← MARK as run
+    
     const token = searchParams.get('token')
 
     if (!token) {
@@ -54,8 +56,10 @@ const VerifyEmailPage: React.FC = () => {
         console.log('Verification response:', response)
 
         if (response.status === 200) {
-          localStorage.setItem('authToken', token!); // using `!` since you already checked for null
-          localStorage.setItem('email', response.data.email); // also save email for OTP
+          const tokenFromUrl = searchParams.get('token');
+          const email = response.data.email;
+
+          authService.setToken(tokenFromUrl!); // ✅ uses your central service
           setStatus('success')
           setMessage('Email verified! Check your inbox for OTP.')
 
@@ -63,8 +67,8 @@ const VerifyEmailPage: React.FC = () => {
           setTimeout(
             () =>
               navigate('/api/auth/verify-otp', {
-                state: { email: response.data.email, 
-                         token: searchParams.get('token') },
+                state: { email: email, 
+                         token: tokenFromUrl },
               }),
             3000
           )

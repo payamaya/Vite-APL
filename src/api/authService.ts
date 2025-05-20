@@ -5,29 +5,27 @@ import { LoginResponse } from '../interfaces/api/ApiResponse'
 
 const authService = {
   login: async (
-    credentials: {
-      email: string
-      password: string
-    },
-    sessionId: string
+    credentials: { email: string; password: string }
   ): Promise<{ token: string; role: UserRoleValue }> => {
     try {
       const response = await apiService.create<
         { email: string; password: string },
         LoginResponse
       >('auth/login', credentials)
+
       const { token, role: rawRole } = response.data
 
-      // Convert to lowercase and validate
+      // Immediately store the token as-is
+      localStorage.setItem('token', token)
+
+      // Normalize and validate role
       const normalizedRole = rawRole.toLowerCase()
       if (!Object.values(ROLES).includes(normalizedRole as UserRoleValue)) {
         throw new Error(`Invalid role received: ${rawRole}`)
       }
-      localStorage.setItem(`token_${sessionId}`, token)
-      localStorage.setItem(`role_${sessionId}`, normalizedRole)
 
-      localStorage.setItem('token', token)
       localStorage.setItem('userRole', normalizedRole)
+
       return { token, role: normalizedRole as UserRoleValue }
     } catch (error) {
       throw new Error(
@@ -36,11 +34,9 @@ const authService = {
     }
   },
 
-  getUserRole: (sessionId: string): UserRoleValue | null => {
+  getUserRole: (): UserRoleValue | null => {
     try {
-      const token =
-        localStorage.getItem(`token_${sessionId}`) ||
-        localStorage.getItem('token')
+      const token = localStorage.getItem('token')
       if (!token || token.split('.').length !== 3) {
         console.warn('No valid token found or token format is invalid')
         return null
@@ -65,23 +61,24 @@ const authService = {
     }
   },
 
-  logout: (sessionId: string): void => {
-    localStorage.removeItem(`token_${sessionId}`)
-    localStorage.removeItem(`role_${sessionId}`)
+  logout: (): void => {
     localStorage.removeItem('token')
     localStorage.removeItem('userRole')
     localStorage.removeItem('sessionId')
   },
+
   getToken: (): string | null => {
     return localStorage.getItem('token')
   },
+
   setToken: (token: string): void => {
     localStorage.setItem('token', token)
   },
-  setUserRole: (sessionId: string, role: UserRoleValue): void => {
-    localStorage.setItem(`role_${sessionId}`, role)
+
+  setUserRole: (role: UserRoleValue): void => {
     localStorage.setItem('userRole', role)
   },
+
   isAuthenticated: (): boolean => {
     const token = authService.getToken()
     if (!token) return false
@@ -90,7 +87,6 @@ const authService = {
 
   isValidToken: (token: string | null): boolean => {
     if (!token) return false
-
     try {
       const decodedToken = jwt_decode(token)
       return decodedToken.exp * 1000 > Date.now()
@@ -99,12 +95,14 @@ const authService = {
       return false
     }
   },
-  clearSession: (sessionId: string): void => {
-    localStorage.removeItem(`token_${sessionId}`)
-    localStorage.removeItem(`role_${sessionId}`)
+
+  clearSession: (): void => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
   },
 }
 
+// JWT decode helper
 function jwt_decode(token: string): DecodedToken {
   const parts = token.split('.')
   if (parts.length !== 3) {

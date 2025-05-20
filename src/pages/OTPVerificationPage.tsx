@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import API_BASE_URL from '../api/apiConfig'
 import { ROUTES } from '../routes'
+import authService from '../api/authService'
 
 const OTPVerificationPage = () => {
   const [otp, setOtp] = useState('')
@@ -12,9 +13,12 @@ const OTPVerificationPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSendingOtp, setIsSendingOtp] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
-  const email = location.state?.email || localStorage.getItem('email')
-  const token = location.state?.token || localStorage.getItem('authToken')
+  // const location = useLocation()
+  // const email = location.state?.email || localStorage.getItem('email')
+  // const token = location.state?.token || localStorage.getItem('authToken')
+  const token = authService.getToken(); // ✅ clean, consistent
+  const email = localStorage.getItem('email'); // can later move to service if needed
+
 
 // Use `token` in headers or send to backend if needed
   const hasSentOtpRef = useRef(false)                                      // ← ADDED guard ref

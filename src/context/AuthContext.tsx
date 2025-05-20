@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           isLoading: false,
         })
       } else {
-        authService.setToken('valid_token')
+        //authService.setToken('valid_token')
         if (role) {
           authService.setUserRole(sessionId, role)
         }
