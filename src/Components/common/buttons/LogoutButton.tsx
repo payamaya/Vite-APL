@@ -22,7 +22,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({
   ...buttonProps
 }) => {
   const navigate = useNavigate()
-  const { setAuthenticated, sessionId } = useAuth()
+  const { setAuthenticated } = useAuth()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleLogout = async () => {
@@ -32,7 +32,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({
 
     setIsLoggingOut(true)
     try {
-      await authService.logout(sessionId)
+      await authService.logout()
       setAuthenticated(false, null)
       navigate(redirectPath)
       onSuccess?.()
