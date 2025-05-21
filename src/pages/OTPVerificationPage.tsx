@@ -16,29 +16,30 @@ const OTPVerificationPage = () => {
   // const location = useLocation()
   // const email = location.state?.email || localStorage.getItem('email')
   // const token = location.state?.token || localStorage.getItem('authToken')
-  const token = authService.getToken(); // ✅ clean, consistent
-  const email = localStorage.getItem('email'); // can later move to service if needed
+  const token = authService.getToken() // ✅ clean, consistent
+  const email = localStorage.getItem('email') // can later move to service if needed
 
-
-// Use `token` in headers or send to backend if needed
-  const hasSentOtpRef = useRef(false)                                      // ← ADDED guard ref
+  // Use `token` in headers or send to backend if needed
+  const hasSentOtpRef = useRef(false) // ← ADDED guard ref
 
   //✅ Send OTP when the page loads
   useEffect(() => {
-    if (hasSentOtpRef.current) return                                      // ← SKIP if already run
-    hasSentOtpRef.current = true                                           // ← MARK as run
+    if (hasSentOtpRef.current) return // ← SKIP if already run
+    hasSentOtpRef.current = true // ← MARK as run
 
     const sendInitialOtp = async () => {
       if (!email) return
       setIsSendingOtp(true)
       try {
-        await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
+        await axios.post(
+          `${API_BASE_URL}auth/send-otp`,
+          { email },
           {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
-             withCredentials: true,
+            withCredentials: true,
           }
         )
         setMessage('OTP has been sent to your email.')
@@ -71,16 +72,17 @@ const OTPVerificationPage = () => {
         `${API_BASE_URL}auth/verify-otp`,
         { code: otp, email }, // Include email if backend expects it
         {
-           headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
       )
 
       if (response.data.success) {
         setMessage('OTP verified successfully!')
-        navigate(ROUTES.HOME)
+        //TODO Navigate to the correct page e.g set-password
+        navigate(ROUTES.AUTH.SET_PASSWORD)
       } else {
         setError('Verification failed. Please try again.')
       }
@@ -95,14 +97,16 @@ const OTPVerificationPage = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post(`${API_BASE_URL}auth/send-otp`, { email },
+      await axios.post(
+        `${API_BASE_URL}auth/send-otp`,
+        { email },
         {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-             withCredentials: true,
-          }
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
       )
       setMessage('New OTP sent to your email')
       setError('')
@@ -117,7 +121,9 @@ const OTPVerificationPage = () => {
   return (
     <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto' }}>
       <h2>Verify OTP</h2>
-      <p>Enter the 6-digit code sent to <strong>{email}</strong></p>
+      <p>
+        Enter the 6-digit code sent to <strong>{email}</strong>
+      </p>
       {isSendingOtp && <p>Sending OTP...</p>}
       <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
         <input

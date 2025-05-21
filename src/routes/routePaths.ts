@@ -50,6 +50,7 @@ export const ROUTES = {
     REGISTER: '/auth/register',
     CONFIRM_EMAIL: '/auth/confirm-email',
     VERIFY_OTP: '/api/auth/verify-otp',
+    SET_PASSWORD: '/api/auth/set-password',
   },
   UNAUTHORIZED: '/unauthorized',
   NOT_FOUND: '*',

@@ -1,62 +1,93 @@
-import apiService from './apiService'
+import axios from 'axios'
+import API_BASE_URL from './apiConfig'
 import { DecodedToken } from '../types'
 import { ROLES, UserRoleValue } from '../constants/RolesEnum'
-import { LoginResponse } from '../interfaces/api/ApiResponse'
 
 const authService = {
-  login: async (
-    credentials: { email: string; password: string }
-  ): Promise<{ token: string; role: UserRoleValue }> => {
+  login: async (credentials: { email: string; password: string }) => {
     try {
-      const response = await apiService.create<
-        { email: string; password: string },
-        LoginResponse
-      >('auth/login', credentials)
+      const response = await axios.post(
+        `${API_BASE_URL}auth/login`,
+        credentials,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
 
-      const { token, role: rawRole } = response.data
-
-      // Immediately store the token as-is
-      localStorage.setItem('token', token)
-
-      // Normalize and validate role
-      const normalizedRole = rawRole.toLowerCase()
-      if (!Object.values(ROLES).includes(normalizedRole as UserRoleValue)) {
-        throw new Error(`Invalid role received: ${rawRole}`)
+      // Verify the response contains a valid token
+      if (!response.data?.token) {
+        throw new Error('No token received in login response')
       }
 
-      localStorage.setItem('userRole', normalizedRole)
+      // Quick validation of token structure
+      if (response.data.token.split('.').length !== 3) {
+        throw new Error('Invalid token format received from server')
+      }
 
-      return { token, role: normalizedRole as UserRoleValue }
+      return response.data
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Login error:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          headers: error.response?.headers,
+        })
+        throw new Error(error.response?.data?.message || error.message)
+      }
+      throw error
+    }
+  },
+
+  setPassword: async (password: string) => {
+    const token = authService.getToken()
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}auth/set-password`,
+        { password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      return {
+        success: response.data.success,
+        message: response.data.message || 'Password set successfully',
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       throw new Error(
-        `Invalid credentials: ${error instanceof Error ? error.message : String(error)}`
+        error.response?.data?.message ||
+          error.message ||
+          'Failed to set password'
       )
     }
   },
 
+  // In authService.ts
   getUserRole: (): UserRoleValue | null => {
     try {
-      const token = localStorage.getItem('token')
-      if (!token || token.split('.').length !== 3) {
-        console.warn('No valid token found or token format is invalid')
+      const token = authService.getToken()
+      if (!token) return null
+
+      try {
+        const decoded = jwt_decode(token)
+        if (!decoded?.role) return null
+
+        // Normalize role to lowercase
+        const role = decoded.role.toString().toLowerCase()
+
+        // Check against valid roles
+        return Object.values(ROLES).includes(role as UserRoleValue)
+          ? (role as UserRoleValue)
+          : null
+      } catch (decodeError) {
+        console.error('Token decode error:', decodeError)
         return null
       }
-
-      const decodedToken = jwt_decode(token)
-      if (!decodedToken.role) {
-        console.warn('No role found in token')
-        return null
-      }
-
-      const tokenRole = decodedToken.role.toLowerCase()
-      if (!Object.values(ROLES).includes(tokenRole as UserRoleValue)) {
-        console.warn('Invalid role in token:', tokenRole)
-        return null
-      }
-
-      return tokenRole as UserRoleValue
     } catch (error) {
-      console.error('Error decoding token:', error)
+      console.error('Error getting user role:', error)
       return null
     }
   },
@@ -64,34 +95,35 @@ const authService = {
   logout: (): void => {
     localStorage.removeItem('token')
     localStorage.removeItem('userRole')
-    localStorage.removeItem('sessionId')
   },
 
-  getToken: (): string | null => {
-    return localStorage.getItem('token')
-  },
+  getToken: (): string | null => localStorage.getItem('token'),
 
-  setToken: (token: string): void => {
-    localStorage.setItem('token', token)
-  },
+  setToken: (token: string): void => localStorage.setItem('token', token),
 
-  setUserRole: (role: UserRoleValue): void => {
-    localStorage.setItem('userRole', role)
-  },
+  setUserRole: (role: UserRoleValue): void =>
+    localStorage.setItem('userRole', role),
 
   isAuthenticated: (): boolean => {
     const token = authService.getToken()
-    if (!token) return false
-    return authService.isValidToken(token)
+    return token ? authService.isValidToken(token) : false
   },
 
   isValidToken: (token: string | null): boolean => {
     if (!token) return false
+
     try {
-      const decodedToken = jwt_decode(token)
-      return decodedToken.exp * 1000 > Date.now()
+      const decoded = jwt_decode(token)
+
+      // Verify expiration exists and is a number
+      if (typeof decoded.exp !== 'number') {
+        console.warn('Token missing expiration')
+        return false
+      }
+
+      return decoded.exp * 1000 > Date.now()
     } catch (error) {
-      console.error('Token validation error:', error)
+      console.error('Invalid token:', error)
       return false
     }
   },
@@ -102,22 +134,44 @@ const authService = {
   },
 }
 
-// JWT decode helper
 function jwt_decode(token: string): DecodedToken {
-  const parts = token.split('.')
-  if (parts.length !== 3) {
-    throw new Error('Invalid JWT format')
-  }
+  try {
+    // Verify token has 3 parts
+    const parts = token.split('.')
+    if (parts.length !== 3) {
+      throw new Error('Invalid JWT format: Token must have 3 parts')
+    }
 
-  const base64Url = parts[1]
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split('')
-      .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-      .join('')
-  )
-  return JSON.parse(jsonPayload) as DecodedToken
+    const base64Url = parts[1]
+    if (!base64Url) {
+      throw new Error('Invalid JWT format: Missing payload')
+    }
+
+    // Replace URL-safe characters
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+
+    // Decode base64
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    )
+
+    // Parse and verify the decoded payload
+    const decoded = JSON.parse(jsonPayload)
+
+    if (typeof decoded !== 'object' || decoded === null) {
+      throw new Error('Invalid JWT payload: Expected an object')
+    }
+
+    return decoded as DecodedToken
+  } catch (error) {
+    console.error('JWT decode error:', error)
+    throw new Error(
+      `Failed to decode token: ${error instanceof Error ? error.message : String(error)}`
+    )
+  }
 }
 
 export default authService

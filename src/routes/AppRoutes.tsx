@@ -1,6 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { Home, About, Courses, CourseDetails } from '../pages/Common'
+import {
+  Home,
+  About,
+  Courses,
+  CourseDetails,
+  SetPasswordPage,
+} from '../pages/Common'
 import ModuleDetails from '../pages/Common/ModuleDetails'
 import {
   adminRoutes,
@@ -55,6 +61,8 @@ const AppRoutes = () => {
       <Route path={ROUTES.AUTH.VERIFY_OTP} element={<OTPVerificationPage />} />
       {/* Fallback */}
       <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
+      <Route path={ROUTES.AUTH.SET_PASSWORD} element={<SetPasswordPage />} />
+
       {/*TODO later fix:Where Unauthorized is a component with guidance like "Please log in with the appropriate account."
        */}
       <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />

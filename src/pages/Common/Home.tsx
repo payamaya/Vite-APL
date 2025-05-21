@@ -4,18 +4,17 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
 import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { UserRoleValue } from '../../constants/RolesEnum'
 
 const Home = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  //const { setAuthenticated, sessionId } = useAuth()
   const { setAuthenticated } = useAuth()
+
   const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -28,33 +27,36 @@ const Home = () => {
     setError(null)
 
     try {
-      const { role, token } = await authService.login(
-        {
-          email: formData.email,
-          password: formData.password,
-        },
-        //sessionId // Replace with the actual sessionId value
-      )
-      console.log('token :>> ', token)
+      const { role, token } = await authService.login({
+        email: formData.email,
+        password: formData.password,
+      })
 
-      console.log('Login successful - Role:', role)
+      // Store token and role
+      authService.setToken(token)
+      authService.setUserRole(role as UserRoleValue)
+
+      // Update auth context
+      setAuthenticated(true, role as UserRoleValue)
+
+      // Navigate to appropriate dashboard
+      navigate(`${role}`)
+
       setFormData({ email: '', password: '' })
-
-      // Set authentication state
-      setAuthenticated(true, role)
-
-      // Navigate after ensuring state is updated
-      setTimeout(() => {
-        navigate(`/${role}`) // Now using lowercase paths to match your ROUTES
-      }, 10)
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error('Login failed', error)
-      setError(error instanceof Error ? error.message : 'Login failed')
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        'Login failed. Please try again.'
+      setError(errorMessage)
       setAuthenticated(false, null)
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <section className='container d-flex justify-content-center'>
       <form onSubmit={handleSubmit} className='card w-50 p-4 my-4 border-2'>
@@ -65,7 +67,7 @@ const Home = () => {
           type='email'
           value={formData.email}
           onChange={handleChange}
-          error={error && error.toLowerCase().includes('email') ? error : ''}
+          error={error?.toLowerCase().includes('email') ? error : ''}
         />
         <ReusableInput
           autoComplete='true'
@@ -74,7 +76,7 @@ const Home = () => {
           type='password'
           value={formData.password}
           onChange={handleChange}
-          error={error && error.toLowerCase().includes('password') ? error : ''}
+          error={error?.toLowerCase().includes('password') ? error : ''}
         />
         {error &&
           !error.toLowerCase().includes('email') &&
