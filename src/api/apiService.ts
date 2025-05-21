@@ -11,7 +11,7 @@ const api = axios.create({
 
 // api.interceptors.request.use((config) => {
 //   const token = authService.getToken()     // <-- This is not receiving the token
-//   //const token = localStorage.getItem('token') 
+//   //const token = localStorage.getItem('token')
 //   //console.log('Interceptor fired. Token:', token)
 //   if (token && config.headers) {
 //     if (!authService.isValidToken(token)) {
@@ -23,38 +23,46 @@ const api = axios.create({
 //   return config
 // })
 
-api.interceptors.request.use((config) => {
-   if (config.url?.includes('auth/login')) {
-    return config // skip token
-  }
-  const token = authService.getToken()
+api.interceptors.request.use(
+  (config) => {
+    if (config.url?.includes('auth/login')) {
+      return config // skip token
+    }
+    const token = authService.getToken()
 
-  console.log('%c[Interceptor]', 'color: cyan', {
-    tokenFromAuthService: token,
-    localStorageToken: localStorage.getItem('token'),
-    url: config.url,
-    method: config.method,
-    headersBefore: { ...config.headers }
-  })
+    console.log('%c[Interceptor]', 'color: cyan', {
+      tokenFromAuthService: token,
+      localStorageToken: localStorage.getItem('token'),
+      url: config.url,
+      method: config.method,
+      headersBefore: { ...config.headers },
+    })
 
-  if (token && config.headers) {
-    if (!authService.isValidToken(token)) {
-      console.warn('[Interceptor] Token is invalid or expired. Logging out.')
-      authService.logout()
-      throw new Error('Token expired. Please login again.')
+    if (token && config.headers) {
+      if (!authService.isValidToken(token)) {
+        console.warn('[Interceptor] Token is invalid or expired. Logging out.')
+        authService.logout()
+        throw new Error('Token expired. Please login again.')
+      }
+
+      config.headers['Authorization'] = `Bearer ${token}`
+      console.log(
+        '%c[Interceptor] Authorization header added.',
+        'color: green',
+        {
+          headersAfter: config.headers,
+        }
+      )
+    } else {
+      console.warn('%c[Interceptor] No valid token found.', 'color: orange')
     }
 
-    config.headers['Authorization'] = `Bearer ${token}`
-    console.log('%c[Interceptor] Authorization header added.', 'color: green', {
-      headersAfter: config.headers
-    })
-  } else {
-    console.warn('%c[Interceptor] No valid token found.', 'color: orange')
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
   }
-
-  return config
-})
-
+)
 
 const handleError = <T>(error: any): Promise<ApiResponse<T>> => {
   console.error('API error: ', error)
@@ -71,7 +79,6 @@ const handleError = <T>(error: any): Promise<ApiResponse<T>> => {
 }
 
 const apiService = {
-
   getAll: async <T>(
     endpoint: string,
     params?: Record<string, any>
@@ -110,7 +117,9 @@ const apiService = {
     data: RequestType
   ): Promise<ApiResponse<ResponseType>> => {
     try {
+      console.log('Sending request to:', endpoint, 'with data:', data)
       const response = await api.post<ResponseType>(endpoint, data) // No baseURL needed here either
+      console.log('Received response:', response)
       return {
         data: response.data,
         status: response.status,
@@ -119,6 +128,11 @@ const apiService = {
         message: (response.data as any)?.message,
       }
     } catch (error: any) {
+      console.error('Detailed error:', {
+        message: error.message,
+        response: error.response,
+        config: error.config,
+      })
       return handleError<ResponseType>(error)
     }
   },
