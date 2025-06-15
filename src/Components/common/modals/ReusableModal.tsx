@@ -90,12 +90,13 @@ const ReusableModal = <T extends Record<string, any>>({
                   <label className='form-label'>{field.label}</label>
                   {field.type === 'custom' && field.render ? (
                     field.render({
-                      value: formData[field.name] || '',
+                      value: formData[field.name],
                       onChange: (value) =>
                         setFormData((prev) => ({
                           ...prev,
-                          [field.name]: value as string,
+                          [field.name]: value,
                         })),
+                      field,
                     })
                   ) : field.type === 'textarea' ? (
                     <ReusableTextarea
