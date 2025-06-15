@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { courseService, studentService } from '../../services'
-
-// import { Link } from "react-router-dom"
-import ReusableTable from '../../Components/common/tables/ReusableTable'
-import courseTableColumns from '../../Components/common/tables/courseTableColumns'
-import studenTableColumns from '../../Components/common/tables/studentTableCoulmn'
+import {
+  ReusableTable,
+  courseTableColumns,
+  studenTableColumns,
+} from '../../Components/common/tables'
 import { ICourse, IStudent } from '../../interfaces/components/entities'
 
 function AdminCourses() {
