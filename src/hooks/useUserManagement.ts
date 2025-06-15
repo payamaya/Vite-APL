@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { IUser } from '../interfaces/components/entities/IUser'
-import { useNotification } from '../context/NotificationContext'
+import { useNotification } from '../context/useNotification'
 import { registerService } from '../services/registerService'
 
 export const useUserManagement = (

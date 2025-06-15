@@ -1,15 +1,9 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import authService from '../api/authService'
 import { UserRoleValue } from '../constants/RolesEnum'
+import { AuthContext } from './AuthContext.1'
 
-interface AuthContextType {
+export interface AuthContextType {
   isAuthenticated: boolean
   userRole: UserRoleValue | null
   isLoading: boolean
@@ -17,8 +11,6 @@ interface AuthContextType {
   setAuthenticated: (auth: boolean, role?: UserRoleValue | null) => void
   logout: () => void
 }
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState({
@@ -58,7 +50,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       userRole: storedRole as UserRoleValue,
       isLoading: false,
     })
-  }, [sessionId])
+  }, [])
+  //   setAuthState({
+  //     isAuthenticated: true,
+  //     userRole: storedRole as UserRoleValue,
+  //     isLoading: false,
+  //   })
+  // }, [sessionId])
 
   const setAuthenticated = useCallback(
     (isAuthenticated: boolean, role?: UserRoleValue | null) => {
@@ -139,12 +137,4 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       {authState.isLoading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   )
-}
-
-export const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
-  }
-  return context
 }

@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom'
 import { ICourse } from '../../interfaces/components/entities'
 
 interface CourseListProps {

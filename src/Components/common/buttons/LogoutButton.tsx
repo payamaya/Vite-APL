@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReusableButton from './ReusableButton'
-import { useAuth } from '../../../context/AuthContext'
+import { useAuth } from '../../../context/useAuth'
 import authService from '../../../api/authService'
 import { BaseButtonProps } from '../../../interfaces/base/BaseButtonProps'
 

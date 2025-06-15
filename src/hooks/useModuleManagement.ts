@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { IModule } from '../interfaces/components/entities'
 import { moduleService } from '../services'
-import { useNotification } from '../context/NotificationContext'
+import { useNotification } from '../context/useNotification'
 
 export const useModuleManagement = (
   courseId: string,

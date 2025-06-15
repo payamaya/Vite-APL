@@ -12,7 +12,7 @@ import { NavItem } from '../../../interfaces/components/NavbarInterfaces'
 import { DashboardLayoutProps } from './DashboardLayoutProps'
 import { Outlet } from 'react-router-dom'
 import LogoutButton from '../buttons/LogoutButton'
-import { useNotification } from '../../../context/NotificationContext'
+import { useNotification } from '../../../context/useNotification'
 import { getErrorMessage } from '../../../utils/errorUtils'
 
 const DashboardLayout = ({

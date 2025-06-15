@@ -4,9 +4,11 @@ import { NavItem } from '../interfaces/components/NavbarInterfaces'
 export const NAV_BRAND = 'My E-Learning Platform'
 
 export const PUBLIC_NAV_ITEMS: NavItem[] = [
-  { label: 'Home', link: '/', role: null },
-  { label: 'About', link: '/about', role: null },
-  { label: 'Courses', link: '/courses', role: null },
+  { label: 'Home', link: '/', role: ROLES.GUEST },
+  { label: 'About', link: '/about', role: ROLES.GUEST },
+  { label: 'Login', link: '/login', role: ROLES.GUEST },
+  // { label: 'Dashboard', link: '/student/dashboard', role: ROLES.USER },
+  // { label: 'Courses', link: '/courses', role: null },
 ]
 
 export const ADMIN_NAV_ITEMS: NavItem[] = [

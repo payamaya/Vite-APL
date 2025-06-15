@@ -7,7 +7,7 @@ import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import { ICourse } from '../../interfaces/components/entities/ICourse'
-import { useNotification } from '../../context/NotificationContext'
+import { useNotification } from '../../context/useNotification'
 
 const Courses = () => {
   const [loading, setLoading] = useState(true)
@@ -48,14 +48,14 @@ const Courses = () => {
     <section className='container'>
       <div className='d-flex justify-content-between align-items-center mb-3'>
         <h1>The Courses</h1>
-        <ReusableButton
+        {/* <ReusableButton
           onClick={() => {
             setCurrentCourse(null)
             setIsModalOpen(true)
           }}
           theme='light'
           label='Add Course'
-        />
+        /> */}
       </div>
 
       {loading && <p>Loading courses...</p>}

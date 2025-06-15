@@ -6,8 +6,7 @@ export interface BaseFieldProps {
   error?: string
   required?: boolean
   autoFocus?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+  [key: string]: unknown
 }
 export interface FieldConfig {
   componentType: 'input' | 'textarea'

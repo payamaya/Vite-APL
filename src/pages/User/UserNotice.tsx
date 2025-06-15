@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useState, useEffect } from 'react'
 import noticeTableColumns from '../../Components/common/tables/noticeTableColumns'
 import ReusableTable from '../../Components/common/tables/ReusableTable'
 import { courseService } from '../../services'
 
 function UserNotice() {
-  const [notices, setNotices] = useState<any[]>([]) // You can replace 'any' with a specific type if you have one
+  const [notices, setNotices] = useState<unknown[]>([]) // You can replace 'any' with a specific type if you have one
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 

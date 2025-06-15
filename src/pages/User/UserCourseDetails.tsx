@@ -17,7 +17,7 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
 
-import { useNotification } from '../../context/NotificationContext'
+import { useNotification } from '../../context/useNotification'
 
 import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
@@ -69,35 +69,6 @@ const UserCourseDetails = () => {
       activities
     )
 
-  const fetchCourseAndModules = async () => {
-    if (!courseId) {
-      setError('No course ID provided')
-      return
-    }
-
-    try {
-      setLoading(true)
-      setError('')
-
-      const [courseResponse, modulesResponse] = await Promise.all([
-        courseService.getCourseById(courseId),
-        moduleService.getAllModules(courseId),
-      ])
-
-      setCourse(courseResponse.data)
-      setModules(
-        Array.isArray(modulesResponse.data)
-          ? modulesResponse.data
-          : [modulesResponse.data]
-      )
-    } catch (err) {
-      setError('Failed to load course or modules')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const handleFetchActivities = async (moduleId: string) => {
     setSelectedModuleId(moduleId)
     try {
@@ -111,8 +82,36 @@ const UserCourseDetails = () => {
   }
 
   useEffect(() => {
+    const fetchCourseAndModules = async () => {
+      if (!courseId) {
+        setError('No course ID provided')
+        return
+      }
+
+      try {
+        setLoading(true)
+        setError('')
+
+        const [courseResponse, modulesResponse] = await Promise.all([
+          courseService.getCourseById(courseId),
+          moduleService.getAllModules(courseId),
+        ])
+
+        setCourse(courseResponse.data)
+        setModules(
+          Array.isArray(modulesResponse.data)
+            ? modulesResponse.data
+            : [modulesResponse.data]
+        )
+      } catch (err) {
+        setError('Failed to load course or modules')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
     fetchCourseAndModules()
-  }, [courseId])
+  }, [courseId, setModules])
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>

@@ -1,19 +1,16 @@
 // context/NotificationContext.tsx
-import { createContext, useState, useContext, ReactNode } from 'react'
+import { useState, ReactNode } from 'react'
 import { Notification } from '../Components/common/notifications/Notification'
+import { NotificationContext } from './NotificationContext.1'
 
 type NotificationType = {
   message: string
   variant: 'success' | 'danger' | 'warning' | 'info'
 }
 
-interface NotificationContextType {
+export interface NotificationContextType {
   showNotification: (notification: NotificationType) => void
 }
-
-const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined
-)
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
   const [notification, setNotification] = useState<NotificationType | null>(
@@ -37,14 +34,4 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
       )}
     </NotificationContext.Provider>
   )
-}
-
-export const useNotification = () => {
-  const context = useContext(NotificationContext)
-  if (!context) {
-    throw new Error(
-      'useNotification must be used within a NotificationProvider'
-    )
-  }
-  return context
 }
