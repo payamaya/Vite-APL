@@ -1,8 +1,14 @@
 import { JSX } from 'react'
 
-export type FieldType = 'text' | 'textarea' | 'number' | 'select' | 'date' | 'checkbox' | 'custom';
+export type FieldType =
+  | 'text'
+  | 'textarea'
+  | 'number'
+  | 'select'
+  | 'date'
+  | 'checkbox'
+  | 'custom'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ModalField<T> = {
   name: keyof T
   label: string
@@ -17,7 +23,7 @@ export type ModalField<T> = {
   options?: { label: string; value: string | number }[] // For 'select'
   min?: string
   render?: (props: {
-    value: any
-    onChange: (value: any) => void
+    value: unknown
+    onChange: (value: unknown) => void
   }) => JSX.Element // For 'custom'
 }

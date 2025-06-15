@@ -8,7 +8,7 @@ import {
 } from './config/navItems'
 
 import Footer from './Components/common/footer/Footer'
-import { useAuth } from './context/AuthContext'
+import { useAuth } from './context/useAuth'
 
 function App() {
   const { userRole } = useAuth()

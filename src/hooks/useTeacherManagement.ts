@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 
 import { teacherService } from '../services'
-import { useNotification } from '../context/NotificationContext'
+import { useNotification } from '../context/useNotification'
 import { ITeacher } from '../interfaces/components/entities'
 
 export const useTeacherManagement = (initialTeachers: ITeacher[] = []) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { courseService, moduleService, activityService } from '../../services'
 
@@ -12,7 +12,7 @@ import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import { ResourceManager } from '../../Components/ResourceManager'
 
-import { useNotification } from '../../context/NotificationContext'
+import { useNotification } from '../../context/useNotification'
 
 import { moduleFields } from '../../Components/common/forms/moduleFields'
 import { activityFields } from '../../Components/common/forms/activityFields'
@@ -67,7 +67,7 @@ const CourseDetails = () => {
       activities
     )
 
-  const fetchCourseAndModules = async () => {
+  const fetchCourseAndModules = useCallback(async () => {
     if (!courseId) {
       setError('No course ID provided')
       return
@@ -94,7 +94,7 @@ const CourseDetails = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [courseId, setModules])
 
   const handleFetchActivities = async (moduleId: string) => {
     setSelectedModuleId(moduleId)
@@ -107,10 +107,9 @@ const CourseDetails = () => {
       console.error('Failed to fetch activities', err)
     }
   }
-
   useEffect(() => {
     fetchCourseAndModules()
-  }, [courseId])
+  }, [courseId, fetchCourseAndModules])
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>

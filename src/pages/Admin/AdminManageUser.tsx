@@ -7,7 +7,7 @@ import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 
-import { useNotification } from '../../context/NotificationContext'
+import { useNotification } from '../../context/useNotification'
 // import { formatDate } from '../../utils/dateUtils'
 import { IUser } from '../../interfaces/components/entities'
 import { FaEnvelope, FaPhone } from 'react-icons/fa'
