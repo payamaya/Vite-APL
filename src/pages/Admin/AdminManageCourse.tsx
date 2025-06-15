@@ -7,7 +7,7 @@ import { ResourceManager } from '../../Components/ResourceManager'
 import GoBackButton from '../../Components/common/buttons/GoBackButton'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import { ICourse } from '../../interfaces/components/entities'
-import { useNotification } from '../../context/NotificationContext'
+import { useNotification } from '../../context/useNotification'
 import { formatDate } from '../../utils/dateUtils'
 import ResourceList from './ResourceList'
 

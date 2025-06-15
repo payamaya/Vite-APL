@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { ICourse } from '../interfaces/components/entities'
 import { courseService } from '../services'
-import { useNotification } from '../context/NotificationContext'
+import { useNotification } from '../context/useNotification'
 
 export const useCourseManagement = (initialCourses: ICourse[] = []) => {
   const [courses, setCourses] = useState<ICourse[]>(initialCourses)

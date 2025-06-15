@@ -15,32 +15,31 @@ const ModuleDetails = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const fetchData = async () => {
-    try {
-      if (!courseId || !moduleId) {
-        setError('No course ID or module ID provided')
-        return
-      }
-
-      // Fetch the course details
-      const courseResponse = await courseService.getCourseById(courseId)
-      setCourse(courseResponse.data)
-
-      // Fetch the specific module details using moduleId
-      const moduleResponse = await moduleService.getModuleById(
-        courseId,
-        moduleId
-      )
-      setModule(moduleResponse.data)
-    } catch (err) {
-      setError('Failed to load data')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!courseId || !moduleId) {
+          setError('No course ID or module ID provided')
+          return
+        }
+
+        // Fetch the course details
+        const courseResponse = await courseService.getCourseById(courseId)
+        setCourse(courseResponse.data)
+
+        // Fetch the specific module details using moduleId
+        const moduleResponse = await moduleService.getModuleById(
+          courseId,
+          moduleId
+        )
+        setModule(moduleResponse.data)
+      } catch (err) {
+        setError('Failed to load data')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
     fetchData()
   }, [courseId, moduleId])
 

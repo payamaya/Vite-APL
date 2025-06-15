@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
-import { useNotification } from '../context/NotificationContext'
+import { useNotification } from '../context/useNotification'
 import { ApiResponse } from '../interfaces/api/ApiResponse'
 import { ServiceInterface } from './ServiceInterface'
 

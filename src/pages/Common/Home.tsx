@@ -3,7 +3,7 @@ import authService from '../../api/authService'
 import ReusableButton from '../../Components/common/buttons/ReusableButton'
 import ReusableInput from '../../Components/common/inputs/ReusableInput'
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/useAuth'
 import { UserRoleValue } from '../../constants/RolesEnum'
 
 const Home = () => {

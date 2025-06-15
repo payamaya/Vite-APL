@@ -1,6 +1,6 @@
 import { IUser } from '../interfaces/components/entities/IUser'
 import createEntityService from './entityServiceFactory'
-// BUG change student to user url controller!!!!!!
+// BUG May need to change "student" to "user" url controller!!!!!!
 // SO the admin can see all user
 const usersService = createEntityService<IUser>('user')
 

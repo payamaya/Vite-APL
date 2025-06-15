@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import { UserRoleValue } from '../constants/RolesEnum'
 import authService from '../api/authService'
 
@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   allowedRoles = [],
-  redirectPath = '/login',
+  redirectPath = '/',
   children,
 }) => {
   const { isAuthenticated, userRole, isLoading } = useAuth()

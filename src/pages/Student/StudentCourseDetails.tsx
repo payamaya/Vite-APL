@@ -20,35 +20,6 @@ const StudentCourseDetails = () => {
   const [error, setError] = useState('')
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null)
 
-  const fetchCourseAndModules = async () => {
-    if (!courseId) {
-      setError('No course ID provided')
-      setLoading(false)
-      return
-    }
-
-    try {
-      setLoading(true)
-      setError('')
-
-      // Fetch course and modules in parallel
-      const [courseResponse, modulesResponse] = await Promise.all([
-        courseService.getCourseById(courseId),
-        moduleService.getAllModules(courseId),
-      ])
-
-      // Ensure we're setting arrays for modules and single object for course
-      setCourse(courseResponse.data)
-      const modulesData = modulesResponse.data
-      setModules(Array.isArray(modulesData) ? modulesData : [modulesData])
-    } catch (err) {
-      setError('Failed to load course or modules')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const handleFetchActivities = async (moduleId: string) => {
     try {
       setSelectedModuleId(moduleId)
@@ -66,6 +37,34 @@ const StudentCourseDetails = () => {
   }
 
   useEffect(() => {
+    const fetchCourseAndModules = async () => {
+      if (!courseId) {
+        setError('No course ID provided')
+        setLoading(false)
+        return
+      }
+
+      try {
+        setLoading(true)
+        setError('')
+
+        // Fetch course and modules in parallel
+        const [courseResponse, modulesResponse] = await Promise.all([
+          courseService.getCourseById(courseId),
+          moduleService.getAllModules(courseId),
+        ])
+
+        // Ensure we're setting arrays for modules and single object for course
+        setCourse(courseResponse.data)
+        const modulesData = modulesResponse.data
+        setModules(Array.isArray(modulesData) ? modulesData : [modulesData])
+      } catch (err) {
+        setError('Failed to load course or modules')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
     fetchCourseAndModules()
   }, [courseId])
 
