@@ -25,5 +25,29 @@ export type ModalField<T> = {
   render?: (props: {
     value: unknown
     onChange: (value: unknown) => void
-  }) => JSX.Element // For 'custom'
-}
+    field: ModalField<T>
+  }) => JSX.Element
+} & (
+  | {
+      type: 'select'
+      options: { label: string; value: string | number }[]
+    }
+  | {
+      type: 'date'
+      minDate?: Date
+      maxDate?: Date
+      disabledDates?: Date[]
+      excludeDates?: Date[]
+    }
+  | {
+      type: 'custom'
+      render: (props: {
+        value: unknown
+        onChange: (value: unknown) => void
+        field: ModalField<T>
+      }) => JSX.Element
+    }
+  | {
+      type: Exclude<FieldType, 'select' | 'date' | 'custom'>
+    }
+)
